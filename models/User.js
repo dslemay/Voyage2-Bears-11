@@ -15,7 +15,7 @@ const userScema = new Schema({
   },
   name: {
     type: String,
-    trime: true,
+    trim: true,
     required: 'Please supply a name'
   }
 });
