@@ -10,8 +10,16 @@ app.get('/', function(req, res) {
 });
 
 app.post('/login', function(req, res) {
-  var email = req.body.email;
-  var password = req.body.password;
+  const email = req.body.email;
+  const password = req.body.password;
+
+  res.send('Success');
+});
+
+app.post('/register', function(req, res) {
+  const name = req.body.name;
+  const email = req.body.email;
+  const password = req.body.password;
 
   res.send('Success');
 });
