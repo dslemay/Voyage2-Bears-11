@@ -1,7 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 const app = express();
+
+app.use(bodyParser.json());
 
 // Import Environment variables to store information not in the repo.
 require('dotenv').config();
@@ -13,6 +16,8 @@ mongoose
     useMongoClient: true
   })
   .catch(err => console.error(`Unable to connect to MongoDB: ${err.message}`));
+
+require('./routes/detailRoutes')(app);
 
 // Determine port and start server.
 const PORT = process.env.PORT || 5000;
