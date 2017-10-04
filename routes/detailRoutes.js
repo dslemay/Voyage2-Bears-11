@@ -9,6 +9,8 @@ const searchRequest = {
   location: 'san francisco, ca'
 };
 
+// Implement async/await syntax for this route
+
 module.exports = app => {
   app.get('/api/yelp', (req, res) => {
     yelp
@@ -17,8 +19,8 @@ module.exports = app => {
         const client = yelp.client(response.jsonBody.access_token);
 
         client.search(searchRequest).then(response => {
-          const firstResult = response.jsonBody.businesses[0];
-          const hotels = JSON.stringify(firstResult, null, 4);
+          const fiveResults = response.jsonBody.businesses.slice(0, 5);
+          const hotels = JSON.stringify(fiveResults, null, 4);
           res.send(hotels);
         });
       })
