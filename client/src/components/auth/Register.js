@@ -52,13 +52,13 @@ class Register extends Component {
           <div className="row">
             <div className="input-field col s12">
               <input
-                id="first_name"
+                id="name"
                 type="text"
                 className="validate"
                 value={this.state.name}
                 onChange={this.handleNameChange}
               />
-              <label htmlFor="first_name">Name</label>
+              <label htmlFor="name">Name</label>
             </div>
           </div>
 
