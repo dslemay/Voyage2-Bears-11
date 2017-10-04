@@ -1,10 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 
 const app = express();
-
-app.use(bodyParser.json());
 
 // Import Environment variables to store information not in the repo.
 require('dotenv').config();

@@ -1,4 +1,3 @@
-const axios = require('axios');
 const yelp = require('yelp-fusion');
 const keys = require('../config/keys');
 
@@ -10,17 +9,21 @@ const searchRequest = {
   location: 'san francisco, ca'
 };
 
-yelp
-  .accessToken(clientId, clientSecret)
-  .then(response => {
-    const client = yelp.client(response.jsonBody.access_token);
+module.exports = app => {
+  app.get('/api/yelp', (req, res) => {
+    yelp
+      .accessToken(clientId, clientSecret)
+      .then(response => {
+        const client = yelp.client(response.jsonBody.access_token);
 
-    client.search(searchRequest).then(response => {
-      const firstResult = response.jsonBody.businesses[0];
-      const prettyJson = JSON.stringify(firstResult, null, 4);
-      console.log(prettyJson);
-    });
-  })
-  .catch(e => {
-    console.log(e);
+        client.search(searchRequest).then(response => {
+          const firstResult = response.jsonBody.businesses[0];
+          const hotels = JSON.stringify(firstResult, null, 4);
+          res.send(hotels);
+        });
+      })
+      .catch(e => {
+        console.log(e);
+      });
   });
+};
