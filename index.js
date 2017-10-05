@@ -1,7 +1,28 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 const app = express();
+app.use(bodyParser.json());
+
+app.get('/', function(req, res) {
+  res.send('Express server running');
+});
+
+app.post('/login', function(req, res) {
+  const email = req.body.email;
+  const password = req.body.password;
+
+  res.send('Success');
+});
+
+app.post('/register', function(req, res) {
+  const name = req.body.name;
+  const email = req.body.email;
+  const password = req.body.password;
+
+  res.send('Success');
+});
 
 // Import Environment variables to store information not in the repo.
 require('dotenv').config();
