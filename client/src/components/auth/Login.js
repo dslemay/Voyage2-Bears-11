@@ -4,11 +4,39 @@ class Login extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      email: '',
+      password: ''
+    };
+
+    this.handleEmailChange = this.handleEmailChange.bind(this);
+    this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleEmailChange(e) {
+    this.setState({ email: e.target.value });
+  }
+
+  handlePasswordChange(e) {
+    this.setState({ password: e.target.value });
   }
 
   handleSubmit(e) {
     e.preventDefault();
+
+    const form = {
+      email: this.state.email,
+      password: this.state.password
+    };
+
+    console.log(form);
+
+    fetch('/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(form)
+    }).then(console.log('Sucessful POST'));
   }
 
   render() {
@@ -18,14 +46,26 @@ class Login extends Component {
         <form className="col s12" onSubmit={this.handleSubmit}>
           <div className="row">
             <div className="input-field col s12">
-              <input id="email" type="email" className="validate" />
+              <input
+                id="email"
+                type="email"
+                className="validate"
+                value={this.state.email}
+                onChange={this.handleEmailChange}
+              />
               <label htmlFor="email">Email</label>
             </div>
           </div>
 
           <div className="row">
             <div className="input-field col s12">
-              <input id="password" type="password" className="validate" />
+              <input
+                id="password"
+                type="password"
+                className="validate"
+                value={this.state.password}
+                onChange={this.handlePasswordChange}
+              />
               <label htmlFor="password">Password</label>
             </div>
           </div>

@@ -7,8 +7,6 @@ const expressValidator = require('express-validator');
 const routes = require('./routes/authRoutes');
 require('services/passport');
 
-const app = express();
-
 // Import Environment variables to store information not in the repo.
 require('dotenv').config({ path: 'variables.env' });
 
