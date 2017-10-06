@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
 const expressValidator = require('express-validator');
 const routes = require('./routes/authRoutes');
 
@@ -27,6 +28,30 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Validator will be used for registration form to validate and sanitize data
 app.use(expressValidator());
+
+// Set up and configure MongoDBStore for storing session details
+const store = new MongoDBStore({
+  uri: process.env.DATABASE,
+  collection: 'sessions'
+});
+
+store.on('error', function(error) {
+  assert.ifError(error);
+  assert.ok(false);
+});
+
+// Set up sessions to allow for logins and Passport implementation.
+app.use(
+  require('express-session')({
+    secret: process.env.SECRET,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
+    },
+    resave: false,
+    saveUninitialized: false,
+    store: store
+  })
+);
 
 app.use('/', routes);
 
