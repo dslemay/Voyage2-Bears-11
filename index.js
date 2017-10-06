@@ -6,6 +6,7 @@ const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const expressValidator = require('express-validator');
 const routes = require('./routes/authRoutes');
+require('services/passport');
 
 const app = express();
 
@@ -52,6 +53,10 @@ app.use(
     store: store
   })
 );
+
+// Initialize Passport and use sessions
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', routes);
 
