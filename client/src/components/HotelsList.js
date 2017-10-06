@@ -42,11 +42,11 @@ class HotelsList extends Component {
                 title={hotel.name}
                 subtitle={
                   <span>
-                    rating: {hotel.rating}
+                    Rating: {hotel.rating}
                   </span>
                 }
                 actionIcon={
-                  <IconButton>
+                  <IconButton href={hotel.url} target="_blank">
                     <InfoIcon color="rgba(255, 255, 255, 0.54)" />
                   </IconButton>
                 }
