@@ -2,15 +2,15 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 mongoose.Promise = global.Promise;
-import isEmail from 'validator/lib/isEmail';
+const validator = require('validator');
 const mongodbErrorHandler = require('mongoose-mongodb-errors');
 
-const userScema = new Schema({
+const userSchema = new Schema({
   email: {
     type: String,
     lowercase: true,
     trim: true,
-    validate: [isEmail, 'Please supply a valid email'],
+    validate: [validator.isEmail, 'Please supply a valid email'],
     required: 'Please supply an email'
   },
   name: {
