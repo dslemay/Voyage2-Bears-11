@@ -5,7 +5,8 @@ const authController = require('../controllers/authController');
 
 router.post(
   '/register',
-  authController.validateRegister
+  authController.validateRegister,
+  authController.checkValidations
   // authController.register,
   // authController.login
 );
