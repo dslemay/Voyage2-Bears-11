@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 mongoose.Promise = global.Promise;
 const validator = require('validator');
+const passportLocalMongoose = require('passport-local-mongoose');
 const mongodbErrorHandler = require('mongoose-mongodb-errors');
 
 const userSchema = new Schema({
@@ -20,6 +21,7 @@ const userSchema = new Schema({
   }
 });
 
+userSchema.plugin(passportLocalMongoose, { usernameField: 'email' });
 userSchema.plugin(mongodbErrorHandler);
 
 module.exports = mongoose.model('User', userSchema);
