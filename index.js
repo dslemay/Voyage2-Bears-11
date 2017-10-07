@@ -4,11 +4,15 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const expressValidator = require('express-validator');
+require('./models/User');
 const routes = require('./routes/authRoutes');
-require('services/passport');
+const passport = require('passport');
+require('./services/passport');
+
+const app = express();
 
 // Import Environment variables to store information not in the repo.
-require('dotenv').config({ path: 'variables.env' });
+require('dotenv').config();
 
 // Connect to Database and use native ES6 promises
 mongoose.Promise = global.Promise;
