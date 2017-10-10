@@ -26,13 +26,12 @@ function getFlights() {
         }
     };
 
-    axios.post(url, data)
-    .then(data => console.log(data));
+    return axios.post(url, data);
 }
 
-function FlightsList() {
-  getFlights();
-  return <p>hello</p>
+async function FlightsList() {
+  const flight = await getFlights();
+  return <p>{flight.data.trips.tripOption["0"].saleTotal}</p>
 }
 
 export default FlightsList;
