@@ -41,7 +41,7 @@ class Register extends Component {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData)
-    }).then(console.log('Successful POST'));
+    }).then(response => console.log(response));
   }
 
   render() {
