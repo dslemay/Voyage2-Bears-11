@@ -11,7 +11,13 @@ const userSchema = new Schema({
     type: String,
     lowercase: true,
     trim: true,
-    validate: [validator.isEmail, 'Please supply a valid email'],
+    validate: {
+      isAsync: true,
+      validator: (v, cb) => {
+        cb(validator.isEmail(v));
+      },
+      message: 'Please supply a valid email'
+    },
     required: 'Please supply an email'
   },
   name: {
