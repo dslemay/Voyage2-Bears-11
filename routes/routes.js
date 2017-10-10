@@ -12,5 +12,10 @@ router.post(
 );
 
 router.post('/login', authController.login);
+router.get('/logout', (req, res) => {
+  req.logout();
+  console.log('Logout successful');
+  res.redirect('/');
+});
 
 module.exports = router;
