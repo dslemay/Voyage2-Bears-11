@@ -6,6 +6,7 @@ import Landing from './Landing';
 import Login from './auth/Login';
 import Register from './auth/Register';
 import HotelsList from './HotelsList';
+import FlightsList from './FlightsList';
 
 class App extends Component {
   render() {
@@ -17,6 +18,7 @@ class App extends Component {
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route path="/hotels" component={HotelsList} />
+          <Route path="/flights" component={FlightsList} />
         </div>
       </BrowserRouter>
     );

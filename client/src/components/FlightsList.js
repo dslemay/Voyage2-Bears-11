@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import axios from 'axios';
 
 function getFlights() {
@@ -10,7 +10,7 @@ function getFlights() {
             {
               "origin": "LAS",
               "destination": dest,
-              "date": "2017-09-30"
+              "date": "2017-10-30"
             }
           ],
           "passengers": {
@@ -30,8 +30,9 @@ function getFlights() {
     .then(data => console.log(data));
 }
 
-class FlightsList extends Component {
-
+function FlightsList() {
+  getFlights();
+  return <p>hello</p>
 }
 
 export default FlightsList;
