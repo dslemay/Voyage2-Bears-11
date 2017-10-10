@@ -30,13 +30,11 @@ class Login extends Component {
       password: this.state.password
     };
 
-    console.log(form);
-
     fetch('/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form)
-    }).then(console.log('Sucessful POST'));
+    }).then(response => console.log(response));
   }
 
   render() {
