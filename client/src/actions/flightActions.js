@@ -10,7 +10,7 @@ export function fetchFlightsSuccess(flights) {
 export function fetchFlights() {
   const dest = 'SFO';
   const url =
-    'https://www.googleapis.com/qpxExpress/v1/trips/search?key=AIzaSyA5uBa7NKGCyrL3NxLuT3q23dZoMV-mLM8';
+    'https://www.googleapis.com/qpxExpress/v1/trips/search?key=';
   const data = {
     request: {
       slice: [
