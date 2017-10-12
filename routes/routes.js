@@ -4,15 +4,15 @@ const router = express.Router();
 const authController = require('../controllers/authController');
 
 router.post(
-  '/register',
+  '/auth/register',
   authController.validateRegister,
   authController.checkValidations,
   authController.register,
   authController.login
 );
 
-router.post('/login', authController.login);
-router.get('/logout', (req, res) => {
+router.post('/auth/login', authController.login);
+router.get('/auth/logout', (req, res) => {
   req.logout();
   res.redirect('/');
 });
