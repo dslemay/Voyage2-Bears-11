@@ -47,7 +47,24 @@ exports.register = async (req, res, next) => {
   next();
 };
 
-exports.login = passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/login'
-});
+exports.login = function(req, res, next) {
+  passport.authenticate('local', function(err, user, info) {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return res
+        .status(401)
+        .json({ message: info.message, redirect: '/login' });
+    }
+    req.logIn(user, function(err) {
+      if (err) {
+        return next(err);
+      }
+      return res.status(200).json({
+        message: 'You have been successfully logged in',
+        redirect: '/'
+      });
+    });
+  })(req, res, next);
+};
