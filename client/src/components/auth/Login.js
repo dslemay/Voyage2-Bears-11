@@ -44,11 +44,12 @@ class Login extends Component {
       */
       if (path !== '/login') {
         // Login was successful
-        this.props.history.push(url.pathname);
+        this.props.history.push(path);
       } else {
         //Login was unsuccessful
         document.getElementById('email').value = '';
         document.getElementById('password').value = '';
+        this.setState({ email: '', password: '' });
       }
     });
   }
