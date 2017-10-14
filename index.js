@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const expressValidator = require('express-validator');
+const keys = require('./config/keys');
 require('./models/User');
 const routes = require('./routes/routes');
 const passport = require('passport');
@@ -11,13 +12,13 @@ require('./services/passport');
 
 const app = express();
 
-// Import Environment variables to store information not in the repo.
-require('dotenv').config();
+const database = keys.database;
+const cookieSecret = keys.cookieSecret;
 
 // Connect to Database and use native ES6 promises
 mongoose.Promise = global.Promise;
 mongoose
-  .connect(process.env.DATABASE, {
+  .connect(database, {
     useMongoClient: true
   })
   .catch(err => console.error(`Unable to connect to MongoDB: ${err.message}`));
@@ -33,7 +34,7 @@ app.use(expressValidator());
 
 // Set up and configure MongoDBStore for storing session details
 const store = new MongoDBStore({
-  uri: process.env.DATABASE,
+  uri: database,
   collection: 'sessions'
 });
 
@@ -45,7 +46,7 @@ store.on('error', function(error) {
 // Set up sessions to allow for logins and Passport implementation.
 app.use(
   require('express-session')({
-    secret: process.env.SECRET,
+    secret: cookieSecret,
     cookie: {
       maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
     },
