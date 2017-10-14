@@ -34,24 +34,25 @@ class Login extends Component {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form)
-    }).then(response => {
-      const url = new URL(response.url);
-      const path = url.pathname;
-      /* Handle redirect based on url in response object which is handled on backend.
-       * Redirect upon successful login
-       * Upon unsuccessful login, the page will not change. Reset input fields.
-       * TODO: Add error handling and provide notification to user of failed login.
-      */
-      if (path !== '/login') {
-        // Login was successful
-        this.props.history.push(path);
-      } else {
-        //Login was unsuccessful
-        document.getElementById('email').value = '';
-        document.getElementById('password').value = '';
-        this.setState({ email: '', password: '' });
-      }
-    });
+    })
+      .then(response => response.json())
+      .then(data => {
+        const path = data.redirect;
+        /* Handle redirect based on url in response object which is handled on backend.
+         * Redirect upon successful login
+         * Upon unsuccessful login, the page will not change. Reset input fields.
+         * TODO: Utilize message property of object to display message to user on success/failure
+         */
+        if (path !== '/login') {
+          // Login was successful
+          this.props.history.push(path);
+        } else {
+          //Login was unsuccessful
+          document.getElementById('email').value = '';
+          document.getElementById('password').value = '';
+          this.setState({ email: '', password: '' });
+        }
+      });
   }
 
   render() {
