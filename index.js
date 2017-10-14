@@ -6,7 +6,6 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 const expressValidator = require('express-validator');
 const keys = require('./config/keys');
 require('./models/User');
-const routes = require('./routes/routes');
 const passport = require('passport');
 require('./services/passport');
 
@@ -61,7 +60,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Set up the routes
-app.use('/', routes);
+require('./routes/authRoutes')(app);
 require('./routes/detailRoutes')(app);
 
 // Determine port and start server.
