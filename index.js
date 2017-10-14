@@ -35,6 +35,8 @@ mongoose
   })
   .catch(err => console.error(`Unable to connect to MongoDB: ${err.message}`));
 
+require('./routes/detailRoutes')(app);
+
 // Determine port and start server.
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
