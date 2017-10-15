@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
+import _ from 'lodash';
+import paperInformation from './paperInformation';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
@@ -6,10 +8,6 @@ import Grid from 'material-ui/Grid';
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
-import CardTravelIcon from 'material-ui-icons/CardTravel';
-import FlightTakeoffIcon from 'material-ui-icons/FlightTakeoff';
-import HotelIcon from 'material-ui-icons/Hotel';
-import FavoriteBorderIcon from 'material-ui-icons/FavoriteBorder';
 
 const styles = theme => ({
   root: {
@@ -24,7 +22,7 @@ const styles = theme => ({
     color: theme.palette.text.secondary
   },
   media: {
-    height: 400
+    height: 450
   },
   paperIcons: {
     height: 70,
@@ -36,65 +34,54 @@ const styles = theme => ({
   }
 });
 
-function Landing(props) {
-  const { classes } = props;
+class Landing extends Component {
+  renderPapers() {
+    const classes = this.props.classes;
+    return _.map(paperInformation, ({ description, Icon }) => {
+      return (
+        <Grid item xs={6} sm={3} key={Icon}>
+          <Paper className={classes.paper}>
+            <Icon />
+            {description}
+          </Paper>
+        </Grid>
+      );
+    });
+  }
 
-  return (
-    <div className={classes.root}>
-      <Grid container spacing={24}>
-        <Grid item xs={12}>
-          <Card className={classes.card}>
-            <CardMedia
-              className={classes.media}
-              image="https://source.unsplash.com/IE_sifhay7o"
-              title="Icy Mountain"
-            />
-            <CardContent>
-              <Typography type="display2" component="h2">
-                Welcome
-              </Typography>
-              <Typography component="p">
-                Possibly add description here.
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Button raised color="primary">
-                Generate Destinations
-              </Button>
-            </CardActions>
-          </Card>
+  render() {
+    const classes = this.props.classes;
+    return (
+      <div className={classes.root}>
+        <Grid container spacing={24}>
+          <Grid item xs={12}>
+            <Card className={classes.card}>
+              <CardMedia
+                className={classes.media}
+                image="https://source.unsplash.com/IE_sifhay7o"
+                title="Welcome to ChinguTravels"
+              />
+              <CardContent>
+                <Typography type="display2" component="h2">
+                  Welcome
+                </Typography>
+                <Typography component="p">
+                  Discover new locations to visit. Click 'Generate Destinations'
+                  below to start your journey!
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <Button raised color="primary">
+                  Generate Destinations
+                </Button>
+              </CardActions>
+            </Card>
+          </Grid>
+          {this.renderPapers()}
         </Grid>
-        <Grid item xs={6} sm={3}>
-          <Paper className={classes.paper}>
-            <CardTravelIcon className={classes.paperIcons} />
-            Generate a random list of popular destinations in order to discover
-            exciting and interesting places you may have otherwise never found.
-          </Paper>
-        </Grid>
-        <Grid item xs={6} sm={3}>
-          <Paper className={classes.paper}>
-            <FlightTakeoffIcon className={classes.paperIcons} />
-            Discover flights from your chosen airport to see availability and
-            price information to a specific destination.
-          </Paper>
-        </Grid>
-        <Grid item xs={6} sm={3}>
-          <Paper className={classes.paper}>
-            <HotelIcon className={classes.paperIcons} />
-            Find popular, nearby hotels with their ratings, along with reviews
-            from costumers and detailed information thanks to Yelp.
-          </Paper>
-        </Grid>
-        <Grid item xs={6} sm={3}>
-          <Paper className={classes.paper}>
-            <FavoriteBorderIcon className={classes.paperIcons} />
-            Make an account with us in order to keep track of the most tempting
-            destinations you find and check them out later.
-          </Paper>
-        </Grid>
-      </Grid>
-    </div>
-  );
+      </div>
+    );
+  }
 }
 
 Landing.propTypes = {
