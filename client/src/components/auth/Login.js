@@ -33,6 +33,7 @@ class Login extends Component {
     fetch('/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
       body: JSON.stringify(form)
     })
       .then(response => response.json())
