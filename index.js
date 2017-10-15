@@ -26,7 +26,7 @@ mongoose
 
 //Body Parser to be used for passing the fields for login and registration form
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // Validator will be used for registration form to validate and sanitize data
 app.use(expressValidator());
@@ -44,7 +44,7 @@ store.on('error', function(error) {
 
 // Set up sessions to allow for logins and Passport implementation.
 app.use(
-  require('express-session')({
+  session({
     secret: cookieSecret,
     cookie: {
       maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
