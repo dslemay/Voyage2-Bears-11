@@ -5,8 +5,7 @@ import Header from './Header';
 import Landing from './Landing';
 import Login from './auth/Login';
 import Register from './auth/Register';
-import HotelsList from './HotelsList';
-import FlightsList from './FlightsList';
+import InfoList from './InfoList';
 
 class App extends Component {
   render() {
@@ -17,8 +16,7 @@ class App extends Component {
           <Route exact path="/" component={Landing} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
-          <Route path="/hotels" component={HotelsList} />
-          <Route path="/flights" component={FlightsList} />
+          <Route path="/info" component={InfoList} />
         </div>
       </BrowserRouter>
     );
