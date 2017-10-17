@@ -1,12 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
+
 import { fetchFlights } from '../actions/flightActions';
 import Button from 'material-ui/Button';
 
 class FlightsList extends React.Component {
   componentWillMount() {
+    // fetch flights
     this.props.fetchFlights();
   }
+
+  // render flight and button to page
   render() {
     console.log(this.props.flights)
     return (

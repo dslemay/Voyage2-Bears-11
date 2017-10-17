@@ -7,6 +7,7 @@ export function fetchFlightsSuccess(flights) {
 }
 
 // Thunk
+// post flight info to google api
 export function fetchFlights() {
   const url =
     'https://www.googleapis.com/qpxExpress/v1/trips/search?key=AIzaSyCqLj6JPkZgBK8E9QZtgWBAO9OcVYaQrKc';
