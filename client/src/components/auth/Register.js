@@ -37,11 +37,23 @@ class Register extends Component {
       password: this.state.password
     };
 
-    fetch('/register', {
+    fetch('/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
       body: JSON.stringify(formData)
-    }).then(console.log('Successful POST'));
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.errors) {
+          console.log(data.errors);
+          // TODO: Handle displaying the msg for each error
+        }
+        // Handle redirect upon successful user creation.
+        // Data object also contains a message property.
+        const path = data.redirect;
+        this.props.history.push(path);
+      });
   }
 
   render() {

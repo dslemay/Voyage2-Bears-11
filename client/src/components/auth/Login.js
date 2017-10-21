@@ -30,13 +30,30 @@ class Login extends Component {
       password: this.state.password
     };
 
-    console.log(form);
-
-    fetch('/login', {
+    fetch('/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
       body: JSON.stringify(form)
-    }).then(console.log('Sucessful POST'));
+    })
+      .then(response => response.json())
+      .then(data => {
+        const path = data.redirect;
+        /* Handle redirect based on url in response object which is handled on backend.
+         * Redirect upon successful login
+         * Upon unsuccessful login, the page will not change. Reset input fields.
+         * TODO: Utilize message property of object to display message to user on success/failure
+         */
+        if (path !== '/login') {
+          // Login was successful
+          this.props.history.push(path);
+        } else {
+          //Login was unsuccessful
+          document.getElementById('email').value = '';
+          document.getElementById('password').value = '';
+          this.setState({ email: '', password: '' });
+        }
+      });
   }
 
   render() {
