@@ -7,12 +7,14 @@ class Register extends Component {
     this.state = {
       name: '',
       email: '',
-      password: ''
+      password: '',
+      passwordConfirm: ''
     };
 
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.handleFieldChange = this.handleFieldChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -28,13 +30,19 @@ class Register extends Component {
     this.setState({ password: e.target.value });
   }
 
+  handleFieldChange(e) {
+    console.log(e.target.id);
+    this.setState({ [e.target.id]: e.target.value });
+  }
+
   handleSubmit(e) {
     e.preventDefault();
 
     const formData = {
       name: this.state.name,
       email: this.state.email,
-      password: this.state.password
+      password: this.state.password,
+      'password-confirm': this.state.passwordConfirm
     };
 
     fetch('/auth/register', {
@@ -97,6 +105,19 @@ class Register extends Component {
                 onChange={this.handlePasswordChange}
               />
               <label htmlFor="password">Password</label>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="input-field col s12">
+              <input
+                id="passwordConfirm"
+                type="password"
+                className="validate"
+                value={this.state.passwordConfirm}
+                onChange={this.handleFieldChange}
+              />
+              <label htmlFor="password-confirm">Confirm Password</label>
             </div>
           </div>
 
