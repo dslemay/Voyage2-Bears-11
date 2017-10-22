@@ -1,6 +1,31 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class Header extends Component {
+  renderLinks() {
+    switch (this.props.auth) {
+      case null:
+        return;
+      case false:
+        return (
+          <div>
+            <li>
+              <a href="/login">Login</a>
+            </li>
+            <li>
+              <a href="/register">Register</a>
+            </li>
+          </div>
+        );
+      default:
+        return (
+          <li>
+            <a href="/api/logout">Logout</a>
+          </li>
+        );
+    }
+  }
+
   render() {
     return (
       <nav className="teal lighten-2">
@@ -9,12 +34,7 @@ class Header extends Component {
             ChinguTravels
           </a>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
-            <li>
-              <a href="/login">Login</a>
-            </li>
-            <li>
-              <a href="/register">Register</a>
-            </li>
+            {this.renderLinks()}
           </ul>
         </div>
       </nav>
@@ -22,4 +42,8 @@ class Header extends Component {
   }
 }
 
-export default Header;
+function mapStateToProps({ auth }) {
+  return { auth };
+}
+
+export default connect(mapStateToProps)(Header);
