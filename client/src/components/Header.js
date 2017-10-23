@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 class Header extends Component {
@@ -10,14 +11,15 @@ class Header extends Component {
         return (
           <div>
             <li>
-              <a href="/login">Login</a>
+              <Link to="/login">Login</Link>
             </li>
             <li>
-              <a href="/register">Register</a>
+              <Link to="/register">Register</Link>
             </li>
           </div>
         );
       default:
+        // Logout using anchor tag to force refresh which also will update auth state.
         return (
           <li>
             <a href="/api/logout">Logout</a>
@@ -30,9 +32,9 @@ class Header extends Component {
     return (
       <nav className="teal lighten-2">
         <div className="nav-wrapper">
-          <a href="/" className="brand-logo">
+          <Link to="/" className="brand-logo">
             ChinguTravels
-          </a>
+          </Link>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
             {this.renderLinks()}
           </ul>
