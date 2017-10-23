@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../../actions';
 
 class Register extends Component {
   constructor(props) {
@@ -52,6 +54,7 @@ class Register extends Component {
         // Handle redirect upon successful user creation.
         // Data object also contains a message property.
         const path = data.redirect;
+        this.props.fetchUser();
         this.props.history.push(path);
       });
   }
@@ -113,4 +116,4 @@ class Register extends Component {
   }
 }
 
-export default Register;
+export default connect(null, actions)(Register);
