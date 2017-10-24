@@ -20,15 +20,14 @@ exports.validateRegister = [
   // Check that the password is not empty
   check('password', 'You must supply a password')
     .not()
-    .isEmpty()
+    .isEmpty(),
   // Check that the password confirm field is not empty and the passwords match
-  // TODO: Uncomment this logic when the password-confirm is added to the front-end
-  // check('password-confirm')
-  //   .not()
-  //   .isEmpty()
-  //   .withMessage('You must confirm your password')
-  //   .custom((value, { req }) => value === req.body.password)
-  //   .withMessage('Your passwords must match')
+  check('password-confirm')
+    .not()
+    .isEmpty()
+    .withMessage('You must confirm your password')
+    .custom((value, { req }) => value === req.body.password)
+    .withMessage('Your passwords must match')
 ];
 
 exports.checkValidations = (req, res, next) => {

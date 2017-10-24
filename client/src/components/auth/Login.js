@@ -9,17 +9,12 @@ class Login extends Component {
       password: ''
     };
 
-    this.handleEmailChange = this.handleEmailChange.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.handleFieldChange = this.handleFieldChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleEmailChange(e) {
-    this.setState({ email: e.target.value });
-  }
-
-  handlePasswordChange(e) {
-    this.setState({ password: e.target.value });
+  handleFieldChange(e) {
+    this.setState({ [e.target.id]: e.target.value });
   }
 
   handleSubmit(e) {
@@ -68,7 +63,7 @@ class Login extends Component {
                 type="email"
                 className="validate"
                 value={this.state.email}
-                onChange={this.handleEmailChange}
+                onChange={this.handleFieldChange}
               />
               <label htmlFor="email">Email</label>
             </div>
@@ -81,7 +76,7 @@ class Login extends Component {
                 type="password"
                 className="validate"
                 value={this.state.password}
-                onChange={this.handlePasswordChange}
+                onChange={this.handleFieldChange}
               />
               <label htmlFor="password">Password</label>
             </div>

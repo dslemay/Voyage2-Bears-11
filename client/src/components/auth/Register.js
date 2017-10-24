@@ -7,25 +7,16 @@ class Register extends Component {
     this.state = {
       name: '',
       email: '',
-      password: ''
+      password: '',
+      passwordConfirm: ''
     };
 
-    this.handleNameChange = this.handleNameChange.bind(this);
-    this.handleEmailChange = this.handleEmailChange.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.handleFieldChange = this.handleFieldChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleNameChange(e) {
-    this.setState({ name: e.target.value });
-  }
-
-  handleEmailChange(e) {
-    this.setState({ email: e.target.value });
-  }
-
-  handlePasswordChange(e) {
-    this.setState({ password: e.target.value });
+  handleFieldChange(e) {
+    this.setState({ [e.target.id]: e.target.value });
   }
 
   handleSubmit(e) {
@@ -34,7 +25,8 @@ class Register extends Component {
     const formData = {
       name: this.state.name,
       email: this.state.email,
-      password: this.state.password
+      password: this.state.password,
+      'password-confirm': this.state.passwordConfirm
     };
 
     fetch('/auth/register', {
@@ -68,7 +60,7 @@ class Register extends Component {
                 type="text"
                 className="validate"
                 value={this.state.name}
-                onChange={this.handleNameChange}
+                onChange={this.handleFieldChange}
               />
               <label htmlFor="name">Name</label>
             </div>
@@ -81,7 +73,7 @@ class Register extends Component {
                 type="email"
                 className="validate"
                 value={this.state.email}
-                onChange={this.handleEmailChange}
+                onChange={this.handleFieldChange}
               />
               <label htmlFor="email">Email</label>
             </div>
@@ -94,9 +86,22 @@ class Register extends Component {
                 type="password"
                 className="validate"
                 value={this.state.password}
-                onChange={this.handlePasswordChange}
+                onChange={this.handleFieldChange}
               />
               <label htmlFor="password">Password</label>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="input-field col s12">
+              <input
+                id="passwordConfirm"
+                type="password"
+                className="validate"
+                value={this.state.passwordConfirm}
+                onChange={this.handleFieldChange}
+              />
+              <label htmlFor="password-confirm">Confirm Password</label>
             </div>
           </div>
 
