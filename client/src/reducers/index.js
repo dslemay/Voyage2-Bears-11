@@ -6,6 +6,5 @@ import authReducer from './authReducer';
 export default combineReducers({
   hotels: hotelsReducer,
   flights: flightsReducer,
-  hotels: hotelsReducer,
   auth: authReducer
 });
