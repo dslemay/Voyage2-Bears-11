@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../../actions';
 
 class Login extends Component {
   constructor(props) {
@@ -41,6 +43,7 @@ class Login extends Component {
          */
         if (path !== '/login') {
           // Login was successful
+          this.props.fetchUser();
           this.props.history.push(path);
         } else {
           //Login was unsuccessful
@@ -94,4 +97,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default connect(null, actions)(Login);

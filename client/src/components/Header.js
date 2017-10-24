@@ -1,20 +1,42 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 class Header extends Component {
+  renderLinks() {
+    switch (this.props.auth) {
+      case null:
+        return;
+      case false:
+        return (
+          <div>
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
+            <li>
+              <Link to="/register">Register</Link>
+            </li>
+          </div>
+        );
+      default:
+        // Logout using anchor tag to force refresh which also will update auth state.
+        return (
+          <li>
+            <a href="/api/logout">Logout</a>
+          </li>
+        );
+    }
+  }
+
   render() {
     return (
       <nav className="teal lighten-2">
         <div className="nav-wrapper">
-          <a href="/" className="brand-logo">
+          <Link to="/" className="brand-logo">
             ChinguTravels
-          </a>
+          </Link>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
-            <li>
-              <a href="/login">Login</a>
-            </li>
-            <li>
-              <a href="/register">Register</a>
-            </li>
+            {this.renderLinks()}
           </ul>
         </div>
       </nav>
@@ -22,4 +44,8 @@ class Header extends Component {
   }
 }
 
-export default Header;
+function mapStateToProps({ auth }) {
+  return { auth };
+}
+
+export default connect(mapStateToProps)(Header);
