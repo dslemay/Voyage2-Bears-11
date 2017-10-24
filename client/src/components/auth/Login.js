@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../../actions';
 
 class Login extends Component {
   constructor(props) {
@@ -9,17 +11,12 @@ class Login extends Component {
       password: ''
     };
 
-    this.handleEmailChange = this.handleEmailChange.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.handleFieldChange = this.handleFieldChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleEmailChange(e) {
-    this.setState({ email: e.target.value });
-  }
-
-  handlePasswordChange(e) {
-    this.setState({ password: e.target.value });
+  handleFieldChange(e) {
+    this.setState({ [e.target.id]: e.target.value });
   }
 
   handleSubmit(e) {
@@ -30,13 +27,31 @@ class Login extends Component {
       password: this.state.password
     };
 
-    console.log(form);
-
-    fetch('/login', {
+    fetch('/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
       body: JSON.stringify(form)
-    }).then(console.log('Sucessful POST'));
+    })
+      .then(response => response.json())
+      .then(data => {
+        const path = data.redirect;
+        /* Handle redirect based on url in response object which is handled on backend.
+         * Redirect upon successful login
+         * Upon unsuccessful login, the page will not change. Reset input fields.
+         * TODO: Utilize message property of object to display message to user on success/failure
+         */
+        if (path !== '/login') {
+          // Login was successful
+          this.props.fetchUser();
+          this.props.history.push(path);
+        } else {
+          //Login was unsuccessful
+          document.getElementById('email').value = '';
+          document.getElementById('password').value = '';
+          this.setState({ email: '', password: '' });
+        }
+      });
   }
 
   render() {
@@ -51,7 +66,7 @@ class Login extends Component {
                 type="email"
                 className="validate"
                 value={this.state.email}
-                onChange={this.handleEmailChange}
+                onChange={this.handleFieldChange}
               />
               <label htmlFor="email">Email</label>
             </div>
@@ -64,7 +79,7 @@ class Login extends Component {
                 type="password"
                 className="validate"
                 value={this.state.password}
-                onChange={this.handlePasswordChange}
+                onChange={this.handleFieldChange}
               />
               <label htmlFor="password">Password</label>
             </div>
@@ -82,4 +97,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default connect(null, actions)(Login);
