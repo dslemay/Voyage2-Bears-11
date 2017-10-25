@@ -13,12 +13,12 @@ const styles = theme => ({
   root: {
     flexGrow: 1,
     marginTop: 30,
-    marginRight: 100,
-    marginLeft: 100
+    marginRight: 50,
+    marginLeft: 50
   },
   paper: {
     padding: 16,
-    textAlign: 'center',
+    textAlign: 'left',
     color: theme.palette.text.secondary
   },
   media: {
@@ -39,7 +39,7 @@ class Landing extends Component {
     const classes = this.props.classes;
     return _.map(paperInformation, ({ description, Icon }) => {
       return (
-        <Grid item xs={6} sm={3} key={Icon}>
+        <Grid item xs={12} sm={6} md={3} key={Icon}>
           <Paper className={classes.paper}>
             <Icon />
             {description}

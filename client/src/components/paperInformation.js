@@ -8,12 +8,12 @@ export default [
   {
     Icon: () => <CardTravelIcon className="Landing-paperIcons-4" />,
     description:
-      'Generate a random list of popular destinations in order to discover exciting and interesting places you may have otherwise never found.'
+      'Generate potential destinations in order to discover exciting and interesting places you may have otherwise never found.'
   },
   {
     Icon: () => <FlightTakeoffIcon className="Landing-paperIcons-4" />,
     description:
-      'Discover flights from your chosen airport to see availability and price information to a specific destination.'
+      'Discover some flights from your chosen airport to see availability and price information to a specific location.'
   },
   {
     Icon: () => <HotelIcon className="Landing-paperIcons-4" />,
