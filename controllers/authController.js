@@ -68,3 +68,13 @@ exports.login = function(req, res, next) {
     });
   })(req, res, next);
 };
+
+exports.isLoggedIn = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    console.log('Is authenticated');
+    next();
+  }
+
+  console.log('Is not logged in');
+  res.redirect('/login');
+};
