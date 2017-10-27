@@ -23,8 +23,7 @@ export function fetchFlights() {
       passengers: {
         adultCount: 1
       },
-      solutions: 1,
-      refundable: false
+      solutions: 6
     }
   };
   return function(dispatch) {

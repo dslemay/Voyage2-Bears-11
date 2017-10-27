@@ -7,7 +7,6 @@ import Subheader from 'material-ui/List/ListSubheader';
 import IconButton from 'material-ui/IconButton';
 import InfoIcon from 'material-ui-icons/Info';
 import { fetchHotels } from '../actions';
-import FlightsList from './FlightsList';
 
 const styles = theme => ({
   container: {
@@ -23,7 +22,7 @@ const styles = theme => ({
   }
 });
 
-class InfoList extends Component {
+class FlightsList extends Component {
   componentDidMount() {
     this.props.fetchHotels();
   }
@@ -55,13 +54,12 @@ class InfoList extends Component {
             </GridListTile>
           )}
         </GridList>
-        <FlightsList />
       </div>
     );
   }
 }
 
-InfoList.propTypes = {
+FlightsList.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
@@ -70,5 +68,5 @@ function mapStateToProps({ hotels }) {
 }
 
 export default connect(mapStateToProps, { fetchHotels })(
-  withStyles(styles)(InfoList)
+  withStyles(styles)(FlightsList)
 );

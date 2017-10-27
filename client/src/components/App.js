@@ -6,7 +6,7 @@ import Header from './Header';
 import Landing from './Landing';
 import Login from './auth/Login';
 import Register from './auth/Register';
-import InfoList from './InfoList';
+import FlightsList from './FlightsList';
 import * as actions from '../actions';
 
 class App extends Component {
@@ -22,7 +22,7 @@ class App extends Component {
           <Route exact path="/" component={Landing} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
-          <Route path="/info" component={InfoList} />
+          <Route path="/flights" component={FlightsList} />
         </div>
       </BrowserRouter>
     );

@@ -15,13 +15,14 @@ class FlightsList extends React.Component {
     console.log(this.props.flights)
     return (
     <div>
+      <h3>Flights as low as</h3>
       {this.props.flights.map(flight => (
           <div>
-            <p>Flights as low as {flight.data.trips.tripOption["0"].saleTotal}</p>
-            <Button href="https://www.google.com/flights/#search;f=LAS;t=SFO;d=2017-10-30">Book Flights Now</Button>
+            <p>{flight.data.trips.tripOption["0"].saleTotal}</p>
           </div>
         )
       )}
+      <Button href="https://www.google.com/flights/#search;f=LAS;t=SFO;d=2017-10-30" target="_blank">Book Flights Now</Button>
     </div>
     )
   }
