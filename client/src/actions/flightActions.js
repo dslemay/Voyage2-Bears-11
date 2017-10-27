@@ -23,7 +23,7 @@ export function fetchFlights() {
       passengers: {
         adultCount: 1
       },
-      solutions: 6
+      solutions: 1
     }
   };
   return function(dispatch) {
