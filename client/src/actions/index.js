@@ -1,6 +1,11 @@
 // Where we put our action creators
 import axios from 'axios';
-import { FETCH_HOTELS, FETCH_USER, ADD_FAVORITE } from './types';
+import {
+  FETCH_HOTELS,
+  FETCH_USER,
+  ADD_FAVORITE,
+  REMOVE_FAVORITE
+} from './types';
 
 export const fetchHotels = () => async dispatch => {
   const res = await axios.get('/api/yelp');
@@ -26,5 +31,11 @@ export const updateFavorites = (favArrName, locationId) => async dispatch => {
       index: res.data.index
     });
   }
-  // ADD LOGIC FOR DELETING ITEMS
+
+  dispatch({
+    type: REMOVE_FAVORITE,
+    favArrName,
+    locationId,
+    index: res.data.index
+  });
 };
