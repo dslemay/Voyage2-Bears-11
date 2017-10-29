@@ -71,10 +71,8 @@ exports.login = function(req, res, next) {
 
 exports.isLoggedIn = (req, res, next) => {
   if (req.isAuthenticated()) {
-    console.log('Is authenticated');
     next();
+  } else {
+    res.redirect('/login');
   }
-
-  console.log('Is not logged in');
-  res.redirect('/login');
 };
