@@ -25,3 +25,29 @@ exports.updateFavorites = async (req, res, next) => {
 
   res.send({ index });
 };
+
+exports.getFavoritesData = async (req, res) => {
+  const tokenReq = await yelp.accessToken(clientId, clientSecret);
+  const token = tokenReq.jsonBody.access_token;
+  const client = yelp.client(token);
+  const locationQuery = req.query.location;
+
+  // If there is a req.query, get information for that location
+  if (locationQuery) {
+    const locationRes = await client.business(locationQuery);
+    const location = locationRes.jsonBody;
+    return res.send(location);
+  }
+
+  // If there is no req.query, pull information from all of favorites
+  const hotelsIds = req.user.favorites.hotels;
+  const POIsIds = req.user.favorites.POIs;
+  const hotelsPromise = hotelsIds.map(hotel => client.business(hotel));
+  const POIsPromise = POIsIds.map(POI => client.business(POI));
+
+  const hotelsRes = await Promise.all(hotelsPromise);
+  const hotels = await hotelsRes.map(hotel => hotel.jsonBody);
+  const POIsRes = await Promise.all(POIsPromise);
+  const POIs = await POIsRes.map(POI => POI.jsonBody);
+  res.send({ hotels, POIs });
+};
