@@ -25,18 +25,17 @@ export const updateFavorites = (favArrName, locationId) => async dispatch => {
   const index = res.data.index;
 
   if (!index) {
+    const yelp = await axios.get(`/api/favorites?location=${locationId}`);
     return dispatch({
       type: ADD_FAVORITE,
       favArrName,
-      locationId,
-      index: res.data.index
+      location: yelp.data
     });
   }
 
   dispatch({
     type: REMOVE_FAVORITE,
     favArrName,
-    locationId,
     index: res.data.index
   });
 };
@@ -44,5 +43,7 @@ export const updateFavorites = (favArrName, locationId) => async dispatch => {
 export const fetchFavorites = () => async dispatch => {
   const res = await axios.get('api/favorites');
 
-  dispatch({ type: FETCH_FAVORITES, payload: res.data });
+  if (res.data !== false) {
+    dispatch({ type: FETCH_FAVORITES, payload: res.data });
+  }
 };

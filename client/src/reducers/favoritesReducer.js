@@ -6,12 +6,11 @@ import {
 
 export default function(state = { hotels: [], POIs: [] }, action) {
   const arr = action.favArrName;
-  const location = action.locationId;
   const i = action.index;
   switch (action.type) {
     case ADD_FAVORITE:
       return Object.assign({}, state, {
-        [arr]: [...state[arr], location]
+        [arr]: [...state[arr], action.location]
       });
     case REMOVE_FAVORITE:
       return Object.assign({}, state, {
