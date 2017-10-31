@@ -6,7 +6,7 @@ const keys = require('../config/keys');
 const clientId = keys.yelpClientID;
 const clientSecret = keys.yelpClientSecret;
 
-exports.updateFavorites = async (req, res, next) => {
+exports.updateFavorites = async (req, res) => {
   // Check if place ID exists in current user array. If it doesn't $addToSet. If it does, remove from array
   const userLocationArr = req.params.type; // Which array we are querying
   const locationQuery = req.body.locationId; // Location to be adding or removing
