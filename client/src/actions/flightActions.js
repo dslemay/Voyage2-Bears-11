@@ -17,7 +17,7 @@ export function fetchFlights() {
         {
           origin: 'LAS',
           destination: 'SFO',
-          date: '2017-10-30'
+          date: '2017-11-30'
         }
       ],
       passengers: {
