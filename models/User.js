@@ -25,7 +25,10 @@ const userSchema = new Schema({
     trim: true,
     required: 'Please supply a name'
   },
-  hotels: [String]
+  favorites: {
+    hotels: [String],
+    POIs: [String]
+  }
 });
 
 userSchema.plugin(passportLocalMongoose, { usernameField: 'email' });
