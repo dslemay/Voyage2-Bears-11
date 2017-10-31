@@ -3,9 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import { GridList, GridListTile, GridListTileBar } from 'material-ui/GridList';
-import Subheader from 'material-ui/List/ListSubheader';
 import IconButton from 'material-ui/IconButton';
-import InfoIcon from 'material-ui-icons/Info';
+import FavoriteBorderIcon from 'material-ui-icons/FavoriteBorder';
 import { fetchHotels } from '../actions';
 
 const styles = theme => ({
@@ -17,7 +16,7 @@ const styles = theme => ({
     background: theme.palette.background.paper
   },
   gridList: {
-    width: 500,
+    width: '100%',
     height: 450
   }
 });
@@ -31,10 +30,7 @@ class HotelsList extends Component {
     const classes = this.props.classes;
     return (
       <div className={classes.container}>
-        <GridList cellHeight={180} className={classes.gridList}>
-          <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
-            <Subheader>Hotels</Subheader>
-          </GridListTile>
+        <GridList cellHeight={220} className={classes.gridList}>
           {this.props.hotels.map(hotel =>
             <GridListTile key={hotel.name}>
               <img src={hotel.image_url} alt={hotel.name} />
@@ -46,8 +42,8 @@ class HotelsList extends Component {
                   </span>
                 }
                 actionIcon={
-                  <IconButton href={hotel.url} target="_blank">
-                    <InfoIcon color="rgba(255, 255, 255, 0.54)" />
+                  <IconButton>
+                    <FavoriteBorderIcon color="rgba(255, 255, 255, 0.84)" />
                   </IconButton>
                 }
               />
