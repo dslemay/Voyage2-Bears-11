@@ -7,7 +7,6 @@ import Landing from './Landing';
 import Login from './auth/Login';
 import Register from './auth/Register';
 import HotelsList from './HotelsList';
-import DetailsTab from './DetailsTab';
 import DestinationDetails from './DestinationDetails';
 import * as actions from '../actions';
 

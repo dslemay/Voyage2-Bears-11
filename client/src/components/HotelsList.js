@@ -3,9 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import { GridList, GridListTile, GridListTileBar } from 'material-ui/GridList';
-import IconButton from 'material-ui/IconButton';
-import FavoriteBorderIcon from 'material-ui-icons/FavoriteBorder';
 import { fetchHotels } from '../actions';
+import SimpleSnackbar from './SimpleSnackbar';
 
 const styles = theme => ({
   container: {
@@ -30,7 +29,7 @@ class HotelsList extends Component {
     const classes = this.props.classes;
     return (
       <div className={classes.container}>
-        <GridList cellHeight={220} className={classes.gridList}>
+        <GridList cellHeight={230} className={classes.gridList}>
           {this.props.hotels.map(hotel =>
             <GridListTile key={hotel.name}>
               <img src={hotel.image_url} alt={hotel.name} />
@@ -39,13 +38,11 @@ class HotelsList extends Component {
                 subtitle={
                   <span>
                     Rating: {hotel.rating}
+                    <br />
+                    Price: {hotel.price}
                   </span>
                 }
-                actionIcon={
-                  <IconButton>
-                    <FavoriteBorderIcon color="rgba(255, 255, 255, 0.84)" />
-                  </IconButton>
-                }
+                actionIcon={<SimpleSnackbar />}
               />
             </GridListTile>
           )}

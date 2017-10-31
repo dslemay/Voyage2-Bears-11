@@ -8,7 +8,6 @@ import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
 import Button from 'material-ui/Button';
-import DescriptionIcon from 'material-ui-icons/Description';
 import Typography from 'material-ui/Typography';
 
 const styles = theme => ({
@@ -20,8 +19,10 @@ const styles = theme => ({
   },
   paper: {
     padding: 16,
+    paddingTop: 40,
     textAlign: 'center',
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
+    height: '100%'
   },
   card: {
     width: '100%'
@@ -56,21 +57,24 @@ function DestinationDetails(props) {
             </CardActions>
           </Card>
         </Grid>
-        <Grid item xs={6}>
-          <DetailsTab />
+        <Grid item xs={9}>
+          <Paper>
+            <DetailsTab />
+          </Paper>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={3}>
           <Paper className={classes.paper}>
             Lorem ipsum dolor sit amet, errem reprehendunt at nec, ex ius
             eleifend contentiones. Dolor meliore cu pri, ei atqui falli
             intellegat vix. Mea quot constituto definiebas ei, ex ius fugit
             honestatis, an vide justo laoreet his. Ipsum cetero complectitur duo
-            cu, mel saperet necessitatibus ad. Volumus deleniti comprehensam vim
-            ea. An mea deserunt adversarium, graece facete possim eum no. Dicant
-            utamur maiestatis et nam. Per reque cotidieque ad, prima eruditi
-            omittantur id mea. Ne sale harum his, id errem verear suavitate per,
-            ex principes theophrastus nec. Ei nemore antiopam dissentias sea,
-            ius scaevola percipit et, ei tale graece forensibus his.
+            cu, mel saperet necessitatibus ad. <br />
+            <br />Volumus deleniti comprehensam vim ea. An mea deserunt
+            adversarium, graece facete possim eum no. Dicant utamur maiestatis
+            et nam. Per reque cotidieque ad, prima eruditi omittantur id mea. Ne
+            sale harum his, id errem verear suavitate per, ex principes
+            theophrastus nec. Ei nemore antiopam dissentias sea, ius scaevola
+            percipit et, ei tale graece forensibus his.
           </Paper>
         </Grid>
       </Grid>
