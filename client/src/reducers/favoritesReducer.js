@@ -1,6 +1,10 @@
-import { ADD_FAVORITE, REMOVE_FAVORITE } from '../actions/types';
+import {
+  ADD_FAVORITE,
+  REMOVE_FAVORITE,
+  FETCH_FAVORITES
+} from '../actions/types';
 
-export default function(state = { hotels: [] }, action) {
+export default function(state = { hotels: [], POIs: [] }, action) {
   const arr = action.favArrName;
   const location = action.locationId;
   const i = action.index;
@@ -13,6 +17,8 @@ export default function(state = { hotels: [] }, action) {
       return Object.assign({}, state, {
         [arr]: [...state[arr].slice(0, i), ...state[arr].slice(i + 1)]
       });
+    case FETCH_FAVORITES:
+      return action.payload;
     default:
       return state;
   }

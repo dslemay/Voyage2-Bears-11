@@ -4,7 +4,8 @@ import {
   FETCH_HOTELS,
   FETCH_USER,
   ADD_FAVORITE,
-  REMOVE_FAVORITE
+  REMOVE_FAVORITE,
+  FETCH_FAVORITES
 } from './types';
 
 export const fetchHotels = () => async dispatch => {
@@ -38,4 +39,10 @@ export const updateFavorites = (favArrName, locationId) => async dispatch => {
     locationId,
     index: res.data.index
   });
+};
+
+export const fetchFavorites = () => async dispatch => {
+  const res = await axios.get('api/favorites');
+
+  dispatch({ type: FETCH_FAVORITES, payload: res.data });
 };
