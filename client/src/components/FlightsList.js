@@ -22,7 +22,7 @@ class FlightsList extends React.Component {
           </div>
         )
       )}
-      <Button href="https://www.google.com/flights/#search;f=LAS;t=SFO;d=2017-10-30" target="_blank">Book Flights Now</Button>
+      <Button href="https://www.google.com/flights/#search;f=LAS;t=SFO;d=2017-11-30" target="_blank">Book Flights Now</Button>
     </div>
     )
   }
