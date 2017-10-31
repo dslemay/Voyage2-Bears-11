@@ -44,6 +44,7 @@ class Login extends Component {
         if (path !== '/login') {
           // Login was successful
           this.props.fetchUser();
+          this.props.fetchFavorites();
           this.props.history.push(path);
         } else {
           //Login was unsuccessful
