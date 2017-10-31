@@ -7,4 +7,10 @@ module.exports = app => {
     authController.isLoggedIn,
     favoritesController.updateFavorites
   );
+
+  app.get(
+    '/api/favorites',
+    authController.isLoggedIn,
+    favoritesController.getFavoritesData
+  );
 };
