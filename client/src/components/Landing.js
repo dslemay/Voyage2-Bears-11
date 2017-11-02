@@ -13,8 +13,8 @@ const styles = theme => ({
   root: {
     flexGrow: 1,
     marginTop: 30,
-    marginRight: 50,
-    marginLeft: 50
+    marginRight: 30,
+    marginLeft: 30
   },
   paper: {
     padding: 16,
@@ -23,7 +23,7 @@ const styles = theme => ({
     height: '100%'
   },
   media: {
-    height: 450
+    height: 500
   },
   paperIcons: {
     height: 70,
@@ -67,8 +67,8 @@ class Landing extends Component {
                   Welcome
                 </Typography>
                 <Typography component="p">
-                  Discover new locations to visit. Click 'Generate Destinations'
-                  below to start your journey!
+                  Discover new locations to visit. Click{' '}
+                  <b>Generate Destinations</b> below to start your journey!
                 </Typography>
               </CardContent>
               <CardActions>

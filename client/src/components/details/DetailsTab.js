@@ -1,6 +1,5 @@
 import React from 'react';
 import HotelsList from './HotelsList';
-import SimpleSnackbar from './SimpleSnackbar';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
@@ -54,7 +53,7 @@ class DetailsTab extends React.Component {
           </TabContainer>}
         {value === 1 &&
           <TabContainer>
-            <SimpleSnackbar />
+            <h2>Flights Component</h2>
           </TabContainer>}
       </div>
     );

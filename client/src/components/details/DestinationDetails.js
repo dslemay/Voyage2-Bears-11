@@ -14,8 +14,8 @@ const styles = theme => ({
   root: {
     flexGrow: 1,
     marginTop: 30,
-    marginRight: 50,
-    marginLeft: 50
+    marginRight: 30,
+    marginLeft: 30
   },
   paper: {
     padding: 16,

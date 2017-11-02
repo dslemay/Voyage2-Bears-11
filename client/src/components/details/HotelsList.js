@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import { GridList, GridListTile, GridListTileBar } from 'material-ui/GridList';
-import { fetchHotels } from '../actions';
-import SimpleSnackbar from './SimpleSnackbar';
+import { fetchHotels } from '../../actions';
+import SimpleSnackbar from '../SimpleSnackbar';
 
 const styles = theme => ({
   container: {

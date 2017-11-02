@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import Button from 'material-ui/Button';
 import Snackbar from 'material-ui/Snackbar';
 import IconButton from 'material-ui/IconButton';
-import CloseIcon from 'material-ui-icons/Close';
 import FavoriteBorderIcon from 'material-ui-icons/FavoriteBorder';
 import FavoriteIcon from 'material-ui-icons/Favorite';
 
@@ -23,7 +21,7 @@ class SimpleSnackbar extends Component {
 
   // Connect handleClick to action creator?
   handleClick = () => {
-    this.setState({ open: true, heart: true });
+    this.setState({ open: true, heart: !this.state.heart });
   };
 
   handleRequestClose = (event, reason) => {
@@ -34,12 +32,13 @@ class SimpleSnackbar extends Component {
     this.setState({ open: false });
   };
 
-  handleRequestUndo = () => {
-    this.setState({ open: false, heart: false });
+  toggleHeart = () => {
+    // check redux state for heart
+    return this.state.heart ? <FavoriteIcon /> : <FavoriteBorderIcon />;
   };
 
-  toggleHeart = () => {
-    return this.state.heart ? <FavoriteIcon /> : <FavoriteBorderIcon />;
+  renderMessage = () => {
+    return this.state.heart ? 'Added to favorites' : 'Removed from favorites';
   };
 
   render() {
@@ -52,34 +51,19 @@ class SimpleSnackbar extends Component {
         <Snackbar
           anchorOrigin={{
             vertical: 'bottom',
-            horizontal: 'right'
+            horizontal: 'left'
           }}
           open={this.state.open}
-          autoHideDuration={5000}
+          autoHideDuration={3000}
           onRequestClose={this.handleRequestClose}
           SnackbarContentProps={{
             'aria-describedby': 'message-id'
           }}
-          message={<span id="message-id">Added to favorites</span>}
-          action={[
-            <Button
-              key="undo"
-              color="accent"
-              dense
-              onClick={this.handleRequestUndo}
-            >
-              UNDO
-            </Button>,
-            <IconButton
-              key="close"
-              aria-label="Close"
-              color="inherit"
-              className={classes.close}
-              onClick={this.handleRequestClose}
-            >
-              <CloseIcon />
-            </IconButton>
-          ]}
+          message={
+            <span id="message-id">
+              {this.renderMessage()}
+            </span>
+          }
         />
       </div>
     );
