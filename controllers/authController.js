@@ -57,14 +57,22 @@ exports.login = function(req, res, next) {
         .status(401)
         .json({ message: info.message, redirect: '/login' });
     }
-    req.logIn(user, function(err) {
+    req.logIn(user, async function(err) {
       if (err) {
         return next(err);
       }
+      await req.session.save();
       return res.status(200).json({
         message: 'You have been successfully logged in',
         redirect: '/'
       });
     });
   })(req, res, next);
+};
+
+exports.isLoggedIn = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.send({ error: 'You must be logged in!' });
 };
