@@ -8,10 +8,10 @@ const clientSecret = keys.yelpClientSecret;
 
 exports.updateFavorites = async (req, res) => {
   // Check if place ID exists in current user array. If it doesn't $addToSet. If it does, remove from array
-  const type = req.params.type;
-  const userLocationArr = 'favorites.' + req.params.type; // Which array we are querying
+  const favArrName = req.body.favArrName; // Hotels vs POIs
+  const databaseArr = 'favorites.' + favArrName; // Which array we are modifying in the database
   const locationQuery = req.body.locationId; // Location to be adding or removing
-  const favorites = req.user.favorites[type];
+  const favorites = req.user.favorites[favArrName];
   const operator = favorites.includes(locationQuery) ? '$pull' : '$addToSet';
   const favIndex = favorites.indexOf(locationQuery);
   const index = favIndex > -1 ? favIndex : undefined;
@@ -19,7 +19,7 @@ exports.updateFavorites = async (req, res) => {
   await User.findByIdAndUpdate(
     req.user._id,
     {
-      [operator]: { [userLocationArr]: locationQuery }
+      [operator]: { [databaseArr]: locationQuery }
     },
     { new: true }
   );

@@ -3,7 +3,7 @@ const favoritesController = require('../controllers/favoritesController');
 
 module.exports = app => {
   app.post(
-    '/api/favorites/:type',
+    '/api/favorites',
     authController.isLoggedIn,
     favoritesController.updateFavorites
   );

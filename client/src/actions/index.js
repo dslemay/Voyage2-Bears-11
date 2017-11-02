@@ -21,7 +21,7 @@ export const fetchUser = () => async dispatch => {
 };
 
 export const updateFavorites = (favArrName, locationId) => async dispatch => {
-  const res = await axios.post(`/api/favorites/${favArrName}`, { locationId });
+  const res = await axios.post('/api/favorites', { favArrName, locationId });
   const index = res.data.index;
 
   if (!index) {
@@ -41,9 +41,9 @@ export const updateFavorites = (favArrName, locationId) => async dispatch => {
 };
 
 export const fetchFavorites = () => async dispatch => {
-  const res = await axios.get('api/favorites');
+  const res = await axios.get('/api/favorites');
 
-  if (res.data !== false) {
+  if (!res.data.error) {
     dispatch({ type: FETCH_FAVORITES, payload: res.data });
   }
 };
