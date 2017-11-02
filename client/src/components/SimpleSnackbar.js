@@ -6,6 +6,7 @@ import Snackbar from 'material-ui/Snackbar';
 import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui-icons/Close';
 import FavoriteBorderIcon from 'material-ui-icons/FavoriteBorder';
+import FavoriteIcon from 'material-ui-icons/Favorite';
 
 const styles = theme => ({
   close: {
@@ -16,12 +17,13 @@ const styles = theme => ({
 
 class SimpleSnackbar extends Component {
   state = {
-    open: false
+    open: false,
+    heart: false
   };
 
   // Connect handleClick to action creator?
   handleClick = () => {
-    this.setState({ open: true });
+    this.setState({ open: true, heart: true });
   };
 
   handleRequestClose = (event, reason) => {
@@ -32,12 +34,20 @@ class SimpleSnackbar extends Component {
     this.setState({ open: false });
   };
 
+  handleRequestUndo = () => {
+    this.setState({ open: false, heart: false });
+  };
+
+  toggleHeart = () => {
+    return this.state.heart ? <FavoriteIcon /> : <FavoriteBorderIcon />;
+  };
+
   render() {
     const { classes } = this.props;
     return (
       <div>
         <IconButton color="contrast" onClick={this.handleClick}>
-          <FavoriteBorderIcon />
+          {this.toggleHeart()}
         </IconButton>
         <Snackbar
           anchorOrigin={{
@@ -56,7 +66,7 @@ class SimpleSnackbar extends Component {
               key="undo"
               color="accent"
               dense
-              onClick={this.handleRequestClose}
+              onClick={this.handleRequestUndo}
             >
               UNDO
             </Button>,

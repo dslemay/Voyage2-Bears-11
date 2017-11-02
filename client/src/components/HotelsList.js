@@ -17,6 +17,9 @@ const styles = theme => ({
   gridList: {
     width: '100%',
     height: 450
+  },
+  gridImg: {
+    cursor: 'pointer'
   }
 });
 
@@ -32,7 +35,12 @@ class HotelsList extends Component {
         <GridList cellHeight={230} className={classes.gridList}>
           {this.props.hotels.map(hotel =>
             <GridListTile key={hotel.name}>
-              <img src={hotel.image_url} alt={hotel.name} />
+              <img
+                src={hotel.image_url}
+                alt={hotel.name}
+                onClick={() => window.open(hotel.url)}
+                className={classes.gridImg}
+              />
               <GridListTileBar
                 title={hotel.name}
                 subtitle={
