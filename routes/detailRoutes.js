@@ -19,8 +19,8 @@ module.exports = app => {
         const client = yelp.client(response.jsonBody.access_token);
 
         client.search(searchRequest).then(response => {
-          const sixResults = response.jsonBody.businesses.slice(0, 6);
-          const hotels = JSON.stringify(sixResults, null, 4);
+          const twelveResults = response.jsonBody.businesses.slice(0, 12);
+          const hotels = JSON.stringify(twelveResults, null, 4);
           res.send(hotels);
         });
       })
