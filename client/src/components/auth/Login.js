@@ -56,35 +56,30 @@ class Login extends Component {
   }
 
   render() {
+    const fieldsInfo = [
+      { id: 'email', type: 'email', label: 'Email' },
+      { id: 'password', type: 'password', label: 'Password' }
+    ];
+
+    const formFields = fieldsInfo.map(field => (
+      <div className="row" key={field.id}>
+        <div className="input-field col s12">
+          <input
+            id={field.id}
+            type={field.type}
+            className="validate"
+            value={this.state[field.id]}
+            onChange={this.handleFieldChange}
+          />
+          <label htmlFor="email">{field.label}</label>
+        </div>
+      </div>
+    ));
     return (
       <div className="container">
         <h2>Login</h2>
         <form className="col s12" onSubmit={this.handleSubmit}>
-          <div className="row">
-            <div className="input-field col s12">
-              <input
-                id="email"
-                type="email"
-                className="validate"
-                value={this.state.email}
-                onChange={this.handleFieldChange}
-              />
-              <label htmlFor="email">Email</label>
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="input-field col s12">
-              <input
-                id="password"
-                type="password"
-                className="validate"
-                value={this.state.password}
-                onChange={this.handleFieldChange}
-              />
-              <label htmlFor="password">Password</label>
-            </div>
-          </div>
+          {formFields}
           <button
             className="btn waves-effect waves-light"
             type="submit"
