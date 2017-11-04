@@ -50,7 +50,7 @@ class HotelsList extends Component {
                     Price: {hotel.price}
                   </span>
                 }
-                actionIcon={<SimpleSnackbar />}
+                actionIcon={<SimpleSnackbar yelpId={hotel.id} />}
               />
             </GridListTile>
           )}

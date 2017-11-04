@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { updateFavorites } from '../actions';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Snackbar from 'material-ui/Snackbar';
@@ -22,6 +24,8 @@ class SimpleSnackbar extends Component {
   // Connect handleClick to action creator?
   handleClick = () => {
     this.setState({ open: true, heart: !this.state.heart });
+    this.props.updateFavorites('hotels', this.props.yelpId);
+    console.log(this.props.yelpId);
   };
 
   handleRequestClose = (event, reason) => {
@@ -74,4 +78,10 @@ SimpleSnackbar.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(SimpleSnackbar);
+function mapStateToProps({ favorites }) {
+  return { favorites };
+}
+
+export default connect(mapStateToProps, { updateFavorites })(
+  withStyles(styles)(SimpleSnackbar)
+);
