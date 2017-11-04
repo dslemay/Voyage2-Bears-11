@@ -33,7 +33,7 @@ exports.validateRegister = [
 exports.checkValidations = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.json({ errors: errors.mapped() });
+    return res.json({ errors: errors.array() });
   }
   next();
 };

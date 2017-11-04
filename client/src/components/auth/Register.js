@@ -40,8 +40,11 @@ class Register extends Component {
       .then(response => response.json())
       .then(data => {
         if (data.errors) {
-          console.log(data.errors);
-          // TODO: Handle displaying the msg for each error
+          const errors = data.errors;
+          errors.map(error => {
+            const message = { type: 'error', text: error.msg };
+            window.flash_messages.addMessage(message);
+          });
         }
         // Handle redirect upon successful user creation.
         // Data object also contains a message property.
