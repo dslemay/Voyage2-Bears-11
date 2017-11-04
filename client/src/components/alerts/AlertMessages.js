@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../../actions';
 import Alert from './Alert';
 
 class AlertMessages extends Component {
@@ -13,27 +15,19 @@ class AlertMessages extends Component {
     return Math.floor(Math.random() * 1000);
   }
 
-  addMessage(message) {
-    const messages = this.state.messages;
-    messages.push(message);
-    this.setState({ messages: messages });
-  }
-
   removeMessage(message) {
-    const messages = this.state.messages;
-    const index = this.state.messages.indexOf(message);
-    messages.splice(index, 1);
-    this.setState({ messages: messages });
+    const messages = this.props.messages;
+    const index = messages.indexOf(message);
+    this.props.updateMessages(index);
   }
 
   render() {
-    const alerts = this.state.messages.map(message => (
+    const alerts = this.props.messages.map(message => (
       <Alert
         key={this.randomKey()}
         text={message.text}
         type={message.type}
-        message={message}
-        onClose={() => this.removeMessage()}
+        onClose={() => this.removeMessage(message)}
       />
     ));
 
@@ -41,4 +35,8 @@ class AlertMessages extends Component {
   }
 }
 
-export default AlertMessages;
+function mapStateToProps({ messages }) {
+  return { messages };
+}
+
+export default connect(mapStateToProps, actions)(AlertMessages);

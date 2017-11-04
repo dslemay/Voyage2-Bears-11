@@ -43,7 +43,7 @@ class Register extends Component {
           const errors = data.errors;
           errors.map(error => {
             const message = { type: 'error', text: error.msg };
-            window.flash_messages.addMessage(message);
+            return this.props.updateMessages(null, message);
           });
         }
         // Handle redirect upon successful user creation.
