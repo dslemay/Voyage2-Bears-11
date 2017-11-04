@@ -17,15 +17,13 @@ const styles = theme => ({
 
 class SimpleSnackbar extends Component {
   state = {
-    open: false,
-    heart: false
+    open: false
   };
 
   // Connect handleClick to action creator?
   handleClick = () => {
-    this.setState({ open: true, heart: !this.state.heart });
+    this.setState({ open: true });
     this.props.updateFavorites('hotels', this.props.yelpId);
-    console.log(this.props.yelpId);
   };
 
   handleRequestClose = (event, reason) => {
@@ -38,11 +36,17 @@ class SimpleSnackbar extends Component {
 
   toggleHeart = () => {
     // check redux state for heart
-    return this.state.heart ? <FavoriteIcon /> : <FavoriteBorderIcon />;
+    const inFavorites = this.props.favorites.hotels.some(
+      hotel => hotel.id === this.props.yelpId
+    );
+    return inFavorites ? <FavoriteIcon /> : <FavoriteBorderIcon />;
   };
 
   renderMessage = () => {
-    return this.state.heart ? 'Added to favorites' : 'Removed from favorites';
+    const inFavorites = this.props.favorites.hotels.some(
+      hotel => hotel.id === this.props.yelpId
+    );
+    return inFavorites ? 'Added to favorites' : 'Removed from favorites';
   };
 
   render() {
