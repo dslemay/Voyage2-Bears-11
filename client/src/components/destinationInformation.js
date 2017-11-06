@@ -1,45 +1,58 @@
 export default [
   {
-    displayName: 'New Orleans',
-    yelpName: 'new orleans, la',
-    IATA: 'MSY',
-    description: '',
-    image:
-      'http://www.strengthsinternational.com/wp-content/uploads/2013/12/New-Orleans.jpg'
+    name: 'New Orleans',
+    data: {
+      yelpName: 'new orleans, la',
+      IATA: 'MSY',
+      description:
+        'New Orleans is a Louisiana city on the Mississippi River, near the Gulf of Mexico. Nicknamed the "Big Easy," it\'s known for its round-the-clock nightlife, vibrant live-music scene and spicy, singular cuisine reflecting its history as a melting pot of French, African and American cultures. Embodying its festive spirit is Mardi Gras, the late-winter carnival famed for raucous costumed parades and street parties.',
+      image:
+        'http://www.strengthsinternational.com/wp-content/uploads/2013/12/New-Orleans.jpg'
+    }
   },
   {
-    displayName: 'Melbourne',
-    yelpName: 'melbourne, au',
-    IATA: 'MEL',
-    description: '',
-    image: 'https://source.unsplash.com/o3TZx8_j7FE'
+    name: 'Melbourne',
+    data: {
+      yelpName: 'melbourne, au',
+      IATA: 'MEL',
+      description: '',
+      image: 'https://source.unsplash.com/o3TZx8_j7FE'
+    }
   },
   {
-    displayName: 'Toronto',
-    yelpName: 'toronto, ca',
-    IATA: 'YYZ',
-    description: '',
-    image: 'https://source.unsplash.com/F48AfcHHy3s'
+    name: 'Toronto',
+    data: {
+      yelpName: 'toronto, ca',
+      IATA: 'YYZ',
+      description: '',
+      image: 'https://source.unsplash.com/F48AfcHHy3s'
+    }
   },
   {
-    displayName: 'Buenos Aires',
-    yelpName: 'buenos aires',
-    IATA: 'EZE',
-    description: '',
-    image: 'https://source.unsplash.com/VynkVKneWJA'
+    name: 'Buenos Aires',
+    data: {
+      yelpName: 'buenos aires',
+      IATA: 'EZE',
+      description: '',
+      image: 'https://source.unsplash.com/VynkVKneWJA'
+    }
   },
   {
-    displayName: 'Manila',
-    yelpName: 'manila',
-    IATA: 'MNL',
-    description: '',
-    image: 'https://www.bautrip.com/images/front/manila.jpg'
+    name: 'Manila',
+    data: {
+      yelpName: 'manila',
+      IATA: 'MNL',
+      description: '',
+      image: 'https://www.bautrip.com/images/front/manila.jpg'
+    }
   },
   {
-    displayName: 'Bristol',
-    yelpName: 'bristol, uk',
-    IATA: 'BRS',
-    description: '',
-    image: 'https://source.unsplash.com/Cs7Fj3FfSr8'
+    name: 'Bristol',
+    data: {
+      yelpName: 'bristol, uk',
+      IATA: 'BRS',
+      description: '',
+      image: 'https://source.unsplash.com/Cs7Fj3FfSr8'
+    }
   }
 ];
