@@ -6,7 +6,7 @@ const clientSecret = keys.yelpClientSecret;
 
 const searchRequest = {
   term: 'Hotels',
-  location: 'san francisco, ca'
+  location: 'manila'
 };
 
 // Implement async/await syntax for this route
