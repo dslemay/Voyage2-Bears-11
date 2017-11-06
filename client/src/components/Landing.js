@@ -82,10 +82,13 @@ class Landing extends Component {
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button raised color="default">
-                  <Link to={this.generateRandomLink()}>
-                    Generate Random Destination
-                  </Link>
+                <Button
+                  component={Link}
+                  to={this.generateRandomLink()}
+                  raised
+                  color="primary"
+                >
+                  Generate Random Destination
                 </Button>
               </CardActions>
             </Card>
