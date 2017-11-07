@@ -16,13 +16,6 @@ const styles = theme => ({
 });
 
 class AlertMessages extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { messages: [] };
-
-    window.flash_messages = this;
-  }
-
   randomKey() {
     return Math.floor(Math.random() * 1000);
   }
