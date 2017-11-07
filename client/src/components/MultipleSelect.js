@@ -52,11 +52,16 @@ const destinationAirport = [
 
 class MultipleSelect extends React.Component {
   state = {
-    name: [],
+    originName: '',
+    destinationName: '',
   };
 
-  handleChange = event => {
-    this.setState({ name: event.target.value });
+  changeOrigin = event => {
+    this.setState({originName: event.target.value});
+  };
+
+  changeDestination = event => {
+    this.setState({destinationName: event.target.value});
   };
 
   render() {
@@ -67,9 +72,8 @@ class MultipleSelect extends React.Component {
         <FormControl className={classes.formControl}>
           <InputLabel htmlFor="name-multiple">From</InputLabel>
           <Select
-            multiple
-            value={this.state.name}
-            onChange={this.handleChange}
+            value={this.state.originName}
+            onChange={this.changeOrigin}
             input={<Input id="name-multiple" />}
             MenuProps={{
               PaperProps: {
@@ -85,7 +89,7 @@ class MultipleSelect extends React.Component {
                 key={name}
                 value={name}
                 style={{
-                  fontWeight: this.state.name.indexOf(name) !== -1 ? '500' : '400',
+                  fontWeight: this.state.originName.indexOf(name) !== -1 ? '500' : '400',
                 }}
               >
                 {name}
@@ -93,12 +97,12 @@ class MultipleSelect extends React.Component {
             ))}
           </Select>
         </FormControl>
+
         <FormControl className={classes.formControl}>
           <InputLabel htmlFor="name-multiple">To</InputLabel>
           <Select
-            multiple
-            value={this.state.name}
-            onChange={this.handleChange}
+            value={this.state.destinationName}
+            onChange={this.changeDestination}
             input={<Input id="name-multiple" />}
             MenuProps={{
               PaperProps: {
@@ -114,7 +118,7 @@ class MultipleSelect extends React.Component {
                 key={name}
                 value={name}
                 style={{
-                  fontWeight: this.state.name.indexOf(name) !== -1 ? '500' : '400',
+                  fontWeight: this.state.destinationName.indexOf(name) !== -1 ? '500' : '400',
                 }}
               >
                 {name}
