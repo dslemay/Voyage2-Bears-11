@@ -46,7 +46,7 @@ function DestinationDetails(props) {
               title={destination.name}
             />
             <CardContent>
-              <Typography type="headline" component="h2">
+              <Typography type="display2" component="h2">
                 {destination.name}
               </Typography>
             </CardContent>
