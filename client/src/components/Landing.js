@@ -42,7 +42,7 @@ class Landing extends Component {
     const classes = this.props.classes;
     return _.map(paperInformation, ({ description, Icon }) => {
       return (
-        <Grid item xs={12} sm={6} md={3} key={Icon}>
+        <Grid item xs={12} sm={6} md={3} key={description}>
           <Paper className={classes.paper}>
             <Icon className={classes.paperIcons} />
             {description}
