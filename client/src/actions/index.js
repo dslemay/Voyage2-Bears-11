@@ -5,7 +5,9 @@ import {
   FETCH_USER,
   ADD_FAVORITE,
   REMOVE_FAVORITE,
-  FETCH_FAVORITES
+  FETCH_FAVORITES,
+  ADD_MESSAGE,
+  REMOVE_MESSAGE
 } from './types';
 
 export const fetchHotels = () => async dispatch => {
@@ -46,4 +48,11 @@ export const fetchFavorites = () => async dispatch => {
   if (!res.data.error) {
     dispatch({ type: FETCH_FAVORITES, payload: res.data });
   }
+};
+
+export const updateMessages = (index, message) => async dispatch => {
+  if (index !== null) {
+    return dispatch({ type: REMOVE_MESSAGE, index });
+  }
+  return dispatch({ type: ADD_MESSAGE, payload: message });
 };

@@ -8,6 +8,7 @@ import Landing from './Landing';
 import Login from './auth/Login';
 import Register from './auth/Register';
 import DestinationDetails from './details/DestinationDetails';
+import AlertMessages from './alerts/AlertMessages';
 import * as actions from '../actions';
 
 class App extends Component {
@@ -21,6 +22,7 @@ class App extends Component {
       <BrowserRouter>
         <div>
           <Header />
+          <AlertMessages />
           <Route exact path="/" component={Landing} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
