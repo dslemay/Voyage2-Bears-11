@@ -41,6 +41,7 @@ class Login extends Component {
          * Upon unsuccessful login, the page will not change. Reset input fields.
          * TODO: Utilize message property of object to display message to user on success/failure
          */
+        this.props.updateMessages(null, data);
         if (path !== '/login') {
           // Login was successful
           this.props.fetchUser();
