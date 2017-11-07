@@ -58,6 +58,8 @@ class Header extends Component {
               type="display1"
               color="inherit"
               className={classes.flex}
+              component={Link}
+              to="/"
             >
               Wanderful
             </Typography>
