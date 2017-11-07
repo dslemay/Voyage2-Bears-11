@@ -1,7 +1,19 @@
 import React, { Component } from 'react';
+import compose from 'recompose/compose';
+import PropTypes from 'prop-types';
+import { withStyles } from 'material-ui/styles';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 import Alert from './Alert';
+
+const styles = theme => ({
+  root: {
+    width: '50%',
+    margin: '0 auto',
+    paddingTop: '10px',
+    fontSize: '1.2rem'
+  }
+});
 
 class AlertMessages extends Component {
   constructor(props) {
@@ -22,6 +34,7 @@ class AlertMessages extends Component {
   }
 
   render() {
+    const { classes } = this.props;
     const alerts = this.props.messages.map(message => (
       <Alert
         key={this.randomKey()}
@@ -31,7 +44,7 @@ class AlertMessages extends Component {
       />
     ));
 
-    return <div>{alerts}</div>;
+    return <div className={classes.root}>{alerts}</div>;
   }
 }
 
@@ -39,4 +52,11 @@ function mapStateToProps({ messages }) {
   return { messages };
 }
 
-export default connect(mapStateToProps, actions)(AlertMessages);
+AlertMessages.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+export default compose(
+  withStyles(styles, { name: 'AlertMessages' }),
+  connect(mapStateToProps, actions)
+)(AlertMessages);
