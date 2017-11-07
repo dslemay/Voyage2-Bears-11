@@ -62,6 +62,7 @@ app.use(passport.session());
 // Set up the routes
 require('./routes/authRoutes')(app);
 require('./routes/detailRoutes')(app);
+require('./routes/favoriteRoutes')(app);
 
 // Determine port and start server.
 const PORT = process.env.PORT || 5000;

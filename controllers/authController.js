@@ -33,7 +33,7 @@ exports.validateRegister = [
 exports.checkValidations = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.json({ errors: errors.mapped() });
+    return res.json({ errors: errors.array() });
   }
   next();
 };
@@ -55,16 +55,25 @@ exports.login = function(req, res, next) {
     if (!user) {
       return res
         .status(401)
-        .json({ message: info.message, redirect: '/login' });
+        .json({ type: 'error', text: info.message, redirect: '/login' });
     }
-    req.logIn(user, function(err) {
+    req.logIn(user, async function(err) {
       if (err) {
         return next(err);
       }
+      await req.session.save();
       return res.status(200).json({
-        message: 'You have been successfully logged in',
+        type: 'success',
+        text: 'You have been successfully logged in',
         redirect: '/'
       });
     });
   })(req, res, next);
+};
+
+exports.isLoggedIn = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.send({ error: 'You must be logged in!' });
 };

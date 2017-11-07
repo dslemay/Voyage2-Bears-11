@@ -24,6 +24,10 @@ const userSchema = new Schema({
     type: String,
     trim: true,
     required: 'Please supply a name'
+  },
+  favorites: {
+    hotels: [String],
+    POIs: [String]
   }
 });
 
