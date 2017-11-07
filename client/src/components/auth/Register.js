@@ -50,6 +50,10 @@ class Register extends Component {
         // Data object also contains a message property.
         const path = data.redirect;
         this.props.fetchUser();
+        this.props.updateMessages(null, {
+          type: 'success',
+          text: 'You have been successfully logged in'
+        });
         this.props.history.push(path);
       });
   }
