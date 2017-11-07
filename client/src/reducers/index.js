@@ -8,7 +8,6 @@ import messageReducer from './messageReducer';
 export default combineReducers({
   hotels: hotelsReducer,
   flights: flightsReducer,
-  auth: authReducer
   auth: authReducer,
   favorites: favoritesReducer,
   messages: messageReducer
