@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { fetchFlights } from '../actions/flightActions';
-import AirportList from './AirportList';
 import Button from 'material-ui/Button';
+import MultipleSelect from './MultipleSelect';
 
 class FlightsList extends React.Component {
   componentWillMount() {
@@ -16,18 +16,19 @@ class FlightsList extends React.Component {
     console.log(this.props.flights);
     return (
       <div>
-        <h3>Flights as low as</h3>
+        <MultipleSelect />
         {this.props.flights.map(flight => (
           <div key={flight.data.flights.trips.requestId}>
+            <h5>Flights as low as</h5>
             <p>{flight.data.flights.trips.tripOption['0'].saleTotal}</p>
+            <Button
+              href="https://www.google.com/flights/#search;f=LAS;t=SFO;d=2017-11-30"
+              target="_blank"
+            >
+              Book Flights Now
+            </Button>
           </div>
         ))}
-        <Button
-          href="https://www.google.com/flights/#search;f=LAS;t=SFO;d=2017-11-30"
-          target="_blank"
-        >
-          Book Flights Now
-        </Button>
       </div>
     );
   }
