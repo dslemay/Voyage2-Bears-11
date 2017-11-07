@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { fetchFlights } from '../actions/flightActions';
 import Button from 'material-ui/Button';
 import MultipleSelect from './MultipleSelect';
+import DatePickers from './DatePickers';
 
 class FlightsList extends React.Component {
   componentWillMount() {
@@ -17,6 +18,7 @@ class FlightsList extends React.Component {
     return (
       <div>
         <MultipleSelect />
+        <DatePickers />
         {this.props.flights.map(flight => (
           <div key={flight.data.flights.trips.requestId}>
             <h5>Flights as low as</h5>
