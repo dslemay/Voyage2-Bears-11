@@ -6,6 +6,7 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 const expressValidator = require('express-validator');
 const keys = require('./config/keys');
 require('./models/User');
+require('./models/Destination');
 const passport = require('passport');
 require('./services/passport');
 
