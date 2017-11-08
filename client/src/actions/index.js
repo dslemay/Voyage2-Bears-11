@@ -8,8 +8,8 @@ import {
   FETCH_FAVORITES
 } from './types';
 
-export const fetchHotels = () => async dispatch => {
-  const res = await axios.get('/api/yelp');
+export const fetchHotels = location => async dispatch => {
+  const res = await axios.get(`/api/yelp?location=${location}`);
 
   dispatch({ type: FETCH_HOTELS, payload: res.data });
 };
