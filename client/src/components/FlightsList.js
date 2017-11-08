@@ -36,7 +36,12 @@ class FlightsList extends React.Component {
         <div>
           <MultipleSelect />
           <DatePickers />
-          <Button raised className={classes.button}>Find Flights</Button>
+          <Button 
+            raised 
+            className={classes.button}
+          >
+            Find Flights
+          </Button>
           {this.props.flights.map(flight => (
             <div key={flight.data.flights.trips.requestId}>
               <h5>Flights as low as</h5>
