@@ -4,15 +4,16 @@ const keys = require('../config/keys');
 const clientId = keys.yelpClientID;
 const clientSecret = keys.yelpClientSecret;
 
-const searchRequest = {
-  term: 'Hotels',
-  location: 'san francisco, ca'
-};
-
 // Implement async/await syntax for this route
 
 module.exports = app => {
   app.get('/api/yelp', (req, res) => {
+    const { location } = req.query;
+    const searchRequest = {
+      term: 'Hotels',
+      location
+    };
+
     yelp
       .accessToken(clientId, clientSecret)
       .then(response => {
