@@ -1,5 +1,6 @@
 import React from 'react';
 import DetailsTab from './DetailsTab';
+import destinationInformation from '../destinationInformation';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
@@ -32,6 +33,7 @@ const styles = theme => ({
 
 function DestinationDetails(props) {
   const { classes } = props;
+  const destination = destinationInformation[props.match.params.number];
 
   return (
     <div className={classes.root}>
@@ -40,12 +42,12 @@ function DestinationDetails(props) {
           <Card className={classes.card}>
             <CardMedia
               className={classes.media}
-              image="https://source.unsplash.com/9bdt03k4ujw"
-              title="Random Destination"
+              image={destination.data.image}
+              title={destination.name}
             />
             <CardContent>
-              <Typography type="headline" component="h2">
-                Destination name
+              <Typography type="display2" component="h2">
+                {destination.name}
               </Typography>
             </CardContent>
             <CardActions>
@@ -55,24 +57,14 @@ function DestinationDetails(props) {
             </CardActions>
           </Card>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={12} md={9}>
           <Paper>
-            <DetailsTab />
+            <DetailsTab yelpName={destination.data.yelpName} />
           </Paper>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={12} md={3}>
           <Paper className={classes.paper}>
-            Lorem ipsum dolor sit amet, errem reprehendunt at nec, ex ius
-            eleifend contentiones. Dolor meliore cu pri, ei atqui falli
-            intellegat vix. Mea quot constituto definiebas ei, ex ius fugit
-            honestatis, an vide justo laoreet his. Ipsum cetero complectitur duo
-            cu, mel saperet necessitatibus ad. <br />
-            <br />Volumus deleniti comprehensam vim ea. An mea deserunt
-            adversarium, graece facete possim eum no. Dicant utamur maiestatis
-            et nam. Per reque cotidieque ad, prima eruditi omittantur id mea. Ne
-            sale harum his, id errem verear suavitate per, ex principes
-            theophrastus nec. Ei nemore antiopam dissentias sea, ius scaevola
-            percipit et, ei tale graece forensibus his.
+            {destination.data.description}
           </Paper>
         </Grid>
       </Grid>

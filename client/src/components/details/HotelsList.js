@@ -25,7 +25,8 @@ const styles = theme => ({
 
 class HotelsList extends Component {
   componentDidMount() {
-    this.props.fetchHotels();
+    const { yelpName } = this.props;
+    this.props.fetchHotels(yelpName);
   }
 
   render() {

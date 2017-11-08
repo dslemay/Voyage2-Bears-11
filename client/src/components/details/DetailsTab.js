@@ -49,7 +49,7 @@ class DetailsTab extends React.Component {
         </AppBar>
         {value === 0 &&
           <TabContainer>
-            <HotelsList />
+            <HotelsList yelpName={this.props.yelpName} />
           </TabContainer>}
         {value === 1 &&
           <TabContainer>
