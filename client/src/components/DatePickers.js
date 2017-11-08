@@ -7,6 +7,7 @@ const styles = theme => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
+    justifyContent: 'center',
   },
   textField: {
     marginLeft: theme.spacing.unit,
@@ -22,7 +23,6 @@ function DatePickers(props) {
     <form className={classes.container} noValidate>
       <TextField
         id="date"
-        label="Calendar"
         type="date"
         className={classes.textField}
         InputLabelProps={{

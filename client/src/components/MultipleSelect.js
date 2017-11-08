@@ -10,6 +10,7 @@ const styles = theme => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
+    justifyContent: 'center',
   },
   formControl: {
     margin: theme.spacing.unit,
