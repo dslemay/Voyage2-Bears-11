@@ -1,5 +1,3 @@
-// LINK https://source.unsplash.com/9bdt03k4ujw
-
 import React from 'react';
 import DetailsTab from './DetailsTab';
 import PropTypes from 'prop-types';

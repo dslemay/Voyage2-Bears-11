@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { updateFavorites } from '../actions';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Snackbar from 'material-ui/Snackbar';
@@ -16,12 +18,20 @@ const styles = theme => ({
 class SimpleSnackbar extends Component {
   state = {
     open: false,
-    heart: false
+    clicked: false
   };
 
-  // Connect handleClick to action creator?
+  // Checks to make sure there was a change to props, only opens snackbar for
+  // most recently clicked
+  componentWillReceiveProps(nextProps) {
+    if (this.props !== nextProps && this.state.clicked) {
+      this.setState({ open: true, clicked: false });
+    }
+  }
+
   handleClick = () => {
-    this.setState({ open: true, heart: !this.state.heart });
+    this.props.updateFavorites('hotels', this.props.yelpId);
+    this.setState({ clicked: true });
   };
 
   handleRequestClose = (event, reason) => {
@@ -32,13 +42,19 @@ class SimpleSnackbar extends Component {
     this.setState({ open: false });
   };
 
-  toggleHeart = () => {
-    // check redux state for heart
-    return this.state.heart ? <FavoriteIcon /> : <FavoriteBorderIcon />;
+  // Somehow connect inFavorites to redux?
+  renderHeart = () => {
+    const inFavorites = this.props.favorites.hotels.some(
+      hotel => hotel.id === this.props.yelpId
+    );
+    return inFavorites ? <FavoriteIcon /> : <FavoriteBorderIcon />;
   };
 
   renderMessage = () => {
-    return this.state.heart ? 'Added to favorites' : 'Removed from favorites';
+    const inFavorites = this.props.favorites.hotels.some(
+      hotel => hotel.id === this.props.yelpId
+    );
+    return inFavorites ? 'Added to favorites' : 'Removed from favorites';
   };
 
   render() {
@@ -46,7 +62,7 @@ class SimpleSnackbar extends Component {
     return (
       <div>
         <IconButton color="contrast" onClick={this.handleClick}>
-          {this.toggleHeart()}
+          {this.renderHeart()}
         </IconButton>
         <Snackbar
           anchorOrigin={{
@@ -74,4 +90,10 @@ SimpleSnackbar.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(SimpleSnackbar);
+function mapStateToProps({ favorites }) {
+  return { favorites };
+}
+
+export default connect(mapStateToProps, { updateFavorites })(
+  withStyles(styles)(SimpleSnackbar)
+);

@@ -50,7 +50,9 @@ class HotelsList extends Component {
                     Price: {hotel.price}
                   </span>
                 }
-                actionIcon={<SimpleSnackbar />}
+                actionIcon={
+                  this.props.auth ? <SimpleSnackbar yelpId={hotel.id} /> : ''
+                }
               />
             </GridListTile>
           )}
@@ -64,8 +66,8 @@ HotelsList.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-function mapStateToProps({ hotels }) {
-  return { hotels };
+function mapStateToProps({ hotels, auth }) {
+  return { hotels, auth };
 }
 
 export default connect(mapStateToProps, { fetchHotels })(
