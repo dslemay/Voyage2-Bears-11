@@ -17,13 +17,21 @@ const styles = theme => ({
 
 class SimpleSnackbar extends Component {
   state = {
-    open: false
+    open: false,
+    clicked: false
   };
 
-  // Connect handleClick to action creator?
+  // Checks to make sure there was a change to props, only opens snackbar for
+  // most recently clicked
+  componentWillReceiveProps(nextProps) {
+    if (this.props !== nextProps && this.state.clicked) {
+      this.setState({ open: true, clicked: false });
+    }
+  }
+
   handleClick = () => {
-    this.setState({ open: true });
     this.props.updateFavorites('hotels', this.props.yelpId);
+    this.setState({ clicked: true });
   };
 
   handleRequestClose = (event, reason) => {
@@ -34,8 +42,8 @@ class SimpleSnackbar extends Component {
     this.setState({ open: false });
   };
 
-  toggleHeart = () => {
-    // check redux state for heart
+  // Somehow connect inFavorites to redux?
+  renderHeart = () => {
     const inFavorites = this.props.favorites.hotels.some(
       hotel => hotel.id === this.props.yelpId
     );
@@ -54,7 +62,7 @@ class SimpleSnackbar extends Component {
     return (
       <div>
         <IconButton color="contrast" onClick={this.handleClick}>
-          {this.toggleHeart()}
+          {this.renderHeart()}
         </IconButton>
         <Snackbar
           anchorOrigin={{
