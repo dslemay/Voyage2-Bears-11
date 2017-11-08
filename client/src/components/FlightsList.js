@@ -40,7 +40,7 @@ class FlightsList extends React.Component {
             raised 
             className={classes.button}
           >
-            Find Flights
+            Check Prices
           </Button>
           {this.props.flights.map(flight => (
             <div key={flight.data.flights.trips.requestId}>
