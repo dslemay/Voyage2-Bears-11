@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import paperInformation from './paperInformation';
+import destinationInformation from './destinationInformation';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
@@ -40,14 +42,21 @@ class Landing extends Component {
     const classes = this.props.classes;
     return _.map(paperInformation, ({ description, Icon }) => {
       return (
-        <Grid item xs={12} sm={6} md={3} key={Icon}>
+        <Grid item xs={12} sm={6} md={3} key={description}>
           <Paper className={classes.paper}>
-            <Icon />
+            <Icon className={classes.paperIcons} />
             {description}
           </Paper>
         </Grid>
       );
     });
+  }
+
+  generateRandomLink() {
+    const randomNumber = Math.floor(
+      Math.random() * destinationInformation.length
+    );
+    return `/details/${randomNumber}`;
   }
 
   render() {
@@ -59,7 +68,7 @@ class Landing extends Component {
             <Card className={classes.card}>
               <CardMedia
                 className={classes.media}
-                image="https://source.unsplash.com/IE_sifhay7o"
+                image="https://source.unsplash.com/R261qkc-nDE"
                 title="Welcome to ChinguTravels"
               />
               <CardContent>
@@ -68,12 +77,18 @@ class Landing extends Component {
                 </Typography>
                 <Typography component="p">
                   Discover new locations to visit. Click{' '}
-                  <b>Generate Destinations</b> below to start your journey!
+                  <b>Generate Random Destination</b> below to start your
+                  journey!
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button raised color="primary">
-                  Generate Destinations
+                <Button
+                  component={Link}
+                  to={this.generateRandomLink()}
+                  raised
+                  color="primary"
+                >
+                  Generate Random Destination
                 </Button>
               </CardActions>
             </Card>

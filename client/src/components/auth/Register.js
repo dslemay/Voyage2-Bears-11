@@ -1,6 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withStyles } from 'material-ui/styles';
+import PropTypes from 'prop-types';
+import Paper from 'material-ui/Paper';
 import * as actions from '../../actions';
+
+const styles = theme => ({
+  paper: {
+    marginTop: 30,
+    padding: 16,
+    width: '80%',
+    margin: '0 auto'
+  }
+});
 
 class Register extends Component {
   constructor(props) {
@@ -40,8 +52,16 @@ class Register extends Component {
       .then(response => response.json())
       .then(data => {
         if (data.errors) {
-          console.log(data.errors);
-          // TODO: Handle displaying the msg for each error
+          const errors = data.errors;
+          errors.map(error => {
+            const message = { type: 'error', text: error.msg };
+            return this.props.updateMessages(null, message);
+          });
+        } else {
+          this.props.updateMessages(null, {
+            type: 'success',
+            text: 'You have been successfully logged in'
+          });
         }
         // Handle redirect upon successful user creation.
         // Data object also contains a message property.
@@ -52,73 +72,52 @@ class Register extends Component {
   }
 
   render() {
-    return (
-      <div className="container">
-        <h2>Register</h2>
-        <form className="col s12" onSubmit={this.handleSubmit}>
-          <div className="row">
-            <div className="input-field col s12">
-              <input
-                id="name"
-                type="text"
-                className="validate"
-                value={this.state.name}
-                onChange={this.handleFieldChange}
-              />
-              <label htmlFor="name">Name</label>
-            </div>
-          </div>
+    const fieldsInfo = [
+      { id: 'name', type: 'text', label: 'Name' },
+      { id: 'email', type: 'email', label: 'Email' },
+      { id: 'password', type: 'password', label: 'Password' },
+      { id: 'passwordConfirm', type: 'password', label: 'Confirm Password' }
+    ];
 
-          <div className="row">
-            <div className="input-field col s12">
-              <input
-                id="email"
-                type="email"
-                className="validate"
-                value={this.state.email}
-                onChange={this.handleFieldChange}
-              />
-              <label htmlFor="email">Email</label>
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="input-field col s12">
-              <input
-                id="password"
-                type="password"
-                className="validate"
-                value={this.state.password}
-                onChange={this.handleFieldChange}
-              />
-              <label htmlFor="password">Password</label>
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="input-field col s12">
-              <input
-                id="passwordConfirm"
-                type="password"
-                className="validate"
-                value={this.state.passwordConfirm}
-                onChange={this.handleFieldChange}
-              />
-              <label htmlFor="password-confirm">Confirm Password</label>
-            </div>
-          </div>
-
-          <button
-            className="btn waves-effect waves-light"
-            type="submit"
-            name="action"
-          >
-            Submit
-          </button>
-        </form>
+    const formFields = fieldsInfo.map(field => (
+      <div className="row" key={field.id}>
+        <div className="input-field col s12">
+          <input
+            id={field.id}
+            type={field.type}
+            className="validate"
+            value={this.state[field.id]}
+            onChange={this.handleFieldChange}
+          />
+          <label htmlFor="name">{field.label}</label>
+        </div>
       </div>
+    ));
+
+    const { classes } = this.props;
+
+    return (
+      <Paper className={classes.paper}>
+        <div className="container">
+          <h2>Register</h2>
+          <form className="col s12" onSubmit={this.handleSubmit}>
+            {formFields}
+            <button
+              className="btn waves-effect waves-light"
+              type="submit"
+              name="action"
+            >
+              Submit
+            </button>
+          </form>
+        </div>
+      </Paper>
     );
   }
 }
 
-export default connect(null, actions)(Register);
+Register.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+export default withStyles(styles)(connect(null, actions)(Register));
