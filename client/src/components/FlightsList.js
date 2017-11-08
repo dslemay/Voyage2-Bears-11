@@ -15,6 +15,10 @@ const styles = theme => ({
     justifyContent: 'center',
     textAlign: 'center',
   },
+  button: {
+    marginTop: 20,
+    marginBottom: 20,
+  },
 });
 
 class FlightsList extends React.Component {
@@ -23,28 +27,31 @@ class FlightsList extends React.Component {
     this.props.fetchFlights('SFO', 'LAX', '2017-11-30');
   }
 
-  // render flight and button to page
+  // render flight
   render() {
     console.log(this.props.flights);
     const classes = this.props.classes;
     return (
-      <div>
-        <MultipleSelect />
-        <DatePickers />
-        {this.props.flights.map(flight => (
-          <div key={flight.data.flights.trips.requestId} className={classes.container}>
-            <h5>Flights as low as</h5>
-            <p>{flight.data.flights.trips.tripOption['0'].saleTotal}</p>
-            <Button
-              raised
-              href="https://www.google.com/flights/#search;f=LAS;t=SFO;d=2017-11-30"
-              target="_blank"
-            >
-              Book Flights Now
-            </Button>
-          </div>
-        ))}
-      </div>
+      <section className={classes.container}>
+        <div>
+          <MultipleSelect />
+          <DatePickers />
+          <Button raised className={classes.button}>Find Flights</Button>
+          {this.props.flights.map(flight => (
+            <div key={flight.data.flights.trips.requestId}>
+              <h5>Flights as low as</h5>
+              <p>{flight.data.flights.trips.tripOption['0'].saleTotal}</p>
+              <Button
+                raised
+                href="https://www.google.com/flights/#search;f=LAS;t=SFO;d=2017-11-30"
+                target="_blank"
+              >
+                Book Flights Now
+              </Button>
+            </div>
+          ))}
+        </div>
+      </section>
     );
   }
 }
