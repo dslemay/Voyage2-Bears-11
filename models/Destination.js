@@ -1,7 +1,7 @@
-const mongoose = requrie('mongoose');
+const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 const { Schema } = mongoose;
-const slug = require('slugs');
+const slugify = require('slugify');
 
 const destinationSchema = new Schema({
   name: {
@@ -15,8 +15,8 @@ const destinationSchema = new Schema({
   image: String
 });
 
-destinationSchema.pre('save', async next => {
-  this.slug = slug(name);
+destinationSchema.pre('save', async function(next) {
+  this.slug = slugify(this.name);
   // Make sure no other destinations have this slug
   const slugRegex = new RegExp(`^(${this.slug})((-[0-9*])?)$`, 'i');
   const destWithSlug = await this.constructor.find({ slug: slugRegex });
@@ -28,7 +28,7 @@ destinationSchema.pre('save', async next => {
 });
 
 destinationSchema.statics.randomLocation = function() {
-  return this.aggregate({ $sample: 1 });
+  return this.aggregate([{ $sample: { size: 1 } }]);
 };
 
 mongoose.model('Destination', destinationSchema);
