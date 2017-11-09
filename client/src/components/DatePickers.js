@@ -17,12 +17,14 @@ const styles = theme => ({
 });
 
 class DatePickers extends React.Component {
-  state = {
-    date: '',
-  };
+  constructor(props) {
+    super(props);
 
-  changeDate = event => {
-    this.setState({date: event.target.value});
+    this.changeDate = this.changeDate.bind(this);
+  }
+
+  changeDate(event) {
+    this.props.onDateChange(event.target.value);
   };
 
   render() {
@@ -37,7 +39,7 @@ class DatePickers extends React.Component {
           InputLabelProps={{
             shrink: true,
           }}
-          value={this.state.date}
+          value={this.props.departureDate}
           onChange={this.changeDate}
         />
       </form>

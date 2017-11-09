@@ -22,39 +22,73 @@ const styles = theme => ({
 });
 
 class FlightsList extends React.Component {
-  componentWillMount() {
+  constructor(props) {
+    super(props);
+
+    this.handleDateChange = this.handleDateChange.bind(this);
+    this.handleOriginChange = this.handleOriginChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+
+    this.state = {
+      origin: '',
+      date: '',
+    }
+  }
+
+  handleClick() {
     // fetch flights
-    this.props.fetchFlights('SFO', 'LAX', '2017-11-30');
+    console.log(this.state.origin);
+    this.props.fetchFlights(this.state.origin, 'LAX', this.state.date);
+  }
+
+  handleOriginChange(origin) {
+    this.setState({origin});
+  }
+
+  handleDateChange(date) {
+    this.setState({date});
   }
 
   // render flight
   render() {
     console.log(this.props.flights);
     const classes = this.props.classes;
+
     return (
       <section className={classes.container}>
         <div>
-          <MultipleSelect />
-          <DatePickers />
+          <MultipleSelect 
+            onOriginChange={this.handleOriginChange}
+            originName={this.state.origin}
+          />
+
+          <DatePickers 
+            departureDate={this.state.date}
+            onDateChange={this.handleDateChange}
+          />
+
           <Button 
             raised 
             className={classes.button}
+            onClick={this.handleClick}
           >
             Check Prices
           </Button>
+
           {this.props.flights.map(flight => (
             <div key={flight.data.flights.trips.requestId}>
               <h5>Flights as low as</h5>
               <p>{flight.data.flights.trips.tripOption['0'].saleTotal}</p>
               <Button
                 raised
-                href="https://www.google.com/flights/#search;f=LAS;t=SFO;d=2017-11-30"
+                href={`https://www.google.com/flights/#search;f=${this.state.origin};t=SFO;d=${this.state.date}`}
                 target="_blank"
               >
                 Book Flights Now
               </Button>
             </div>
           ))}
+
         </div>
       </section>
     );

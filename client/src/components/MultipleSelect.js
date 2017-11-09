@@ -42,27 +42,15 @@ const originAirport = [
   '(SLC) Salt Lake City, UT',
 ];
 
-const destinationAirport = [
-  '(BRS) Bristol, UK',
-  '(EZE) Buenos Aires, AR',
-  '(MNL) Manila, PH',
-  '(YYZ) Toronto, CA',
-  '(MEL) Melbourne, AU',
-  '(MSY) New Orleans, LA',
-]
-
 class MultipleSelect extends React.Component {
-  state = {
-    originName: '',
-    destinationName: '',
-  };
+  constructor(props) {
+    super(props);
 
-  changeOrigin = event => {
-    this.setState({originName: event.target.value});
-  };
+    this.changeOrigin = this.changeOrigin.bind(this);
+  }
 
-  changeDestination = event => {
-    this.setState({destinationName: event.target.value});
+  changeOrigin(event) {
+    this.props.onOriginChange(event.target.value);
   };
 
   render() {
@@ -73,7 +61,7 @@ class MultipleSelect extends React.Component {
         <FormControl className={classes.formControl}>
           <InputLabel htmlFor="name-multiple">From</InputLabel>
           <Select
-            value={this.state.originName}
+            value={this.props.originName}
             onChange={this.changeOrigin}
             input={<Input id="name-multiple" />}
             MenuProps={{
@@ -90,7 +78,7 @@ class MultipleSelect extends React.Component {
                 key={name}
                 value={name}
                 style={{
-                  fontWeight: this.state.originName.indexOf(name) !== -1 ? '500' : '400',
+                  fontWeight: this.props.originName.indexOf(name) !== -1 ? '500' : '400',
                 }}
               >
                 {name}
@@ -99,34 +87,7 @@ class MultipleSelect extends React.Component {
           </Select>
         </FormControl>
 
-        <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="name-multiple">To</InputLabel>
-          <Select
-            value={this.state.destinationName}
-            onChange={this.changeDestination}
-            input={<Input id="name-multiple" />}
-            MenuProps={{
-              PaperProps: {
-                style: {
-                  maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-                  width: 200,
-                },
-              },
-            }}
-          >
-            {destinationAirport.map(name => (
-              <MenuItem
-                key={name}
-                value={name}
-                style={{
-                  fontWeight: this.state.destinationName.indexOf(name) !== -1 ? '500' : '400',
-                }}
-              >
-                {name}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+        
       </div>
     );
   }
