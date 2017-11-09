@@ -7,7 +7,6 @@ import Footer from './Footer';
 import Landing from './Landing';
 import Login from './auth/Login';
 import Register from './auth/Register';
-import FlightsList from './FlightsList';
 import DestinationDetails from './details/DestinationDetails';
 import AlertMessages from './alerts/AlertMessages';
 import * as actions from '../actions';
@@ -27,7 +26,6 @@ class App extends Component {
           <Route exact path="/" component={Landing} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
-          <Route path="/flights" component={FlightsList} />
           <Route path="/details" component={DestinationDetails} />
           <Route path="/details/:location" component={DestinationDetails} />
           <Footer />
