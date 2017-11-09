@@ -7,7 +7,7 @@ import Tabs, { Tab } from 'material-ui/Tabs';
 
 function TabContainer(props) {
   return (
-    <div style={{ padding: 8 * 3 }}>
+    <div style={{ padding: 0 }}>
       {props.children}
     </div>
   );

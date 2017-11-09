@@ -9,25 +9,33 @@ import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 
+const breakpoint = {
+  small: '@media (max-width: 500px)'
+};
+
 const styles = theme => ({
   root: {
     flexGrow: 1,
     marginTop: 30,
     marginRight: 30,
-    marginLeft: 30
+    marginLeft: 30,
+
+    [breakpoint.small]: {
+      margin: 0
+    }
   },
   paper: {
     padding: 16,
     paddingTop: 40,
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-    height: '100%'
+    paddingBottom: 40,
+    textAlign: 'left',
+    color: theme.palette.text.secondary
   },
   card: {
     width: '100%'
   },
   media: {
-    height: 600
+    height: 500
   }
 });
 
@@ -57,14 +65,14 @@ function DestinationDetails(props) {
             </CardActions>
           </Card>
         </Grid>
-        <Grid item xs={12} md={9}>
-          <Paper>
-            <DetailsTab yelpName={destination.data.yelpName} />
-          </Paper>
-        </Grid>
         <Grid item xs={12} md={3}>
           <Paper className={classes.paper}>
             {destination.data.description}
+          </Paper>
+        </Grid>
+        <Grid item xs={12} md={9}>
+          <Paper>
+            <DetailsTab yelpName={destination.data.yelpName} />
           </Paper>
         </Grid>
       </Grid>

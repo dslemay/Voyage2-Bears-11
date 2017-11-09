@@ -16,7 +16,7 @@ const styles = theme => ({
   },
   gridList: {
     width: '100%',
-    height: 450
+    height: 500
   },
   gridImg: {
     cursor: 'pointer'

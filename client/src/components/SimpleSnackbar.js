@@ -58,7 +58,6 @@ class SimpleSnackbar extends Component {
   };
 
   render() {
-    const { classes } = this.props;
     return (
       <div>
         <IconButton color="contrast" onClick={this.handleClick}>
