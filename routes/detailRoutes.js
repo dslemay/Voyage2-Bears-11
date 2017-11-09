@@ -1,5 +1,6 @@
 const yelp = require('yelp-fusion');
 const keys = require('../config/keys');
+const mongoose = require('mongoose');
 const Destination = mongoose.model('Destination');
 
 const clientId = keys.yelpClientID;
@@ -31,8 +32,14 @@ module.exports = app => {
       });
   });
 
-  app.get('/api/locationDetails', async (req, res) => {
+  app.get('/api/randomLocation', async (req, res) => {
     const location = await Destination.randomLocation();
-    res.send(location);
+    res.send(location[0].slug);
+  });
+
+  app.get('/api/locationDetails', async (req, res) => {
+    const { location } = req.query;
+    const locationData = await Destination.findOne({ slug: location });
+    res.send(locationData);
   });
 };
