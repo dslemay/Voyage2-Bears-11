@@ -29,6 +29,7 @@ class App extends Component {
           <Route path="/register" component={Register} />
           <Route path="/flights" component={FlightsList} />
           <Route path="/details" component={DestinationDetails} />
+          <Route path="/details/:location" component={DestinationDetails} />
           <Footer />
         </div>
       </BrowserRouter>

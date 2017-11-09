@@ -1,20 +1,23 @@
 const axios = require('axios');
 const yelp = require('yelp-fusion');
 const keys = require('../config/keys');
+const mongoose = require('mongoose');
+const Destination = mongoose.model('Destination');
 
 const clientId = keys.yelpClientID;
 const clientSecret = keys.yelpClientSecret;
 const googleFlights = keys.googleFlights;
 
-const searchRequest = {
-  term: 'Hotels',
-  location: 'san francisco, ca'
-};
-
 // Implement async/await syntax for this route
 
 module.exports = app => {
   app.get('/api/yelp', (req, res) => {
+    const { location } = req.query;
+    const searchRequest = {
+      term: 'Hotels',
+      location
+    };
+
     yelp
       .accessToken(clientId, clientSecret)
       .then(response => {
@@ -57,5 +60,16 @@ module.exports = app => {
     } catch (error) {
       console.log(error);
     }
+  });
+
+  app.get('/api/randomLocation', async (req, res) => {
+    const location = await Destination.randomLocation();
+    res.send(location[0].slug);
+  });
+
+  app.get('/api/locationDetails', async (req, res) => {
+    const { location } = req.query;
+    const locationData = await Destination.findOne({ slug: location });
+    res.send(locationData);
   });
 };

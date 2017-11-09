@@ -1,6 +1,5 @@
-// LINK https://source.unsplash.com/9bdt03k4ujw
-
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import DetailsTab from './DetailsTab';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
@@ -9,6 +8,7 @@ import Grid from 'material-ui/Grid';
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
+import * as actions from '../../actions';
 
 const styles = theme => ({
   root: {
@@ -32,58 +32,66 @@ const styles = theme => ({
   }
 });
 
-function DestinationDetails(props) {
-  const { classes } = props;
+class DestinationDetails extends Component {
+  componentDidMount() {
+    const destination = this.props.match.params.location;
+    this.props.fetchDestination(destination);
+  }
 
-  return (
-    <div className={classes.root}>
-      <Grid container spacing={24}>
-        <Grid item xs={12}>
-          <Card className={classes.card}>
-            <CardMedia
-              className={classes.media}
-              image="https://source.unsplash.com/9bdt03k4ujw"
-              title="Random Destination"
-            />
-            <CardContent>
-              <Typography type="headline" component="h2">
-                Destination name
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Button dense color="primary">
-                Add to Favorites
-              </Button>
-            </CardActions>
-          </Card>
-        </Grid>
-        <Grid item xs={9}>
-          <Paper>
-            <DetailsTab />
-          </Paper>
-        </Grid>
-        <Grid item xs={3}>
-          <Paper className={classes.paper}>
-            Lorem ipsum dolor sit amet, errem reprehendunt at nec, ex ius
-            eleifend contentiones. Dolor meliore cu pri, ei atqui falli
-            intellegat vix. Mea quot constituto definiebas ei, ex ius fugit
-            honestatis, an vide justo laoreet his. Ipsum cetero complectitur duo
-            cu, mel saperet necessitatibus ad. <br />
-            <br />Volumus deleniti comprehensam vim ea. An mea deserunt
-            adversarium, graece facete possim eum no. Dicant utamur maiestatis
-            et nam. Per reque cotidieque ad, prima eruditi omittantur id mea. Ne
-            sale harum his, id errem verear suavitate per, ex principes
-            theophrastus nec. Ei nemore antiopam dissentias sea, ius scaevola
-            percipit et, ei tale graece forensibus his.
-          </Paper>
-        </Grid>
-      </Grid>
-    </div>
-  );
+  renderContent() {
+    const { classes, destination } = this.props;
+    switch (this.props.destination) {
+      case null:
+        return;
+      default:
+        return (
+          <Grid container spacing={24}>
+            <Grid item xs={12}>
+              <Card className={classes.card}>
+                <CardMedia
+                  className={classes.media}
+                  image={destination.image}
+                  title={destination.name}
+                />
+                <CardContent>
+                  <Typography type="display2" component="h2">
+                    {destination.name}
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button dense color="primary">
+                    Add to Favorites
+                  </Button>
+                </CardActions>
+              </Card>
+            </Grid>
+            <Grid item xs={12} md={9}>
+              <Paper>
+                <DetailsTab yelpName={destination.yelpName} />
+              </Paper>
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <Paper className={classes.paper}>{destination.description}</Paper>
+            </Grid>
+          </Grid>
+        );
+    }
+  }
+
+  render() {
+    const { classes } = this.props;
+    return <div className={classes.root}>{this.renderContent()}</div>;
+  }
 }
 
 DestinationDetails.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(DestinationDetails);
+function mapStateToProps({ destination }) {
+  return { destination };
+}
+
+export default connect(mapStateToProps, actions)(
+  withStyles(styles)(DestinationDetails)
+);
