@@ -24,7 +24,7 @@ function Footer(props) {
           type="headline"
           component="h5"
           color="inherit"
-          gutterBottom="true"
+          gutterBottom={true}
         >
           Project created in the Chingu Voyage 2 cohort
         </Typography>
@@ -32,7 +32,7 @@ function Footer(props) {
           type="subheading"
           component="p"
           color="inherit"
-          gutterBottom="true"
+          gutterBottom={true}
         >
           Contributors: Adrian Bernardo, Alex Steele, Daniel Lemay, Jarold Wong
         </Typography>
