@@ -1,6 +1,7 @@
 // Where we put our action creators
 import axios from 'axios';
 import {
+  FETCH_DESTINATION,
   FETCH_HOTELS,
   FETCH_USER,
   ADD_FAVORITE,
@@ -9,6 +10,12 @@ import {
   ADD_MESSAGE,
   REMOVE_MESSAGE
 } from './types';
+
+export const fetchDestination = slug => async dispatch => {
+  const res = await axios.get(`/api/locationDetails?location=${slug}`);
+
+  dispatch({ type: FETCH_DESTINATION, payload: res.data });
+};
 
 export const fetchHotels = location => async dispatch => {
   const res = await axios.get(`/api/yelp?location=${location}`);
