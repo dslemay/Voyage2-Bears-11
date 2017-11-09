@@ -44,6 +44,9 @@ class FlightsList extends React.Component {
   }
 
   handleClick() {
+    var ticket = this.props.flights;
+    // remove any flight prices on the tab
+    ticket.pop();
     const originCode = getOriginCode(this.state.origin);
     this.props.fetchFlights(originCode, 'LAX', this.state.date);
   }
@@ -57,7 +60,6 @@ class FlightsList extends React.Component {
   }
 
   render() {
-    console.log(this.props.flights);
     const classes = this.props.classes;
     const originCode = getOriginCode(this.state.origin);
 
