@@ -5,3 +5,4 @@ export const REMOVE_FAVORITE = 'remove-favorite';
 export const FETCH_FAVORITES = 'fetch-favorites';
 export const ADD_MESSAGE = 'add-message';
 export const REMOVE_MESSAGE = 'remove-message';
+export const FETCH_DESTINATION = 'fetch-destination';

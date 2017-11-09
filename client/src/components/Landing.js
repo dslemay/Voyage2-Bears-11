@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
+import axios from 'axios';
 import paperInformation from './paperInformation';
-import destinationInformation from './destinationInformation';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
@@ -38,6 +38,17 @@ const styles = theme => ({
 });
 
 class Landing extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { link: '/' };
+  }
+
+  componentDidMount() {
+    axios
+      .get('/api/randomLocation')
+      .then(res => this.setState({ link: `/details/${res.data}` }));
+  }
+
   renderPapers() {
     const classes = this.props.classes;
     return _.map(paperInformation, ({ description, Icon }) => {
@@ -50,13 +61,6 @@ class Landing extends Component {
         </Grid>
       );
     });
-  }
-
-  generateRandomLink() {
-    const randomNumber = Math.floor(
-      Math.random() * destinationInformation.length
-    );
-    return `/details/${randomNumber}`;
   }
 
   render() {
@@ -84,7 +88,7 @@ class Landing extends Component {
               <CardActions>
                 <Button
                   component={Link}
-                  to={this.generateRandomLink()}
+                  to={this.state.link}
                   raised
                   color="primary"
                 >
