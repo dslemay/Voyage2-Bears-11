@@ -21,6 +21,14 @@ const styles = theme => ({
   },
 });
 
+// this function takes the string from the origin selection and returns just the IATA code
+function getOriginCode(origin) {
+  // regex matches all contiguous capital letters that appear after '('
+  const re = /[A-Z]+(?!\()/;
+  const originCode = origin.match(re);
+  return originCode;
+}
+
 class FlightsList extends React.Component {
   constructor(props) {
     super(props);
@@ -36,9 +44,8 @@ class FlightsList extends React.Component {
   }
 
   handleClick() {
-    // fetch flights
-    console.log(this.state.origin);
-    this.props.fetchFlights(this.state.origin, 'LAX', this.state.date);
+    const originCode = getOriginCode(this.state.origin);
+    this.props.fetchFlights(originCode, 'LAX', this.state.date);
   }
 
   handleOriginChange(origin) {
@@ -49,10 +56,10 @@ class FlightsList extends React.Component {
     this.setState({date});
   }
 
-  // render flight
   render() {
     console.log(this.props.flights);
     const classes = this.props.classes;
+    const originCode = getOriginCode(this.state.origin);
 
     return (
       <section className={classes.container}>
@@ -81,7 +88,7 @@ class FlightsList extends React.Component {
               <p>{flight.data.flights.trips.tripOption['0'].saleTotal}</p>
               <Button
                 raised
-                href={`https://www.google.com/flights/#search;f=${this.state.origin};t=SFO;d=${this.state.date}`}
+                href={`https://www.google.com/flights/#search;f=${originCode};t=LAX;d=${this.state.date};tt=o`}
                 target="_blank"
               >
                 Book Flights Now
