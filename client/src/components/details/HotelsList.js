@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import { GridList, GridListTile, GridListTileBar } from 'material-ui/GridList';
-import { fetchHotels } from '../../actions';
+import { fetchHotels, fetchDestination } from '../../actions';
 import SimpleSnackbar from '../SimpleSnackbar';
 
 const styles = theme => ({
@@ -25,8 +25,16 @@ const styles = theme => ({
 
 class HotelsList extends Component {
   componentDidMount() {
-    const { yelpName } = this.props;
-    this.props.fetchHotels(yelpName);
+    this.props.fetchHotels(this.props.destination.name);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { name } = this.props.destination;
+    const newName = nextProps.destination.name;
+
+    if (name !== newName) {
+      this.props.fetchHotels(newName);
+    }
   }
 
   render() {
@@ -67,10 +75,10 @@ HotelsList.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-function mapStateToProps({ hotels, auth }) {
-  return { hotels, auth };
+function mapStateToProps({ hotels, auth, destination }) {
+  return { hotels, auth, destination };
 }
 
-export default connect(mapStateToProps, { fetchHotels })(
+export default connect(mapStateToProps, { fetchHotels, fetchDestination })(
   withStyles(styles)(HotelsList)
 );

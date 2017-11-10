@@ -43,9 +43,6 @@ class DashCards extends Component {
               title={hotel.name}
             />
             <CardActions>
-              <Button dense color="primary">
-                Destination Page
-              </Button>
               <Button dense color="primary" href={hotel.url} target="_blank">
                 Yelp Info
               </Button>
