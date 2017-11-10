@@ -28,22 +28,27 @@ const styles = theme => ({
   }
 });
 
-class DashCards extends Component {
+class YelpCards extends Component {
   renderCards() {
-    const { classes } = this.props;
-    return this.props.favorites.hotels.map(hotel => {
+    const { classes, favType } = this.props;
+    console.log(favType);
+
+    return this.props.favorites[favType].map(favItem => {
       return (
-        <Grid item xs={12} sm={6} md={4} key={hotel.coordinates.latitude}>
+        <Grid item xs={12} sm={6} md={4} key={favItem.coordinates.latitude}>
           <Card className={classes.card}>
-            <RemoveFavAlert yelpId={hotel.id} />
-            <CardHeader title={hotel.name} subheader={hotel.location.city} />
+            <RemoveFavAlert yelpId={favItem.id} />
+            <CardHeader
+              title={favItem.name}
+              subheader={favItem.location.city}
+            />
             <CardMedia
               className={classes.media}
-              image={hotel.image_url}
-              title={hotel.name}
+              image={favItem.image_url}
+              title={favItem.name}
             />
             <CardActions>
-              <Button dense color="primary" href={hotel.url} target="_blank">
+              <Button dense color="primary" href={favItem.url} target="_blank">
                 Yelp Info
               </Button>
             </CardActions>
@@ -69,7 +74,7 @@ class DashCards extends Component {
   }
 }
 
-DashCards.propTypes = {
+YelpCards.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired
 };
@@ -79,5 +84,5 @@ function mapStateToProps({ favorites }) {
 }
 
 export default connect(mapStateToProps)(
-  withStyles(styles, { withTheme: true })(DashCards)
+  withStyles(styles, { withTheme: true })(YelpCards)
 );

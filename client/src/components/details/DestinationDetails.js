@@ -46,6 +46,11 @@ class DestinationDetails extends Component {
     this.props.fetchDestination(destination);
   }
 
+  handleFavClick() {
+    const destination = this.props.match.params.location;
+    this.props.updateFavorites('destinations', destination);
+  }
+
   renderContent() {
     const { classes, destination } = this.props;
     switch (this.props.destination) {
@@ -67,7 +72,7 @@ class DestinationDetails extends Component {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button dense color="primary">
+                  <Button dense color="primary" disabled>
                     Add to Favorites
                   </Button>
                 </CardActions>

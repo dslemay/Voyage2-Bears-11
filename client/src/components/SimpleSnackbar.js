@@ -66,7 +66,7 @@ class SimpleSnackbar extends Component {
         <Snackbar
           anchorOrigin={{
             vertical: 'bottom',
-            horizontal: 'left'
+            horizontal: 'right'
           }}
           open={this.state.open}
           autoHideDuration={3000}

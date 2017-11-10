@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Tabs, { Tab } from 'material-ui/Tabs';
-import DashCards from './DashCards';
+import YelpCards from './YelpCards';
+import DestinationCards from './DestinationCards';
 
 function TabContainer(props) {
   return (
@@ -47,10 +48,10 @@ class Dashboard extends Component {
             <Tab label="POI's" />
           </Tabs>
         </AppBar>
-        {value === 0 && <TabContainer>Item One</TabContainer>}
+        {value === 0 && <TabContainer>Destinations</TabContainer>}
         {value === 1 &&
           <TabContainer>
-            <DashCards />
+            <YelpCards favType="hotels" />
           </TabContainer>}
         {value === 2 && <TabContainer>Item Three</TabContainer>}
       </div>
