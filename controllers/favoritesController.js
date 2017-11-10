@@ -44,9 +44,14 @@ exports.getFavoritesData = async (req, res) => {
     return Promise.all(array.map(location => client.business(location)));
   }
 
+  function returnJsonBody(yelpArray) {
+    return yelpArray.map(location => location.jsonBody);
+  }
+
   // If there is no req.query, pull information from all of favorites
   const hotelsIds = req.user.favorites.hotels;
-  const POIsIds = req.user.favorites.POIs;
+  const restaurantsIds = req.user.favorites.restaurants;
+  const entertainmentIds = req.user.favorites.entertainment;
   const destinationIds = req.user.favorites.destinations;
 
   // Get any data stored in user model
@@ -57,15 +62,23 @@ exports.getFavoritesData = async (req, res) => {
 
   // Resolve all promises and format data for return
   const hotelsPromise = yelpPromiseArray(hotelsIds);
-  const POIsPromise = yelpPromiseArray(POIsIds);
-  const [hotelsRes, POIsRes, destinationRes] = await Promise.all([
+  const restaurantsPromise = yelpPromiseArray(restaurantsIds);
+  const entertainmentPromise = yelpPromiseArray(entertainmentIds);
+  const [
+    hotelsRes,
+    restaurantsRes,
+    entertainmentRes,
+    destinationRes
+  ] = await Promise.all([
     hotelsPromise,
-    POIsPromise,
+    restaurantsPromise,
+    entertainmentPromise,
     destinationPromise
   ]);
-  const hotels = hotelsRes.map(hotel => hotel.jsonBody);
-  const POIs = POIsRes.map(POI => POI.jsonBody);
+  const hotels = returnJsonBody(hotelsRes);
+  const restaurants = returnJsonBody(restaurantsRes);
+  const entertainment = returnJsonBody(entertainmentRes);
   const { destinations } = destinationRes.favorites;
 
-  res.send({ hotels, POIs, destinations });
+  res.send({ hotels, restaurants, entertainment, destinations });
 };

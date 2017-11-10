@@ -27,7 +27,8 @@ const userSchema = new Schema({
   },
   favorites: {
     hotels: [String],
-    POIs: [String],
+    restaurants: [String],
+    entertainment: [String],
     destinations: [{ type: Schema.Types.ObjectId, ref: 'Destination' }]
   }
 });
