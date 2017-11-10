@@ -38,7 +38,7 @@ export const updateFavorites = (favArrName, locationId) => async dispatch => {
   const res = await axios.post('/api/favorites', { favArrName, locationId });
   const index = res.data.index;
 
-  if (!index) {
+  if (index === undefined) {
     const yelp = await axios.get(`/api/favorites?location=${locationId}`);
     return dispatch({
       type: ADD_FAVORITE,

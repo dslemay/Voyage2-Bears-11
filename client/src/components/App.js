@@ -26,6 +26,7 @@ class App extends Component {
           <Route exact path="/" component={Landing} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
+          <Route path="/details" component={DestinationDetails} />
           <Route path="/details/:location" component={DestinationDetails} />
           <Footer />
         </div>

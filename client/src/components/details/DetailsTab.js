@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { fetchDestinationCategory } from '../../actions';
 import AppBar from 'material-ui/AppBar';
 import Tabs, { Tab } from 'material-ui/Tabs';
+import FlightsList from '../FlightsList';
 
 function TabContainer(props) {
   return <div style={{ padding: 8 * 3 }}>{props.children}</div>;
@@ -74,7 +75,7 @@ class DetailsTab extends React.Component {
         )}
         {value === 3 && (
           <TabContainer>
-            <h2>Flights Component</h2>
+            <FlightsList />
           </TabContainer>
         )}
       </div>
