@@ -2,6 +2,8 @@ import React from 'react';
 import HotelsList from './HotelsList';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
+import { connect } from 'react-redux';
+import { fetchDestinationCategory } from '../../actions';
 import AppBar from 'material-ui/AppBar';
 import Tabs, { Tab } from 'material-ui/Tabs';
 
@@ -23,9 +25,18 @@ const styles = theme => ({
 });
 
 class DetailsTab extends React.Component {
-  state = {
-    value: 0
-  };
+  constructor() {
+    super();
+    this.state = {
+      value: 0
+    };
+  }
+
+  componentDidMount() {
+    const { yelpLocation } = this.props;
+    this.props.fetchDestinationCategory(yelpLocation, 'hotels');
+    this.props.fetchDestinationCategory(yelpLocation, 'restaurants');
+  }
 
   handleChange = (event, value) => {
     this.setState({ value });
@@ -40,18 +51,21 @@ class DetailsTab extends React.Component {
         <AppBar position="static">
           <Tabs value={value} onChange={this.handleChange} centered>
             <Tab label="Hotels" />
+            <Tab label="Restaurants" />
             <Tab label="Flights" />
           </Tabs>
         </AppBar>
         {value === 0 && (
           <TabContainer>
-            <HotelsList
-              yelpLocation={this.props.yelpName}
-              yelpCategory="hotels"
-            />
+            <HotelsList yelpCategory="hotels" />
           </TabContainer>
         )}
         {value === 1 && (
+          <TabContainer>
+            <HotelsList yelpCategory="restaurants" />
+          </TabContainer>
+        )}
+        {value === 2 && (
           <TabContainer>
             <h2>Flights Component</h2>
           </TabContainer>
@@ -65,4 +79,6 @@ DetailsTab.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(DetailsTab);
+export default connect(null, { fetchDestinationCategory })(
+  withStyles(styles)(DetailsTab)
+);

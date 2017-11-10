@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import { GridList, GridListTile, GridListTileBar } from 'material-ui/GridList';
-import { fetchDestinationCategory } from '../../actions';
 import SimpleSnackbar from '../SimpleSnackbar';
 
 const styles = theme => ({
@@ -24,11 +23,6 @@ const styles = theme => ({
 });
 
 class HotelsList extends Component {
-  componentDidMount() {
-    const { yelpLocation, yelpCategory } = this.props;
-    this.props.fetchDestinationCategory(yelpLocation, yelpCategory);
-  }
-
   render() {
     const { classes, yelpCategory } = this.props;
     return (
@@ -72,14 +66,11 @@ class HotelsList extends Component {
 
 HotelsList.propTypes = {
   classes: PropTypes.object.isRequired,
-  yelpCategory: PropTypes.string.isRequired,
-  yelpLocation: PropTypes.string.isRequired
+  yelpCategory: PropTypes.string.isRequired
 };
 
 function mapStateToProps({ destinationDetails, auth }) {
   return { destinationDetails, auth };
 }
 
-export default connect(mapStateToProps, { fetchDestinationCategory })(
-  withStyles(styles)(HotelsList)
-);
+export default connect(mapStateToProps)(withStyles(styles)(HotelsList));
