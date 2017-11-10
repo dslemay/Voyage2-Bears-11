@@ -3,7 +3,10 @@ import {
   FETCH_DESTINATION_CATEGORY
 } from '../actions/types';
 
-export default function(state = { destination: null, hotels: [] }, action) {
+export default function(
+  state = { destination: null, hotels: [], restaurants: [], entertainment: [] },
+  action
+) {
   const { category } = action;
   switch (action.type) {
     case FETCH_DESTINATION:

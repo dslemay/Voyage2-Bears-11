@@ -36,6 +36,7 @@ class DetailsTab extends React.Component {
     const { yelpLocation } = this.props;
     this.props.fetchDestinationCategory(yelpLocation, 'hotels');
     this.props.fetchDestinationCategory(yelpLocation, 'restaurants');
+    this.props.fetchDestinationCategory(yelpLocation, 'entertainment');
   }
 
   handleChange = (event, value) => {
@@ -52,6 +53,7 @@ class DetailsTab extends React.Component {
           <Tabs value={value} onChange={this.handleChange} centered>
             <Tab label="Hotels" />
             <Tab label="Restaurants" />
+            <Tab label="Entertainment" />
             <Tab label="Flights" />
           </Tabs>
         </AppBar>
@@ -66,6 +68,11 @@ class DetailsTab extends React.Component {
           </TabContainer>
         )}
         {value === 2 && (
+          <TabContainer>
+            <HotelsList yelpCategory="entertainment" />
+          </TabContainer>
+        )}
+        {value === 3 && (
           <TabContainer>
             <h2>Flights Component</h2>
           </TabContainer>
