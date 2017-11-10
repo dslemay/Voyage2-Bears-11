@@ -10,9 +10,9 @@ const clientSecret = keys.yelpClientSecret;
 
 module.exports = app => {
   app.get('/api/yelp', (req, res) => {
-    const { location } = req.query;
+    const { location, category } = req.query;
     const searchRequest = {
-      term: 'Hotels',
+      term: category,
       location
     };
 
