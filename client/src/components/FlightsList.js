@@ -13,12 +13,12 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    textAlign: 'center',
+    textAlign: 'center'
   },
   button: {
     marginTop: 20,
-    marginBottom: 20,
-  },
+    marginBottom: 20
+  }
 });
 
 // this function takes the string from the origin selection and returns just the IATA code
@@ -39,8 +39,8 @@ class FlightsList extends React.Component {
 
     this.state = {
       origin: '',
-      date: '',
-    }
+      date: ''
+    };
   }
 
   handleClick() {
@@ -48,39 +48,37 @@ class FlightsList extends React.Component {
     // remove any flight prices on the tab
     ticket.pop();
     const originCode = getOriginCode(this.state.origin);
-    this.props.fetchFlights(originCode, 'LAX', this.state.date);
+    const destinationCode = this.props.destination.IATA;
+    this.props.fetchFlights(originCode, destinationCode, this.state.date);
   }
 
   handleOriginChange(origin) {
-    this.setState({origin});
+    this.setState({ origin });
   }
 
   handleDateChange(date) {
-    this.setState({date});
+    this.setState({ date });
   }
 
   render() {
     const classes = this.props.classes;
     const originCode = getOriginCode(this.state.origin);
+    const destinationCode = this.props.destination.IATA;
 
     return (
       <section className={classes.container}>
         <div>
-          <MultipleSelect 
+          <MultipleSelect
             onOriginChange={this.handleOriginChange}
             originName={this.state.origin}
           />
 
-          <DatePickers 
+          <DatePickers
             departureDate={this.state.date}
             onDateChange={this.handleDateChange}
           />
 
-          <Button 
-            raised 
-            className={classes.button}
-            onClick={this.handleClick}
-          >
+          <Button raised className={classes.button} onClick={this.handleClick}>
             Check Prices
           </Button>
 
@@ -90,28 +88,26 @@ class FlightsList extends React.Component {
               <p>{flight.data.flights.trips.tripOption['0'].saleTotal}</p>
               <Button
                 raised
-                href={`https://www.google.com/flights/#search;f=${originCode};t=LAX;d=${this.state.date};tt=o`}
+                href={`https://www.google.com/flights/#search;f=${originCode};t=${destinationCode};d=${this
+                  .state.date};tt=o`}
                 target="_blank"
               >
                 Book Flights Now
               </Button>
             </div>
           ))}
-
         </div>
       </section>
     );
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    flights: state.flights
-  };
-};
+function mapStateToProps({ flights, destination }) {
+  return { flights, destination };
+}
 
 FlightsList.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default connect(mapStateToProps, { fetchFlights })(
