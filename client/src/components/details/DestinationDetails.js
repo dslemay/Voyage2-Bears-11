@@ -39,8 +39,9 @@ class DestinationDetails extends Component {
   }
 
   renderContent() {
-    const { classes, destination } = this.props;
-    switch (this.props.destination) {
+    const { classes } = this.props;
+    const { destination } = this.props.destinationDetails;
+    switch (this.props.destinationDetails.destination) {
       case null:
         return;
       default:
@@ -88,8 +89,8 @@ DestinationDetails.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-function mapStateToProps({ destination }) {
-  return { destination };
+function mapStateToProps({ destinationDetails }) {
+  return { destinationDetails };
 }
 
 export default connect(mapStateToProps, actions)(

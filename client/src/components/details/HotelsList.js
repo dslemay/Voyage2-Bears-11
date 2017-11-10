@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import { GridList, GridListTile, GridListTileBar } from 'material-ui/GridList';
-import { fetchHotels } from '../../actions';
+import { fetchDestinationCategory } from '../../actions';
 import SimpleSnackbar from '../SimpleSnackbar';
 
 const styles = theme => ({
@@ -25,8 +25,8 @@ const styles = theme => ({
 
 class HotelsList extends Component {
   componentDidMount() {
-    const { yelpName } = this.props;
-    this.props.fetchHotels(yelpName);
+    const { yelpLocation, yelpCategory } = this.props;
+    this.props.fetchDestinationCategory(yelpLocation, yelpCategory);
   }
 
   render() {
@@ -34,7 +34,7 @@ class HotelsList extends Component {
     return (
       <div className={classes.container}>
         <GridList cellHeight={230} className={classes.gridList}>
-          {this.props.hotels.map(hotel =>
+          {this.props.destinationDetails.hotels.map(hotel => (
             <GridListTile key={hotel.name}>
               <img
                 src={hotel.image_url}
@@ -56,7 +56,7 @@ class HotelsList extends Component {
                 }
               />
             </GridListTile>
-          )}
+          ))}
         </GridList>
       </div>
     );
@@ -67,10 +67,10 @@ HotelsList.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-function mapStateToProps({ hotels, auth }) {
-  return { hotels, auth };
+function mapStateToProps({ destinationDetails, auth }) {
+  return { destinationDetails, auth };
 }
 
-export default connect(mapStateToProps, { fetchHotels })(
+export default connect(mapStateToProps, { fetchDestinationCategory })(
   withStyles(styles)(HotelsList)
 );
