@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Tabs, { Tab } from 'material-ui/Tabs';
+import FlightsList from '../FlightsList';
 
 function TabContainer(props) {
   return (
@@ -53,7 +54,7 @@ class DetailsTab extends React.Component {
           </TabContainer>}
         {value === 1 &&
           <TabContainer>
-            <h2>Flights Component</h2>
+            <FlightsList />
           </TabContainer>}
       </div>
     );

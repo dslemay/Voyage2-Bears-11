@@ -23,7 +23,7 @@ const styles = theme => ({
   }
 });
 
-class HotelsList extends Component {
+class FlightsList extends Component {
   componentDidMount() {
     const { yelpName } = this.props;
     this.props.fetchHotels(yelpName);
@@ -63,7 +63,7 @@ class HotelsList extends Component {
   }
 }
 
-HotelsList.propTypes = {
+FlightsList.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
@@ -72,5 +72,5 @@ function mapStateToProps({ hotels, auth }) {
 }
 
 export default connect(mapStateToProps, { fetchHotels })(
-  withStyles(styles)(HotelsList)
+  withStyles(styles)(FlightsList)
 );
