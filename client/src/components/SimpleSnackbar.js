@@ -30,7 +30,8 @@ class SimpleSnackbar extends Component {
   }
 
   handleClick = () => {
-    this.props.updateFavorites('hotels', this.props.yelpId);
+    const { yelpCategory, yelpId } = this.props;
+    this.props.updateFavorites(yelpCategory, yelpId);
     this.setState({ clicked: true });
   };
 
@@ -75,11 +76,7 @@ class SimpleSnackbar extends Component {
           SnackbarContentProps={{
             'aria-describedby': 'message-id'
           }}
-          message={
-            <span id="message-id">
-              {this.renderMessage()}
-            </span>
-          }
+          message={<span id="message-id">{this.renderMessage()}</span>}
         />
       </div>
     );
@@ -87,7 +84,9 @@ class SimpleSnackbar extends Component {
 }
 
 SimpleSnackbar.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  yelpCategory: PropTypes.string.isRequired,
+  yelpId: PropTypes.string.isRequired
 };
 
 function mapStateToProps({ favorites }) {

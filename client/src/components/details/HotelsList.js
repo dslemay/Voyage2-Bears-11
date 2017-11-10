@@ -30,29 +30,36 @@ class HotelsList extends Component {
   }
 
   render() {
-    const classes = this.props.classes;
+    const { classes, yelpCategory } = this.props;
     return (
       <div className={classes.container}>
         <GridList cellHeight={230} className={classes.gridList}>
-          {this.props.destinationDetails.hotels.map(hotel => (
-            <GridListTile key={hotel.name}>
+          {this.props.destinationDetails[yelpCategory].map(POI => (
+            <GridListTile key={POI.name}>
               <img
-                src={hotel.image_url}
-                alt={hotel.name}
-                onClick={() => window.open(hotel.url)}
+                src={POI.image_url}
+                alt={POI.name}
+                onClick={() => window.open(POI.url)}
                 className={classes.gridImg}
               />
               <GridListTileBar
-                title={hotel.name}
+                title={POI.name}
                 subtitle={
                   <span>
-                    Rating: {hotel.rating}
+                    Rating: {POI.rating}
                     <br />
-                    Price: {hotel.price}
+                    Price: {POI.price}
                   </span>
                 }
                 actionIcon={
-                  this.props.auth ? <SimpleSnackbar yelpId={hotel.id} /> : ''
+                  this.props.auth ? (
+                    <SimpleSnackbar
+                      yelpCategory={yelpCategory}
+                      yelpId={POI.id}
+                    />
+                  ) : (
+                    ''
+                  )
                 }
               />
             </GridListTile>
@@ -64,7 +71,9 @@ class HotelsList extends Component {
 }
 
 HotelsList.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  yelpCategory: PropTypes.string.isRequired,
+  yelpLocation: PropTypes.string.isRequired
 };
 
 function mapStateToProps({ destinationDetails, auth }) {
