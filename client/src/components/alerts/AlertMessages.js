@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import compose from 'recompose/compose';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import { connect } from 'react-redux';
-import * as actions from '../../actions';
+import { updateMessages } from '../../actions';
 import Alert from './Alert';
 
 const styles = theme => ({
@@ -49,7 +48,6 @@ AlertMessages.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default compose(
-  withStyles(styles, { name: 'AlertMessages' }),
-  connect(mapStateToProps, actions)
-)(AlertMessages);
+export default withStyles(styles)(
+  connect(mapStateToProps, { updateMessages })(AlertMessages)
+);

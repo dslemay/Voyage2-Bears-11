@@ -1,6 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as actions from '../../actions';
+import { withStyles } from 'material-ui/styles';
+import PropTypes from 'prop-types';
+import Paper from 'material-ui/Paper';
+import { fetchUser, updateMessages } from '../../actions';
+
+const styles = theme => ({
+  paper: {
+    marginTop: 30,
+    padding: 16,
+    width: '80%',
+    margin: '0 auto'
+  }
+});
 
 class Register extends Component {
   constructor(props) {
@@ -81,22 +93,33 @@ class Register extends Component {
         </div>
       </div>
     ));
+
+    const { classes } = this.props;
+
     return (
-      <div className="container">
-        <h2>Register</h2>
-        <form className="col s12" onSubmit={this.handleSubmit}>
-          {formFields}
-          <button
-            className="btn waves-effect waves-light"
-            type="submit"
-            name="action"
-          >
-            Submit
-          </button>
-        </form>
-      </div>
+      <Paper className={classes.paper}>
+        <div className="container">
+          <h2>Register</h2>
+          <form className="col s12" onSubmit={this.handleSubmit}>
+            {formFields}
+            <button
+              className="btn waves-effect waves-light"
+              type="submit"
+              name="action"
+            >
+              Submit
+            </button>
+          </form>
+        </div>
+      </Paper>
     );
   }
 }
 
-export default connect(null, actions)(Register);
+Register.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+export default withStyles(styles)(
+  connect(null, { fetchUser, updateMessages })(Register)
+);

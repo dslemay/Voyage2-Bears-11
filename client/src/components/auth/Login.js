@@ -1,6 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as actions from '../../actions';
+import { withStyles } from 'material-ui/styles';
+import PropTypes from 'prop-types';
+import Paper from 'material-ui/Paper';
+import { fetchUser, fetchFavorites, updateMessages } from '../../actions';
+
+const styles = theme => ({
+  paper: {
+    marginTop: 30,
+    padding: 16,
+    width: '80%',
+    margin: '0 auto'
+  }
+});
 
 class Login extends Component {
   constructor(props) {
@@ -39,7 +51,6 @@ class Login extends Component {
         /* Handle redirect based on url in response object which is handled on backend.
          * Redirect upon successful login
          * Upon unsuccessful login, the page will not change. Reset input fields.
-         * TODO: Utilize message property of object to display message to user on success/failure
          */
         this.props.updateMessages(null, data);
         if (path !== '/login') {
@@ -76,22 +87,33 @@ class Login extends Component {
         </div>
       </div>
     ));
+
+    const { classes } = this.props;
+
     return (
-      <div className="container">
-        <h2>Login</h2>
-        <form className="col s12" onSubmit={this.handleSubmit}>
-          {formFields}
-          <button
-            className="btn waves-effect waves-light"
-            type="submit"
-            name="action"
-          >
-            Login
-          </button>
-        </form>
-      </div>
+      <Paper className={classes.paper}>
+        <div className="container">
+          <h2>Login</h2>
+          <form className="col s12" onSubmit={this.handleSubmit}>
+            {formFields}
+            <button
+              className="btn waves-effect waves-light"
+              type="submit"
+              name="action"
+            >
+              Login
+            </button>
+          </form>
+        </div>
+      </Paper>
     );
   }
 }
 
-export default connect(null, actions)(Login);
+Login.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+export default withStyles(styles)(
+  connect(null, { fetchUser, fetchFavorites, updateMessages })(Login)
+);

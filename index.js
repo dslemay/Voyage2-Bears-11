@@ -6,6 +6,7 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 const expressValidator = require('express-validator');
 const keys = require('./config/keys');
 require('./models/User');
+require('./models/Destination');
 const passport = require('passport');
 require('./services/passport');
 
@@ -63,6 +64,16 @@ app.use(passport.session());
 require('./routes/authRoutes')(app);
 require('./routes/detailRoutes')(app);
 require('./routes/favoriteRoutes')(app);
+
+// Serve up React files in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+
+  const path = require('path');
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 
 // Determine port and start server.
 const PORT = process.env.PORT || 5000;
