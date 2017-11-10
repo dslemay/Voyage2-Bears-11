@@ -68,7 +68,7 @@ class DestinationDetails extends Component {
             </Grid>
             <Grid item xs={12} md={9}>
               <Paper>
-                <DetailsTab yelpName={destination.yelpName} />
+                <DetailsTab yelpLocation={destination.yelpName} />
               </Paper>
             </Grid>
             <Grid item xs={12} md={3}>
