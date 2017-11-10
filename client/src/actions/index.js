@@ -2,7 +2,7 @@
 import axios from 'axios';
 import {
   FETCH_DESTINATION,
-  FETCH_HOTELS,
+  FETCH_DESTINATION_CATEGORY,
   FETCH_USER,
   ADD_FAVORITE,
   REMOVE_FAVORITE,
@@ -17,10 +17,15 @@ export const fetchDestination = slug => async dispatch => {
   dispatch({ type: FETCH_DESTINATION, payload: res.data });
 };
 
-export const fetchHotels = location => async dispatch => {
-  const res = await axios.get(`/api/yelp?location=${location}`);
+export const fetchDestinationCategory = (
+  location,
+  category
+) => async dispatch => {
+  const res = await axios.get(
+    `/api/yelp?location=${location}&category=${category}`
+  );
 
-  dispatch({ type: FETCH_HOTELS, payload: res.data });
+  dispatch({ type: FETCH_DESTINATION_CATEGORY, category, payload: res.data });
 };
 
 export const fetchUser = () => async dispatch => {
