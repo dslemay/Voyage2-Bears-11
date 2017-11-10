@@ -50,7 +50,7 @@ exports.getFavoritesData = async (req, res) => {
   const destinationIds = req.user.favorites.destinations;
 
   // Get any data stored in user model
-  const destinationPromise = await User.findOne(
+  const destinationPromise = User.findOne(
     { _id: req.user._id },
     'favorites.destinations'
   );
