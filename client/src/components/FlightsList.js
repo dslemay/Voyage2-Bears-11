@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { fetchFlights } from '../actions/flightActions';
+import { updateMessages } from '../actions';
 import Button from 'material-ui/Button';
 import MultipleSelect from './MultipleSelect';
 import DatePickers from './DatePickers';
@@ -44,6 +45,13 @@ class FlightsList extends React.Component {
   }
 
   handleClick() {
+    if (!this.state.date || !this.state.origin) {
+      return this.props.updateMessages(null, {
+        type: 'error',
+        text: 'You must select an airport and date'
+      });
+    }
+
     var ticket = this.props.flights;
     // remove any flight prices on the tab
     ticket.pop();
@@ -110,6 +118,6 @@ FlightsList.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default connect(mapStateToProps, { fetchFlights })(
+export default connect(mapStateToProps, { fetchFlights, updateMessages })(
   withStyles(styles)(FlightsList)
 );
