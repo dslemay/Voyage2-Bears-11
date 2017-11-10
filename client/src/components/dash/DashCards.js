@@ -35,7 +35,7 @@ class DashCards extends Component {
       return (
         <Grid item xs={12} sm={6} md={4} key={hotel.id}>
           <Card className={classes.card}>
-            <RemoveFavAlert className={classes.closeBtn} />
+            <RemoveFavAlert className={classes.closeBtn} yelpId={hotel.id} />
             <CardHeader title={hotel.name} subheader={hotel.location.city} />
             <CardMedia
               className={classes.media}
@@ -46,7 +46,7 @@ class DashCards extends Component {
               <Button dense color="primary">
                 Destination Page
               </Button>
-              <Button dense color="primary">
+              <Button dense color="primary" href={hotel.url} target="_blank">
                 Yelp Info
               </Button>
             </CardActions>

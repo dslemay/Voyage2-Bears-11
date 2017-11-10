@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { updateFavorites } from '../../actions';
 import Button from 'material-ui/Button';
 import Dialog, {
   DialogActions,
@@ -26,6 +28,11 @@ class RemoveFavAlert extends Component {
     this.setState({ open: false });
   };
 
+  handleRequestConfirm = () => {
+    this.setState({ open: false });
+    this.props.updateFavorites('hotels', this.props.yelpId);
+  };
+
   render() {
     return (
       <div>
@@ -46,7 +53,7 @@ class RemoveFavAlert extends Component {
             <Button onClick={this.handleRequestClose} color="accent">
               Cancel
             </Button>
-            <Button onClick={this.handleRequestClose} color="primary" autoFocus>
+            <Button onClick={this.handleRequestConfirm} color="primary">
               Continue
             </Button>
           </DialogActions>
@@ -56,4 +63,4 @@ class RemoveFavAlert extends Component {
   }
 }
 
-export default RemoveFavAlert;
+export default connect(null, { updateFavorites })(RemoveFavAlert);
