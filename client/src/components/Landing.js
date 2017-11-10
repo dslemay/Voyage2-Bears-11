@@ -37,7 +37,7 @@ const styles = theme => ({
   },
   greeting: {
     position: 'absolute',
-    bottom: 165,
+    bottom: 185,
     left: 45,
     color: 'white'
   }

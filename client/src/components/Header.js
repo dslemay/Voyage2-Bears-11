@@ -41,9 +41,14 @@ class Header extends Component {
       default:
         // Logout using anchor tag to force refresh which also will update auth state.
         return (
-          <Button color="inherit" href="/api/logout">
-            Logout
-          </Button>
+          <div>
+            <Button component={Link} to="/dashboard" color="inherit">
+              My Favorites
+            </Button>
+            <Button color="inherit" href="/api/logout">
+              Logout
+            </Button>
+          </div>
         );
     }
   }

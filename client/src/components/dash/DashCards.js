@@ -8,6 +8,7 @@ import Divider from 'material-ui/Divider';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 import RemoveFavAlert from './RemoveFavAlert';
+import { CircularProgress } from 'material-ui/Progress';
 
 const styles = theme => ({
   root: {
@@ -25,6 +26,10 @@ const styles = theme => ({
   },
   line: {
     marginBottom: 23
+  },
+  progress: {
+    margin: 'auto',
+    display: 'block'
   }
 });
 
@@ -33,9 +38,9 @@ class DashCards extends Component {
     const { classes } = this.props;
     return this.props.favorites.hotels.map(hotel => {
       return (
-        <Grid item xs={12} sm={6} md={4} key={hotel.id}>
+        <Grid item xs={12} sm={6} md={4} key={hotel.coordinates.latitude}>
           <Card className={classes.card}>
-            <RemoveFavAlert className={classes.closeBtn} yelpId={hotel.id} />
+            <RemoveFavAlert yelpId={hotel.id} />
             <CardHeader title={hotel.name} subheader={hotel.location.city} />
             <CardMedia
               className={classes.media}
@@ -58,12 +63,20 @@ class DashCards extends Component {
 
   render() {
     const { classes } = this.props;
+    // loading variable useful, but flawed here. Will display loading component
+    // if someone simply has no favorites.
+    const loading = this.props.favorites.hotels.length === 0;
+    console.log(this.props.favorites.hotels);
+
     return (
       <div className={classes.root}>
         <Typography type="display2" gutterBottom>
           My Favorites
         </Typography>
         <Divider className={classes.line} />
+        {loading
+          ? <CircularProgress className={classes.progress} size={70} />
+          : ''}
         <Grid container spacing={24}>
           {this.renderCards()}
         </Grid>
