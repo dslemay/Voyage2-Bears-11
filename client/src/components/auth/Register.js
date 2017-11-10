@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
 import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
-import * as actions from '../../actions';
+import { fetchUser, updateMessages } from '../../actions';
 
 const styles = theme => ({
   paper: {
@@ -120,4 +120,6 @@ Register.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(connect(null, actions)(Register));
+export default withStyles(styles)(
+  connect(null, { fetchUser, updateMessages })(Register)
+);

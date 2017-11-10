@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
 import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
-import * as actions from '../../actions';
+import { fetchUser, fetchFavorites, updateMessages } from '../../actions';
 
 const styles = theme => ({
   paper: {
@@ -51,7 +51,6 @@ class Login extends Component {
         /* Handle redirect based on url in response object which is handled on backend.
          * Redirect upon successful login
          * Upon unsuccessful login, the page will not change. Reset input fields.
-         * TODO: Utilize message property of object to display message to user on success/failure
          */
         this.props.updateMessages(null, data);
         if (path !== '/login') {
@@ -115,4 +114,6 @@ Login.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(connect(null, actions)(Login));
+export default withStyles(styles)(
+  connect(null, { fetchUser, fetchFavorites, updateMessages })(Login)
+);
