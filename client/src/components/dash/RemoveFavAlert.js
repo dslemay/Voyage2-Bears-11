@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Button from 'material-ui/Button';
 import Dialog, {
   DialogActions,
@@ -13,7 +13,7 @@ const style = {
   float: 'right'
 };
 
-class RemoveFavAlert extends React.Component {
+class RemoveFavAlert extends Component {
   state = {
     open: false
   };

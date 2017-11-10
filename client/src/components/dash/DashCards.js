@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
@@ -14,7 +15,10 @@ const styles = theme => ({
     marginTop: 30
   },
   card: {
-    width: '100%'
+    width: '100%',
+    '&:hover': {
+      boxShadow: theme.shadows[8]
+    }
   },
   media: {
     height: 200
@@ -73,4 +77,10 @@ DashCards.propTypes = {
   theme: PropTypes.object.isRequired
 };
 
-export default withStyles(styles, { withTheme: true })(DashCards);
+function mapStateToProps({ favorites }) {
+  return { favorites };
+}
+
+export default connect(mapStateToProps)(
+  withStyles(styles, { withTheme: true })(DashCards)
+);

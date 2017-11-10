@@ -34,6 +34,12 @@ const styles = theme => ({
     marginRight: 'auto',
     marginLeft: 'auto',
     marginBottom: 15
+  },
+  greeting: {
+    position: 'absolute',
+    bottom: 165,
+    left: 45,
+    color: 'white'
   }
 });
 
@@ -69,12 +75,16 @@ class Landing extends Component {
               <CardMedia
                 className={classes.media}
                 image="https://source.unsplash.com/R261qkc-nDE"
-                title="Welcome to ChinguTravels"
-              />
-              <CardContent>
-                <Typography type="display2" component="h2">
+              >
+                <Typography
+                  className={classes.greeting}
+                  type="display2"
+                  component="h2"
+                >
                   Welcome
                 </Typography>
+              </CardMedia>
+              <CardContent>
                 <Typography component="p">
                   Discover new locations to visit. Click{' '}
                   <b>Generate Random Destination</b> below to start your

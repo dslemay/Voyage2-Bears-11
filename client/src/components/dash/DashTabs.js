@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
@@ -21,7 +20,7 @@ TabContainer.propTypes = {
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    marginTop: 0,
+    marginTop: 20,
     backgroundColor: '#E8EAF6'
   }
 });
@@ -51,7 +50,7 @@ class Dashboard extends Component {
         {value === 0 && <TabContainer>Item One</TabContainer>}
         {value === 1 &&
           <TabContainer>
-            <DashCards {...this.props} />
+            <DashCards />
           </TabContainer>}
         {value === 2 && <TabContainer>Item Three</TabContainer>}
       </div>
@@ -63,8 +62,4 @@ Dashboard.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-function mapStateToProps({ favorites }) {
-  return { favorites };
-}
-
-export default connect(mapStateToProps)(withStyles(styles)(Dashboard));
+export default withStyles(styles)(Dashboard);
