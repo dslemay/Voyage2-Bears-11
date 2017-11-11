@@ -45,6 +45,7 @@ class DestinationDetails extends Component {
       case null:
         return;
       default:
+        const id = destination._id;
         return (
           <Grid container spacing={24}>
             <Grid item xs={12}>
@@ -60,8 +61,13 @@ class DestinationDetails extends Component {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button dense color="primary">
-                    Add to Favorites
+                  <Button
+                    dense
+                    color="primary"
+                    onClick={() =>
+                      this.props.updateFavorites('destinations', id)}
+                  >
+                    {this.renderFavMessage()}
                   </Button>
                 </CardActions>
               </Card>
@@ -79,6 +85,13 @@ class DestinationDetails extends Component {
     }
   }
 
+  renderFavMessage = () => {
+    const id = this.props.destinationDetails.destination._id;
+    const destinations = this.props.auth.favorites.destinations;
+    const inFavorites = destinations.indexOf(id);
+    return inFavorites > -1 ? 'Remove from Favorites' : 'Add to Favorites';
+  };
+
   render() {
     const { classes } = this.props;
     return <div className={classes.root}>{this.renderContent()}</div>;
@@ -89,8 +102,8 @@ DestinationDetails.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-function mapStateToProps({ destinationDetails }) {
-  return { destinationDetails };
+function mapStateToProps({ auth, destinationDetails }) {
+  return { auth, destinationDetails };
 }
 
 export default connect(mapStateToProps, actions)(
