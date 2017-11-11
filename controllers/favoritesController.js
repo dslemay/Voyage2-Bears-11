@@ -13,10 +13,9 @@ exports.updateFavorites = async (req, res) => {
   const databaseArr = 'favorites.' + favArrName; // Which array we are modifying in the database
   const locationQuery = req.body.locationId; // Location to be adding or removing
   const favorites = req.user.favorites[favArrName];
-  const operator = favorites.includes(locationQuery) ? '$pull' : '$addToSet';
   const favIndex = favorites.indexOf(locationQuery);
+  const operator = favIndex > -1 ? '$pull' : '$addToSet';
   const index = favIndex > -1 ? favIndex : undefined;
-
   const user = await User.findByIdAndUpdate(
     req.user._id,
     {
@@ -59,7 +58,7 @@ exports.getFavoritesData = async (req, res) => {
   const destinationPromise = User.findOne(
     { _id: req.user._id },
     'favorites.destinations'
-  );
+  ).populate('favorites.destinations', 'name slug image');
 
   // Resolve all promises and format data for return
   const hotelsPromise = yelpPromiseArray(hotelsIds);
