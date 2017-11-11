@@ -39,12 +39,24 @@ export const updateFavorites = (favArrName, locationId) => async dispatch => {
   const index = res.data.index;
   dispatch({ type: FETCH_USER, payload: res.data.user });
 
-  if (index === undefined) {
+  if (index === undefined && favArrName !== 'destinations') {
     const yelp = await axios.get(`/api/favorites?location=${locationId}`);
     return dispatch({
       type: ADD_FAVORITE,
       favArrName,
       location: yelp.data
+    });
+  }
+
+  if (index === undefined && favArrName === 'destinations') {
+    const res = await axios.get(
+      `/api/destinationDetails?destination=${locationId}`
+    );
+    const destination = res.data.destination;
+    return dispatch({
+      type: ADD_FAVORITE,
+      favArrName,
+      location: destination
     });
   }
 
