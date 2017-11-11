@@ -16,7 +16,7 @@ exports.updateFavorites = async (req, res) => {
   const favIndex = favorites.indexOf(locationQuery);
   const index = favIndex > -1 ? favIndex : undefined;
 
-  await User.findByIdAndUpdate(
+  const user = await User.findByIdAndUpdate(
     req.user._id,
     {
       [operator]: { [databaseArr]: locationQuery }
@@ -24,7 +24,7 @@ exports.updateFavorites = async (req, res) => {
     { new: true }
   );
 
-  res.send({ index });
+  res.send({ index, user });
 };
 
 exports.getFavoritesData = async (req, res) => {
