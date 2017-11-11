@@ -1,5 +1,5 @@
 import React from 'react';
-import HotelsList from './HotelsList';
+import DetailsList from './DetailsList';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import { connect } from 'react-redux';
@@ -60,17 +60,17 @@ class DetailsTab extends React.Component {
         </AppBar>
         {value === 0 && (
           <TabContainer>
-            <HotelsList yelpCategory="hotels" />
+            <DetailsList yelpCategory="hotels" />
           </TabContainer>
         )}
         {value === 1 && (
           <TabContainer>
-            <HotelsList yelpCategory="restaurants" />
+            <DetailsList yelpCategory="restaurants" />
           </TabContainer>
         )}
         {value === 2 && (
           <TabContainer>
-            <HotelsList yelpCategory="entertainment" />
+            <DetailsList yelpCategory="entertainment" />
           </TabContainer>
         )}
         {value === 3 && (

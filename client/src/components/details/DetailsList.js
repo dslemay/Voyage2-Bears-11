@@ -22,7 +22,7 @@ const styles = theme => ({
   }
 });
 
-class HotelsList extends Component {
+class DetailsList extends Component {
   render() {
     const { classes, yelpCategory } = this.props;
     return (
@@ -64,7 +64,7 @@ class HotelsList extends Component {
   }
 }
 
-HotelsList.propTypes = {
+DetailsList.propTypes = {
   classes: PropTypes.object.isRequired,
   yelpCategory: PropTypes.string.isRequired
 };
@@ -73,4 +73,4 @@ function mapStateToProps({ destinationDetails, auth }) {
   return { destinationDetails, auth };
 }
 
-export default connect(mapStateToProps)(withStyles(styles)(HotelsList));
+export default connect(mapStateToProps)(withStyles(styles)(DetailsList));
