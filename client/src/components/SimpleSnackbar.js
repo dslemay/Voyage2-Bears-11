@@ -43,18 +43,17 @@ class SimpleSnackbar extends Component {
     this.setState({ open: false });
   };
 
-  // Somehow connect inFavorites to redux?
   renderHeart = () => {
-    const inFavorites = this.props.favorites.hotels.some(
-      hotel => hotel.id === this.props.yelpId
-    );
+    const { yelpCategory } = this.props;
+    const categoryArr = this.props.auth.favorites[yelpCategory];
+    const inFavorites = categoryArr.includes(this.props.yelpId);
     return inFavorites ? <FavoriteIcon /> : <FavoriteBorderIcon />;
   };
 
   renderMessage = () => {
-    const inFavorites = this.props.favorites.hotels.some(
-      hotel => hotel.id === this.props.yelpId
-    );
+    const { yelpCategory } = this.props;
+    const categoryArr = this.props.auth.favorites[yelpCategory];
+    const inFavorites = categoryArr.includes(this.props.yelpId);
     return inFavorites ? 'Added to favorites' : 'Removed from favorites';
   };
 
@@ -89,8 +88,8 @@ SimpleSnackbar.propTypes = {
   yelpId: PropTypes.string.isRequired
 };
 
-function mapStateToProps({ favorites }) {
-  return { favorites };
+function mapStateToProps({ auth, favorites }) {
+  return { auth, favorites };
 }
 
 export default connect(mapStateToProps, { updateFavorites })(
