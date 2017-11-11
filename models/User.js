@@ -30,6 +30,10 @@ const userSchema = new Schema({
     restaurants: [String],
     entertainment: [String],
     destinations: [{ type: Schema.Types.ObjectId, ref: 'Destination' }]
+  },
+  admin: {
+    type: Boolean,
+    default: false
   }
 });
 
