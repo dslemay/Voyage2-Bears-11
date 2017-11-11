@@ -45,7 +45,6 @@ class DestinationDetails extends Component {
       case null:
         return;
       default:
-        const id = destination._id;
         return (
           <Grid container spacing={24}>
             <Grid item xs={12}>
@@ -60,16 +59,7 @@ class DestinationDetails extends Component {
                     {destination.name}
                   </Typography>
                 </CardContent>
-                <CardActions>
-                  <Button
-                    dense
-                    color="primary"
-                    onClick={() =>
-                      this.props.updateFavorites('destinations', id)}
-                  >
-                    {this.renderFavMessage()}
-                  </Button>
-                </CardActions>
+                <CardActions>{this.renderFavButton()}</CardActions>
               </Card>
             </Grid>
             <Grid item xs={12} md={9}>
@@ -84,6 +74,26 @@ class DestinationDetails extends Component {
         );
     }
   }
+
+  renderFavButton = () => {
+    const { auth } = this.props;
+    const id = this.props.destinationDetails.destination._id;
+
+    // Render button if user is logged in
+    if (auth) {
+      return (
+        <Button
+          dense
+          color="primary"
+          onClick={() => this.props.updateFavorites('destinations', id)}
+        >
+          {this.renderFavMessage()}
+        </Button>
+      );
+    }
+
+    return;
+  };
 
   renderFavMessage = () => {
     const id = this.props.destinationDetails.destination._id;
