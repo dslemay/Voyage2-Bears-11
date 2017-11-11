@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
+const Destination = mongoose.model('Destination');
 const yelp = require('yelp-fusion');
 const keys = require('../config/keys');
 
@@ -81,4 +82,13 @@ exports.getFavoritesData = async (req, res) => {
   const { destinations } = destinationRes.favorites;
 
   res.send({ hotels, restaurants, entertainment, destinations });
+};
+
+exports.destinationDetails = async (req, res) => {
+  const locationQuery = req.query.destination;
+  const destination = await Destination.findById(
+    locationQuery,
+    'name slug image'
+  );
+  res.send({ destination });
 };
