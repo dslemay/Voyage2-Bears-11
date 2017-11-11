@@ -25,8 +25,8 @@ module.exports = app => {
 
         client.search(searchRequest).then(response => {
           const twelveResults = response.jsonBody.businesses.slice(0, 12);
-          const hotels = JSON.stringify(twelveResults, null, 4);
-          res.send(hotels);
+          const businesses = JSON.stringify(twelveResults, null, 4);
+          res.send(businesses);
         });
       })
       .catch(e => {
