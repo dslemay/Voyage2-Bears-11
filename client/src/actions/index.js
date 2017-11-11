@@ -12,9 +12,13 @@ import {
 } from './types';
 
 export const fetchDestination = slug => async dispatch => {
-  const res = await axios.get(`/api/locationDetails?location=${slug}`);
-
-  dispatch({ type: FETCH_DESTINATION, payload: res.data });
+  if (slug) {
+    const res = await axios.get(`/api/locationDetails?location=${slug}`);
+    dispatch({ type: FETCH_DESTINATION, payload: res.data });
+  } else {
+    const res = { data: null };
+    dispatch({ type: FETCH_DESTINATION, payload: res.data });
+  }
 };
 
 export const fetchDestinationCategory = (

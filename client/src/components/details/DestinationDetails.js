@@ -38,6 +38,10 @@ class DestinationDetails extends Component {
     this.props.fetchDestination(destination);
   }
 
+  componentWillUnmount() {
+    this.props.fetchDestination(null);
+  }
+
   renderContent() {
     const { classes } = this.props;
     const { destination } = this.props.destinationDetails;
