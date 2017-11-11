@@ -30,6 +30,31 @@ function getOriginCode(origin) {
   return originCode;
 }
 
+function checkDate(date) {
+  var dateArr = date.split("-");
+  dateArr = dateArr.map(Number);
+
+  var today = new Date();
+  if (dateArr[0] < today.getFullYear()) {
+    return this.props.updateMessages(null, {
+      type: 'error',
+      text: 'Please choose correct date'
+    });;
+  }
+  else if (dateArr[1] < today.getMonth()+1) {
+    return this.props.updateMessages(null, {
+      type: 'error',
+      text: 'Please choose correct date'
+    });;
+  }
+  else if (dateArr[2] < today.getDate()) {
+    return this.props.updateMessages(null, {
+      type: 'error',
+      text: 'Please choose correct date'
+    });;
+  }
+}
+
 class FlightsList extends React.Component {
   constructor(props) {
     super(props);
@@ -52,8 +77,10 @@ class FlightsList extends React.Component {
       });
     }
 
+    checkDate(this.state.date);
+
     var ticket = this.props.flights;
-    // remove any flight prices on the tab
+    // remove any flight prices currently on the tab if user wants to change date or originCode
     ticket.pop();
     const originCode = getOriginCode(this.state.origin);
     const destinationCode = this.props.destination.IATA;
