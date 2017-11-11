@@ -33,13 +33,6 @@ const userSchema = new Schema({
   }
 });
 
-function autopopulate(next) {
-  this.populate('favorites.destinations', 'name slug image');
-  next();
-}
-
-userSchema.pre('findOne', autopopulate);
-
 userSchema.plugin(passportLocalMongoose, { usernameField: 'email' });
 userSchema.plugin(mongodbErrorHandler);
 
