@@ -14,15 +14,31 @@ exports.updateFavorites = async (req, res) => {
   const locationQuery = req.body.locationId; // Location to be adding or removing
   const favorites = req.user.favorites[favArrName];
   const favIndex = favorites.indexOf(locationQuery);
-  const operator = favIndex > -1 ? '$pull' : '$addToSet';
   const index = favIndex > -1 ? favIndex : undefined;
-  const user = await User.findByIdAndUpdate(
-    req.user._id,
-    {
-      [operator]: { [databaseArr]: locationQuery }
-    },
-    { new: true }
-  );
+
+  var user;
+  if (index === undefined) {
+    user = await User.findByIdAndUpdate(
+      req.user._id,
+      {
+        $push: {
+          [databaseArr]: {
+            $each: [locationQuery],
+            $position: 0
+          }
+        }
+      },
+      { new: true }
+    );
+  } else {
+    user = await User.findByIdAndUpdate(
+      req.user._id,
+      {
+        $pull: { [databaseArr]: locationQuery }
+      },
+      { new: true }
+    );
+  }
 
   res.send({ index, user });
 };
