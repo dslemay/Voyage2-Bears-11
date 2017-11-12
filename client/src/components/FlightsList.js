@@ -56,7 +56,7 @@ class FlightsList extends React.Component {
     // remove any flight prices on the tab
     ticket.pop();
     const originCode = getOriginCode(this.state.origin);
-    const destinationCode = this.props.destination.IATA;
+    const destinationCode = this.props.destinationDetails.destination.IATA;
     this.props.fetchFlights(originCode, destinationCode, this.state.date);
   }
 
@@ -71,8 +71,7 @@ class FlightsList extends React.Component {
   render() {
     const classes = this.props.classes;
     const originCode = getOriginCode(this.state.origin);
-    const destinationCode = this.props.destination.IATA;
-
+    const destinationCode = this.props.destinationDetails.destination.IATA;
     return (
       <section className={classes.container}>
         <div>
@@ -90,10 +89,12 @@ class FlightsList extends React.Component {
             Check Prices
           </Button>
 
-          {this.props.flights.map(flight => (
+          {this.props.flights.map(flight =>
             <div key={flight.data.flights.trips.requestId}>
               <h5>Flights as low as</h5>
-              <p>{flight.data.flights.trips.tripOption['0'].saleTotal}</p>
+              <p>
+                {flight.data.flights.trips.tripOption['0'].saleTotal}
+              </p>
               <Button
                 raised
                 href={`https://www.google.com/flights/#search;f=${originCode};t=${destinationCode};d=${this
@@ -103,15 +104,15 @@ class FlightsList extends React.Component {
                 Book Flights Now
               </Button>
             </div>
-          ))}
+          )}
         </div>
       </section>
     );
   }
 }
 
-function mapStateToProps({ flights, destination }) {
-  return { flights, destination };
+function mapStateToProps({ flights, destinationDetails }) {
+  return { flights, destinationDetails };
 }
 
 FlightsList.propTypes = {

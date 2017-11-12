@@ -11,7 +11,8 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 16,
     background: 'rgb(33, 33, 33)',
     color: 'rgba(255, 255, 255, 0.54)',
-    textAlign: 'center'
+    textAlign: 'center',
+    position: 'sticky'
   })
 });
 
@@ -24,7 +25,7 @@ function Footer(props) {
           type="headline"
           component="h5"
           color="inherit"
-          gutterBottom="true"
+          gutterBottom={true}
         >
           Project created in the Chingu Voyage 2 cohort
         </Typography>
@@ -32,9 +33,9 @@ function Footer(props) {
           type="subheading"
           component="p"
           color="inherit"
-          gutterBottom="true"
+          gutterBottom={true}
         >
-          Contributors: Adrian Bernardo, Alex Steele, Daniel Lemay, Jarold Wong
+          &copy;2017 Adrian Bernardo, Alex Steele, and Daniel Lemay
         </Typography>
         <a
           href="https://github.com/chingu-coders/Voyage2-Bears-11"

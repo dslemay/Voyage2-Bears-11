@@ -9,7 +9,11 @@ import Tabs, { Tab } from 'material-ui/Tabs';
 import FlightsList from '../FlightsList';
 
 function TabContainer(props) {
-  return <div style={{ padding: 8 * 3 }}>{props.children}</div>;
+  return (
+    <div style={{ padding: 0 }}>
+      {props.children}
+    </div>
+  );
 }
 
 TabContainer.propTypes = {
@@ -58,26 +62,22 @@ class DetailsTab extends React.Component {
             <Tab label="Flights" />
           </Tabs>
         </AppBar>
-        {value === 0 && (
+        {value === 0 &&
           <TabContainer>
             <DetailsList yelpCategory="hotels" />
-          </TabContainer>
-        )}
-        {value === 1 && (
+          </TabContainer>}
+        {value === 1 &&
           <TabContainer>
             <DetailsList yelpCategory="restaurants" />
-          </TabContainer>
-        )}
-        {value === 2 && (
+          </TabContainer>}
+        {value === 2 &&
           <TabContainer>
             <DetailsList yelpCategory="entertainment" />
-          </TabContainer>
-        )}
-        {value === 3 && (
+          </TabContainer>}
+        {value === 3 &&
           <TabContainer>
             <FlightsList />
-          </TabContainer>
-        )}
+          </TabContainer>}
       </div>
     );
   }

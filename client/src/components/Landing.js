@@ -11,12 +11,20 @@ import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 
+const breakpoint = {
+  small: '@media (max-width: 500px)'
+};
+
 const styles = theme => ({
   root: {
     flexGrow: 1,
     marginTop: 30,
     marginRight: 30,
-    marginLeft: 30
+    marginLeft: 30,
+
+    [breakpoint.small]: {
+      margin: 0
+    }
   },
   paper: {
     padding: 16,
@@ -34,6 +42,12 @@ const styles = theme => ({
     marginRight: 'auto',
     marginLeft: 'auto',
     marginBottom: 15
+  },
+  greeting: {
+    position: 'relative',
+    top: 440,
+    left: 20,
+    color: 'white'
   }
 });
 
@@ -73,12 +87,16 @@ class Landing extends Component {
               <CardMedia
                 className={classes.media}
                 image="https://source.unsplash.com/R261qkc-nDE"
-                title="Welcome to ChinguTravels"
-              />
-              <CardContent>
-                <Typography type="display2" component="h2">
+              >
+                <Typography
+                  className={classes.greeting}
+                  type="display2"
+                  component="h2"
+                >
                   Welcome
                 </Typography>
+              </CardMedia>
+              <CardContent>
                 <Typography component="p">
                   Discover new locations to visit. Click{' '}
                   <b>Generate Random Destination</b> below to start your

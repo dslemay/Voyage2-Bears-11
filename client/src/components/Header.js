@@ -10,8 +10,8 @@ import Button from 'material-ui/Button';
 
 const styles = theme => ({
   root: {
-    marginTop: 0,
-    width: '100%'
+    width: '100%',
+    height: 60
   },
   flex: {
     flex: 1
@@ -41,9 +41,14 @@ class Header extends Component {
       default:
         // Logout using anchor tag to force refresh which also will update auth state.
         return (
-          <Button color="inherit" href="/api/logout">
-            Logout
-          </Button>
+          <div>
+            <Button component={Link} to="/dashboard" color="inherit">
+              Favorites
+            </Button>
+            <Button color="inherit" href="/api/logout">
+              Logout
+            </Button>
+          </div>
         );
     }
   }
@@ -52,7 +57,7 @@ class Header extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <AppBar position="static">
+        <AppBar position="fixed">
           <Toolbar>
             <Typography
               type="display1"

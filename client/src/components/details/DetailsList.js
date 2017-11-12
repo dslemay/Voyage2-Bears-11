@@ -15,7 +15,7 @@ const styles = theme => ({
   },
   gridList: {
     width: '100%',
-    height: 450
+    height: 500
   },
   gridImg: {
     cursor: 'pointer'
@@ -28,7 +28,7 @@ class DetailsList extends Component {
     return (
       <div className={classes.container}>
         <GridList cellHeight={230} className={classes.gridList}>
-          {this.props.destinationDetails[yelpCategory].map(POI => (
+          {this.props.destinationDetails[yelpCategory].map(POI =>
             <GridListTile key={POI.name}>
               <img
                 src={POI.image_url}
@@ -46,18 +46,16 @@ class DetailsList extends Component {
                   </span>
                 }
                 actionIcon={
-                  this.props.auth ? (
-                    <SimpleSnackbar
-                      yelpCategory={yelpCategory}
-                      yelpId={POI.id}
-                    />
-                  ) : (
-                    ''
-                  )
+                  this.props.auth
+                    ? <SimpleSnackbar
+                        yelpCategory={yelpCategory}
+                        yelpId={POI.id}
+                      />
+                    : ''
                 }
               />
             </GridListTile>
-          ))}
+          )}
         </GridList>
       </div>
     );

@@ -8,6 +8,7 @@ import Landing from './Landing';
 import Login from './auth/Login';
 import Register from './auth/Register';
 import DestinationDetails from './details/DestinationDetails';
+import DashTabs from './dash/DashTabs';
 import AlertMessages from './alerts/AlertMessages';
 import * as actions from '../actions';
 
@@ -27,6 +28,7 @@ class App extends Component {
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route path="/details/:location" component={DestinationDetails} />
+          <Route path="/dashboard" component={DashTabs} />
           <Footer />
         </div>
       </BrowserRouter>

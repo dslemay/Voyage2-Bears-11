@@ -10,25 +10,33 @@ import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 import * as actions from '../../actions';
 
+const breakpoint = {
+  small: '@media (max-width: 500px)'
+};
+
 const styles = theme => ({
   root: {
     flexGrow: 1,
     marginTop: 30,
     marginRight: 30,
-    marginLeft: 30
+    marginLeft: 30,
+
+    [breakpoint.small]: {
+      margin: 0
+    }
   },
   paper: {
     padding: 16,
     paddingTop: 40,
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-    height: '100%'
+    paddingBottom: 40,
+    textAlign: 'left',
+    color: theme.palette.text.secondary
   },
   card: {
     width: '100%'
   },
   media: {
-    height: 600
+    height: 500
   }
 });
 
@@ -63,16 +71,20 @@ class DestinationDetails extends Component {
                     {destination.name}
                   </Typography>
                 </CardContent>
-                <CardActions>{this.renderFavButton()}</CardActions>
+                <CardActions>
+                  {this.renderFavButton()}
+                </CardActions>
               </Card>
             </Grid>
-            <Grid item xs={12} md={9}>
+            <Grid item xs={12}>
+              <Paper className={classes.paper}>
+                {destination.description}
+              </Paper>
+            </Grid>
+            <Grid item xs={12} md={8}>
               <Paper>
                 <DetailsTab yelpLocation={destination.yelpName} />
               </Paper>
-            </Grid>
-            <Grid item xs={12} md={3}>
-              <Paper className={classes.paper}>{destination.description}</Paper>
             </Grid>
           </Grid>
         );
@@ -108,7 +120,11 @@ class DestinationDetails extends Component {
 
   render() {
     const { classes } = this.props;
-    return <div className={classes.root}>{this.renderContent()}</div>;
+    return (
+      <div className={classes.root}>
+        {this.renderContent()}
+      </div>
+    );
   }
 }
 

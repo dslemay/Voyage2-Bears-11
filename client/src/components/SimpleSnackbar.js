@@ -58,7 +58,6 @@ class SimpleSnackbar extends Component {
   };
 
   render() {
-    const { classes } = this.props;
     return (
       <div>
         <IconButton color="contrast" onClick={this.handleClick}>
@@ -67,7 +66,7 @@ class SimpleSnackbar extends Component {
         <Snackbar
           anchorOrigin={{
             vertical: 'bottom',
-            horizontal: 'left'
+            horizontal: 'right'
           }}
           open={this.state.open}
           autoHideDuration={3000}
