@@ -45,15 +45,26 @@ class Dashboard extends Component {
           <Tabs value={value} onChange={this.handleChange} centered>
             <Tab label="Destinations" />
             <Tab label="Hotels" />
-            <Tab label="POI's" />
+            <Tab label="Food" />
+            <Tab label="Entertainment" />
           </Tabs>
         </AppBar>
-        {value === 0 && <TabContainer>Destinations</TabContainer>}
+        {value === 0 &&
+          <TabContainer>
+            <DestinationCards />
+          </TabContainer>}
         {value === 1 &&
           <TabContainer>
             <YelpCards favType="hotels" />
           </TabContainer>}
-        {value === 2 && <TabContainer>Item Three</TabContainer>}
+        {value === 2 &&
+          <TabContainer>
+            <YelpCards favType="restaurants" />
+          </TabContainer>}
+        {value === 3 &&
+          <TabContainer>
+            <YelpCards favType="entertainment" />
+          </TabContainer>}
       </div>
     );
   }
