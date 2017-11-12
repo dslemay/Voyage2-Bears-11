@@ -23,6 +23,13 @@ const styles = theme => ({
     flexGrow: 1,
     marginTop: 20,
     backgroundColor: '#E8EAF6'
+  },
+  tabBar: {
+    top: 64,
+    boxShadow: theme.shadows[0],
+    [theme.breakpoints.down('sm')]: {
+      top: 56
+    }
   }
 });
 
@@ -41,11 +48,11 @@ class Dashboard extends Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position="static" color="default">
-          <Tabs value={value} onChange={this.handleChange} centered>
+        <AppBar className={classes.tabBar} color="primary">
+          <Tabs value={value} onChange={this.handleChange}>
             <Tab label="Destinations" />
             <Tab label="Hotels" />
-            <Tab label="Food" />
+            <Tab label="Restaurants" />
             <Tab label="Entertainment" />
           </Tabs>
         </AppBar>

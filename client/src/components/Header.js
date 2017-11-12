@@ -43,7 +43,7 @@ class Header extends Component {
         return (
           <div>
             <Button component={Link} to="/dashboard" color="inherit">
-              My Favorites
+              Favorites
             </Button>
             <Button color="inherit" href="/api/logout">
               Logout

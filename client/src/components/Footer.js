@@ -34,7 +34,7 @@ function Footer(props) {
           color="inherit"
           gutterBottom={true}
         >
-          Contributors: Adrian Bernardo, Alex Steele, Daniel Lemay, Jarold Wong
+          &copy;2017 Adrian Bernardo, Alex Steele, and Daniel Lemay
         </Typography>
         <a
           href="https://github.com/chingu-coders/Voyage2-Bears-11"
