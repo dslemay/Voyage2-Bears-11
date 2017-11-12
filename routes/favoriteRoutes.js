@@ -13,4 +13,10 @@ module.exports = app => {
     authController.isLoggedIn,
     favoritesController.getFavoritesData
   );
+
+  app.get(
+    '/api/destinationDetails',
+    authController.isLoggedIn,
+    favoritesController.destinationDetails
+  );
 };

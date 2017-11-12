@@ -27,17 +27,15 @@ const userSchema = new Schema({
   },
   favorites: {
     hotels: [String],
-    POIs: [String],
+    restaurants: [String],
+    entertainment: [String],
     destinations: [{ type: Schema.Types.ObjectId, ref: 'Destination' }]
+  },
+  admin: {
+    type: Boolean,
+    default: false
   }
 });
-
-function autopopulate(next) {
-  this.populate('favorites.destinations', 'name slug image');
-  next();
-}
-
-userSchema.pre('findOne', autopopulate);
 
 userSchema.plugin(passportLocalMongoose, { usernameField: 'email' });
 userSchema.plugin(mongodbErrorHandler);

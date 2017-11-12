@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
+const Destination = mongoose.model('Destination');
 const yelp = require('yelp-fusion');
 const keys = require('../config/keys');
 
@@ -12,11 +13,10 @@ exports.updateFavorites = async (req, res) => {
   const databaseArr = 'favorites.' + favArrName; // Which array we are modifying in the database
   const locationQuery = req.body.locationId; // Location to be adding or removing
   const favorites = req.user.favorites[favArrName];
-  const operator = favorites.includes(locationQuery) ? '$pull' : '$addToSet';
   const favIndex = favorites.indexOf(locationQuery);
+  const operator = favIndex > -1 ? '$pull' : '$addToSet';
   const index = favIndex > -1 ? favIndex : undefined;
-
-  await User.findByIdAndUpdate(
+  const user = await User.findByIdAndUpdate(
     req.user._id,
     {
       [operator]: { [databaseArr]: locationQuery }
@@ -24,7 +24,7 @@ exports.updateFavorites = async (req, res) => {
     { new: true }
   );
 
-  res.send({ index });
+  res.send({ index, user });
 };
 
 exports.getFavoritesData = async (req, res) => {
@@ -44,28 +44,50 @@ exports.getFavoritesData = async (req, res) => {
     return Promise.all(array.map(location => client.business(location)));
   }
 
+  function returnJsonBody(yelpArray) {
+    return yelpArray.map(location => location.jsonBody);
+  }
+
   // If there is no req.query, pull information from all of favorites
   const hotelsIds = req.user.favorites.hotels;
-  const POIsIds = req.user.favorites.POIs;
+  const restaurantsIds = req.user.favorites.restaurants;
+  const entertainmentIds = req.user.favorites.entertainment;
   const destinationIds = req.user.favorites.destinations;
 
   // Get any data stored in user model
   const destinationPromise = User.findOne(
     { _id: req.user._id },
     'favorites.destinations'
-  );
+  ).populate('favorites.destinations', 'name slug image');
 
   // Resolve all promises and format data for return
   const hotelsPromise = yelpPromiseArray(hotelsIds);
-  const POIsPromise = yelpPromiseArray(POIsIds);
-  const [hotelsRes, POIsRes, destinationRes] = await Promise.all([
+  const restaurantsPromise = yelpPromiseArray(restaurantsIds);
+  const entertainmentPromise = yelpPromiseArray(entertainmentIds);
+  const [
+    hotelsRes,
+    restaurantsRes,
+    entertainmentRes,
+    destinationRes
+  ] = await Promise.all([
     hotelsPromise,
-    POIsPromise,
+    restaurantsPromise,
+    entertainmentPromise,
     destinationPromise
   ]);
-  const hotels = hotelsRes.map(hotel => hotel.jsonBody);
-  const POIs = POIsRes.map(POI => POI.jsonBody);
+  const hotels = returnJsonBody(hotelsRes);
+  const restaurants = returnJsonBody(restaurantsRes);
+  const entertainment = returnJsonBody(entertainmentRes);
   const { destinations } = destinationRes.favorites;
 
-  res.send({ hotels, POIs, destinations });
+  res.send({ hotels, restaurants, entertainment, destinations });
+};
+
+exports.destinationDetails = async (req, res) => {
+  const locationQuery = req.query.destination;
+  const destination = await Destination.findById(
+    locationQuery,
+    'name slug image'
+  );
+  res.send({ destination });
 };

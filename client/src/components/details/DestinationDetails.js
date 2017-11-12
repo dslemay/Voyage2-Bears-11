@@ -38,9 +38,14 @@ class DestinationDetails extends Component {
     this.props.fetchDestination(destination);
   }
 
+  componentWillUnmount() {
+    this.props.fetchDestination(null);
+  }
+
   renderContent() {
-    const { classes, destination } = this.props;
-    switch (this.props.destination) {
+    const { classes } = this.props;
+    const { destination } = this.props.destinationDetails;
+    switch (this.props.destinationDetails.destination) {
       case null:
         return;
       default:
@@ -58,16 +63,12 @@ class DestinationDetails extends Component {
                     {destination.name}
                   </Typography>
                 </CardContent>
-                <CardActions>
-                  <Button dense color="primary">
-                    Add to Favorites
-                  </Button>
-                </CardActions>
+                <CardActions>{this.renderFavButton()}</CardActions>
               </Card>
             </Grid>
             <Grid item xs={12} md={9}>
               <Paper>
-                <DetailsTab yelpName={destination.yelpName} />
+                <DetailsTab yelpLocation={destination.yelpName} />
               </Paper>
             </Grid>
             <Grid item xs={12} md={3}>
@@ -77,6 +78,33 @@ class DestinationDetails extends Component {
         );
     }
   }
+
+  renderFavButton = () => {
+    const { auth } = this.props;
+    const id = this.props.destinationDetails.destination._id;
+
+    // Render button if user is logged in
+    if (auth) {
+      return (
+        <Button
+          dense
+          color="primary"
+          onClick={() => this.props.updateFavorites('destinations', id)}
+        >
+          {this.renderFavMessage()}
+        </Button>
+      );
+    }
+
+    return;
+  };
+
+  renderFavMessage = () => {
+    const id = this.props.destinationDetails.destination._id;
+    const destinations = this.props.auth.favorites.destinations;
+    const inFavorites = destinations.indexOf(id);
+    return inFavorites > -1 ? 'Remove from Favorites' : 'Add to Favorites';
+  };
 
   render() {
     const { classes } = this.props;
@@ -88,8 +116,8 @@ DestinationDetails.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-function mapStateToProps({ destination }) {
-  return { destination };
+function mapStateToProps({ auth, destinationDetails }) {
+  return { auth, destinationDetails };
 }
 
 export default connect(mapStateToProps, actions)(
