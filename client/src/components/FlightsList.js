@@ -39,19 +39,19 @@ function checkDate(date) {
     return this.props.updateMessages(null, {
       type: 'error',
       text: 'Please choose correct date'
-    });;
+    });
   }
   else if (dateArr[1] < today.getMonth()+1) {
     return this.props.updateMessages(null, {
       type: 'error',
       text: 'Please choose correct date'
-    });;
+    });
   }
   else if (dateArr[2] < today.getDate()) {
     return this.props.updateMessages(null, {
       type: 'error',
       text: 'Please choose correct date'
-    });;
+    });
   }
 }
 
