@@ -36,7 +36,7 @@ class DestinationCards extends Component {
     if (destinations) {
       return destinations.map(destination => {
         return (
-          <Grid item xs={6} key={destination._id}>
+          <Grid item xs={12} md={6} key={destination._id}>
             <Card className={classes.card}>
               <CardMedia
                 className={classes.media}

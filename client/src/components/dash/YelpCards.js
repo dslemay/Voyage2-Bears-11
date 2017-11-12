@@ -31,13 +31,12 @@ const styles = theme => ({
 class YelpCards extends Component {
   renderCards() {
     const { classes, favType } = this.props;
-    console.log(favType);
 
     return this.props.favorites[favType].map(favItem => {
       return (
         <Grid item xs={12} sm={6} md={4} key={favItem.coordinates.latitude}>
           <Card className={classes.card}>
-            <RemoveFavAlert yelpId={favItem.id} />
+            <RemoveFavAlert yelpId={favItem.id} category={favType} />
             <CardHeader
               title={favItem.name}
               subheader={favItem.location.city}

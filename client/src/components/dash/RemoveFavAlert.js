@@ -29,8 +29,9 @@ class RemoveFavAlert extends Component {
   };
 
   handleRequestConfirm = () => {
+    const { category, yelpId } = this.props;
     this.setState({ open: false });
-    this.props.updateFavorites('hotels', this.props.yelpId);
+    this.props.updateFavorites(category, yelpId);
   };
 
   render() {
