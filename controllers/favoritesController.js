@@ -13,7 +13,8 @@ exports.updateFavorites = async (req, res) => {
   const databaseArr = 'favorites.' + favArrName; // Which array we are modifying in the database
   const locationQuery = req.body.locationId; // Location to be adding or removing
   const favorites = req.user.favorites[favArrName];
-  const index = favorites.indexOf(locationQuery) > -1 ? favIndex : undefined;
+  const favIndex = favorites.indexOf(locationQuery);
+  const index = favIndex > -1 ? favIndex : undefined;
 
   var user;
   if (index === undefined) {
