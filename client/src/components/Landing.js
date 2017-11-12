@@ -44,9 +44,9 @@ const styles = theme => ({
     marginBottom: 15
   },
   greeting: {
-    position: 'absolute',
-    bottom: 200,
-    left: 45,
+    position: 'relative',
+    top: 440,
+    left: 20,
     color: 'white'
   }
 });

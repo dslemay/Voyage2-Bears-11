@@ -47,6 +47,12 @@ class YelpCards extends Component {
               title={favItem.name}
             />
             <CardActions>
+              <img
+                src="https://i.imgur.com/fIljKM6.png"
+                alt=""
+                height="50"
+                width="50"
+              />
               <Button dense color="primary" href={favItem.url} target="_blank">
                 Yelp Info
               </Button>

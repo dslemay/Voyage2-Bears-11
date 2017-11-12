@@ -11,7 +11,8 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 16,
     background: 'rgb(33, 33, 33)',
     color: 'rgba(255, 255, 255, 0.54)',
-    textAlign: 'center'
+    textAlign: 'center',
+    position: 'sticky'
   })
 });
 
