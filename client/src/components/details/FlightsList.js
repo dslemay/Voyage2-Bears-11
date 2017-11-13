@@ -65,22 +65,30 @@ class FlightsList extends React.Component {
 
     this.state = {
       origin: '',
-      date: ''
+      date: '',
+      codeNotSelected: false,
+      dateNotSelected: false,
     };
   }
 
   handleClick() {
-    if (!this.state.date || !this.state.origin) {
-      return this.props.updateMessages(null, {
-        type: 'error',
-        text: 'You must select an airport and date'
-      });
+    if (!this.state.origin) {
+      this.setState(prevState => ({
+        codeNotSelected: !prevState.notSelected
+      }));
+      return;
+    }
+    else if (!this.state.date) {
+      this.setState(prevState => ({
+        dateNotSelected: !prevState.notSelected
+      }));
+      return;
     }
 
     checkDate(this.state.date);
 
     var ticket = this.props.flights;
-    // remove any flight prices currently on the tab if user wants to change date or originCode
+    // ticket.pop() is used to remove any flight prices currently on the tab if user wants to change date or originCode
     ticket.pop();
     const originCode = getOriginCode(this.state.origin);
     const destinationCode = this.props.destinationDetails.destination.IATA;
@@ -105,11 +113,13 @@ class FlightsList extends React.Component {
           <MultipleSelect
             onOriginChange={this.handleOriginChange}
             originName={this.state.origin}
+            selected={this.state.codeNotSelected}
           />
 
           <DatePickers
             departureDate={this.state.date}
             onDateChange={this.handleDateChange}
+            selected={this.state.dateNotSelected}
           />
 
           <Button raised className={classes.button} onClick={this.handleClick}>

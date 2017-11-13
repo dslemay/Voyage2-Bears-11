@@ -35,6 +35,7 @@ class DatePickers extends React.Component {
         <TextField
           id="date"
           type="date"
+          error={this.props.selected}
           className={classes.textField}
           InputLabelProps={{
             shrink: true,
