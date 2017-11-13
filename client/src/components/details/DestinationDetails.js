@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import DetailsTab from './DetailsTab';
+import FlightsList from '../FlightsList';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
@@ -8,42 +10,55 @@ import Grid from 'material-ui/Grid';
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
+import ShuffleIcon from 'material-ui-icons/Shuffle';
+import Tooltip from 'material-ui/Tooltip';
 import * as actions from '../../actions';
-
-const breakpoint = {
-  small: '@media (max-width: 500px)'
-};
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    marginTop: 30,
-    marginRight: 30,
-    marginLeft: 30,
-
-    [breakpoint.small]: {
+    margin: 40,
+    [theme.breakpoints.up('lg')]: {
+      margin: '10%',
+      marginTop: 30
+    },
+    [theme.breakpoints.down('sm')]: {
       margin: 0
     }
   },
   paper: {
-    padding: 16,
-    paddingTop: 40,
-    paddingBottom: 40,
+    padding: 34,
+    marginBottom: 30,
     textAlign: 'left',
     color: theme.palette.text.secondary
   },
   card: {
-    width: '100%'
+    width: '100%',
+    marginBottom: 30
   },
   media: {
     height: 500
+  },
+  shuffleBtn: {
+    float: 'right',
+    top: 40,
+    right: '4%'
   }
 });
 
 class DestinationDetails extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { link: '/' };
+  }
+
   componentDidMount() {
     const destination = this.props.match.params.location;
     this.props.fetchDestination(destination);
+
+    axios
+      .get('/api/randomLocation')
+      .then(res => this.setState({ link: `/details/${res.data}` }));
   }
 
   componentWillUnmount() {
@@ -58,7 +73,7 @@ class DestinationDetails extends Component {
         return;
       default:
         return (
-          <Grid container spacing={24}>
+          <Grid container justify="center" spacing={24}>
             <Grid item xs={12}>
               <Card className={classes.card}>
                 <CardMedia
@@ -70,13 +85,27 @@ class DestinationDetails extends Component {
                   <Typography type="display2" component="h2">
                     {destination.name}
                   </Typography>
+                  <Tooltip
+                    id="tooltip-icon"
+                    title="Shuffle destination"
+                    placement="bottom"
+                  >
+                    <Button
+                      fab
+                      color="primary"
+                      className={classes.shuffleBtn}
+                      href={this.state.link}
+                    >
+                      <ShuffleIcon />
+                    </Button>
+                  </Tooltip>
                 </CardContent>
                 <CardActions>
                   {this.renderFavButton()}
                 </CardActions>
               </Card>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} md={8}>
               <Paper className={classes.paper}>
                 {destination.description}
               </Paper>
@@ -84,6 +113,12 @@ class DestinationDetails extends Component {
             <Grid item xs={12} md={8}>
               <Paper>
                 <DetailsTab yelpLocation={destination.yelpName} />
+              </Paper>
+            </Grid>
+
+            <Grid item xs={12} md={4}>
+              <Paper>
+                <FlightsList />
               </Paper>
             </Grid>
           </Grid>
