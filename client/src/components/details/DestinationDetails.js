@@ -9,7 +9,11 @@ import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
 import CircleLoader from '../CircleLoader';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
-import * as actions from '../../actions';
+import {
+  fetchDestination,
+  resetDestination,
+  updateFavorites
+} from '../../actions';
 
 const breakpoint = {
   small: '@media (max-width: 500px)'
@@ -128,6 +132,8 @@ function mapStateToProps({ auth, destinationDetails }) {
   return { auth, destinationDetails };
 }
 
-export default connect(mapStateToProps, actions)(
-  withStyles(styles)(DestinationDetails)
-);
+export default connect(mapStateToProps, {
+  fetchDestination,
+  resetDestination,
+  updateFavorites
+})(withStyles(styles)(DestinationDetails));
