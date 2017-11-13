@@ -2,7 +2,9 @@
 import axios from 'axios';
 import {
   FETCH_DESTINATION,
+  RECEIVE_DESTINATION,
   FETCH_DESTINATION_CATEGORY,
+  RESET_DESTINATION,
   FETCH_USER,
   ADD_FAVORITE,
   REMOVE_FAVORITE,
@@ -12,13 +14,10 @@ import {
 } from './types';
 
 export const fetchDestination = slug => async dispatch => {
-  if (slug) {
-    const res = await axios.get(`/api/locationDetails?location=${slug}`);
-    dispatch({ type: FETCH_DESTINATION, payload: res.data });
-  } else {
-    const res = { data: null };
-    dispatch({ type: FETCH_DESTINATION, payload: res.data });
-  }
+  dispatch({ type: FETCH_DESTINATION });
+
+  const res = await axios.get(`/api/locationDetails?location=${slug}`);
+  dispatch({ type: RECEIVE_DESTINATION, payload: res.data });
 };
 
 export const fetchDestinationCategory = (
@@ -30,6 +29,10 @@ export const fetchDestinationCategory = (
   );
 
   dispatch({ type: FETCH_DESTINATION_CATEGORY, category, payload: res.data });
+};
+
+export const resetDestination = () => dispatch => {
+  dispatch({ type: RESET_DESTINATION });
 };
 
 export const fetchUser = () => async dispatch => {
