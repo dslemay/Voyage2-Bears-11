@@ -74,13 +74,14 @@ class FlightsList extends React.Component {
   handleClick() {
     if (!this.state.origin) {
       this.setState(prevState => ({
-        codeNotSelected: !prevState.notSelected
+        codeNotSelected: !prevState.codeNotSelected
       }));
       return;
     }
-    else if (!this.state.date) {
+
+    if (!this.state.date) {
       this.setState(prevState => ({
-        dateNotSelected: !prevState.notSelected
+        dateNotSelected: !prevState.dateNotSelected
       }));
       return;
     }
@@ -97,10 +98,20 @@ class FlightsList extends React.Component {
 
   handleOriginChange(origin) {
     this.setState({ origin });
+    if (this.state.codeNotSelected === true) {
+      this.setState(prevState => ({
+        codeNotSelected: !prevState.codeNotSelected
+      }));
+    }
   }
 
   handleDateChange(date) {
     this.setState({ date });
+    if (!this.state.date === true) {
+      this.setState(prevState => ({
+        dateNotSelected: !prevState.dateNotSelected
+      }));
+    }
   }
 
   render() {
