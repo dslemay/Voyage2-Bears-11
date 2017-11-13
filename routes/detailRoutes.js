@@ -12,9 +12,9 @@ const googleFlights = keys.googleFlights;
 
 module.exports = app => {
   app.get('/api/yelp', (req, res) => {
-    const { location } = req.query;
+    const { location, category } = req.query;
     const searchRequest = {
-      term: 'Hotels',
+      term: category,
       location
     };
 
@@ -25,8 +25,8 @@ module.exports = app => {
 
         client.search(searchRequest).then(response => {
           const twelveResults = response.jsonBody.businesses.slice(0, 12);
-          const hotels = JSON.stringify(twelveResults, null, 4);
-          res.send(hotels);
+          const businesses = JSON.stringify(twelveResults, null, 4);
+          res.send(businesses);
         });
       })
       .catch(e => {

@@ -1,14 +1,16 @@
 import React from 'react';
-import HotelsList from './HotelsList';
+import DetailsList from './DetailsList';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
+import { connect } from 'react-redux';
+import { fetchDestinationCategory } from '../../actions';
 import AppBar from 'material-ui/AppBar';
 import Tabs, { Tab } from 'material-ui/Tabs';
 import FlightsList from '../FlightsList';
 
 function TabContainer(props) {
   return (
-    <div style={{ padding: 8 * 3 }}>
+    <div style={{ padding: 0 }}>
       {props.children}
     </div>
   );
@@ -28,9 +30,19 @@ const styles = theme => ({
 });
 
 class DetailsTab extends React.Component {
-  state = {
-    value: 0
-  };
+  constructor() {
+    super();
+    this.state = {
+      value: 0
+    };
+  }
+
+  componentDidMount() {
+    const { yelpLocation } = this.props;
+    this.props.fetchDestinationCategory(yelpLocation, 'hotels');
+    this.props.fetchDestinationCategory(yelpLocation, 'restaurants');
+    this.props.fetchDestinationCategory(yelpLocation, 'entertainment');
+  }
 
   handleChange = (event, value) => {
     this.setState({ value });
@@ -45,14 +57,24 @@ class DetailsTab extends React.Component {
         <AppBar position="static">
           <Tabs value={value} onChange={this.handleChange} centered>
             <Tab label="Hotels" />
+            <Tab label="Restaurants" />
+            <Tab label="Entertainment" />
             <Tab label="Flights" />
           </Tabs>
         </AppBar>
         {value === 0 &&
           <TabContainer>
-            <HotelsList yelpName={this.props.yelpName} />
+            <DetailsList yelpCategory="hotels" />
           </TabContainer>}
         {value === 1 &&
+          <TabContainer>
+            <DetailsList yelpCategory="restaurants" />
+          </TabContainer>}
+        {value === 2 &&
+          <TabContainer>
+            <DetailsList yelpCategory="entertainment" />
+          </TabContainer>}
+        {value === 3 &&
           <TabContainer>
             <FlightsList />
           </TabContainer>}
@@ -65,4 +87,6 @@ DetailsTab.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(DetailsTab);
+export default connect(null, { fetchDestinationCategory })(
+  withStyles(styles)(DetailsTab)
+);

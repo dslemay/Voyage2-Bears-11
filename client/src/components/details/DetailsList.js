@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import { GridList, GridListTile, GridListTileBar } from 'material-ui/GridList';
-import { fetchHotels } from '../../actions';
 import SimpleSnackbar from '../SimpleSnackbar';
 
 const styles = theme => ({
@@ -16,43 +15,43 @@ const styles = theme => ({
   },
   gridList: {
     width: '100%',
-    height: 450
+    height: 500
   },
   gridImg: {
     cursor: 'pointer'
   }
 });
 
-class FlightsList extends Component {
-  componentDidMount() {
-    const { yelpName } = this.props;
-    this.props.fetchHotels(yelpName);
-  }
-
+class DetailsList extends Component {
   render() {
-    const classes = this.props.classes;
+    const { classes, yelpCategory } = this.props;
     return (
       <div className={classes.container}>
         <GridList cellHeight={230} className={classes.gridList}>
-          {this.props.hotels.map(hotel =>
-            <GridListTile key={hotel.name}>
+          {this.props.destinationDetails[yelpCategory].map(POI =>
+            <GridListTile key={POI.name}>
               <img
-                src={hotel.image_url}
-                alt={hotel.name}
-                onClick={() => window.open(hotel.url)}
+                src={POI.image_url}
+                alt={POI.name}
+                onClick={() => window.open(POI.url)}
                 className={classes.gridImg}
               />
               <GridListTileBar
-                title={hotel.name}
+                title={POI.name}
                 subtitle={
                   <span>
-                    Rating: {hotel.rating}
+                    Rating: {POI.rating}
                     <br />
-                    Price: {hotel.price}
+                    Price: {POI.price}
                   </span>
                 }
                 actionIcon={
-                  this.props.auth ? <SimpleSnackbar yelpId={hotel.id} /> : ''
+                  this.props.auth
+                    ? <SimpleSnackbar
+                        yelpCategory={yelpCategory}
+                        yelpId={POI.id}
+                      />
+                    : ''
                 }
               />
             </GridListTile>
@@ -63,14 +62,13 @@ class FlightsList extends Component {
   }
 }
 
-FlightsList.propTypes = {
-  classes: PropTypes.object.isRequired
+DetailsList.propTypes = {
+  classes: PropTypes.object.isRequired,
+  yelpCategory: PropTypes.string.isRequired
 };
 
-function mapStateToProps({ hotels, auth }) {
-  return { hotels, auth };
+function mapStateToProps({ destinationDetails, auth }) {
+  return { destinationDetails, auth };
 }
 
-export default connect(mapStateToProps, { fetchHotels })(
-  withStyles(styles)(FlightsList)
-);
+export default connect(mapStateToProps)(withStyles(styles)(DetailsList));
