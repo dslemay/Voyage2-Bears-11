@@ -8,11 +8,16 @@ import { withStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
+import CircleLoader from '../CircleLoader';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 import ShuffleIcon from 'material-ui-icons/Shuffle';
 import Tooltip from 'material-ui/Tooltip';
-import * as actions from '../../actions';
+import {
+  fetchDestination,
+  resetDestination,
+  updateFavorites
+} from '../../actions';
 
 const styles = theme => ({
   root: {
@@ -62,67 +67,67 @@ class DestinationDetails extends Component {
   }
 
   componentWillUnmount() {
-    this.props.fetchDestination(null);
+    this.props.resetDestination();
   }
 
   renderContent() {
     const { classes } = this.props;
-    const { destination } = this.props.destinationDetails;
-    switch (this.props.destinationDetails.destination) {
-      case null:
-        return;
-      default:
-        return (
-          <Grid container justify="center" spacing={24}>
-            <Grid item xs={12}>
-              <Card className={classes.card}>
-                <CardMedia
-                  className={classes.media}
-                  image={destination.image}
-                  title={destination.name}
-                />
-                <CardContent>
-                  <Typography type="display2" component="h2">
-                    {destination.name}
-                  </Typography>
-                  <Tooltip
-                    id="tooltip-icon"
-                    title="Shuffle destination"
-                    placement="bottom"
-                  >
-                    <Button
-                      fab
-                      color="primary"
-                      className={classes.shuffleBtn}
-                      href={this.state.link}
-                    >
-                      <ShuffleIcon />
-                    </Button>
-                  </Tooltip>
-                </CardContent>
-                <CardActions>
-                  {this.renderFavButton()}
-                </CardActions>
-              </Card>
-            </Grid>
-            <Grid item xs={12} md={8}>
-              <Paper className={classes.paper}>
-                {destination.description}
-              </Paper>
-            </Grid>
-            <Grid item xs={12} md={8}>
-              <Paper>
-                <DetailsTab yelpLocation={destination.yelpName} />
-              </Paper>
-            </Grid>
+    const destination = this.props.destinationDetails.destination.info;
+    const { isFetching } = this.props.destinationDetails.destination;
 
-            <Grid item xs={12} md={4}>
-              <Paper>
-                <FlightsList />
-              </Paper>
-            </Grid>
+    if (isFetching) {
+      return <CircleLoader large />;
+    }
+
+    // Logic necessary to eliminate Material-UI warning during Redux actions
+    if (Object.keys(destination).length > 0 && destination !== undefined) {
+      return (
+        <Grid container justify="center" spacing={24}>
+          <Grid item xs={12}>
+            <Card className={classes.card}>
+              <CardMedia
+                className={classes.media}
+                image={destination.image}
+                title={destination.name}
+              />
+              <CardContent>
+                <Typography type="display2" component="h2">
+                  {destination.name}
+                </Typography>
+                <Tooltip
+                  id="tooltip-icon"
+                  title="Shuffle destination"
+                  placement="bottom"
+                >
+                  <Button
+                    fab
+                    color="primary"
+                    className={classes.shuffleBtn}
+                    href={this.state.link}
+                  >
+                    <ShuffleIcon />
+                  </Button>
+                </Tooltip>
+              </CardContent>
+              <CardActions>{this.renderFavButton()}</CardActions>
+            </Card>
           </Grid>
-        );
+          <Grid item xs={12} md={8}>
+            <Paper className={classes.paper}>{destination.description}</Paper>
+          </Grid>
+          <Grid item xs={12} md={8}>
+            <Paper>
+              <DetailsTab yelpLocation={destination.yelpName} />
+            </Paper>
+          </Grid>
+
+          <Grid item xs={12} md={4}>
+            <Paper>
+              <FlightsList />
+            </Paper>
+          </Grid>
+        </Grid>
+      );
     }
   }
 
@@ -155,11 +160,7 @@ class DestinationDetails extends Component {
 
   render() {
     const { classes } = this.props;
-    return (
-      <div className={classes.root}>
-        {this.renderContent()}
-      </div>
-    );
+    return <div className={classes.root}>{this.renderContent()}</div>;
   }
 }
 
@@ -171,6 +172,8 @@ function mapStateToProps({ auth, destinationDetails }) {
   return { auth, destinationDetails };
 }
 
-export default connect(mapStateToProps, actions)(
-  withStyles(styles)(DestinationDetails)
-);
+export default connect(mapStateToProps, {
+  fetchDestination,
+  resetDestination,
+  updateFavorites
+})(withStyles(styles)(DestinationDetails));
