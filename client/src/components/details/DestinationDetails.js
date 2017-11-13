@@ -115,7 +115,6 @@ class DestinationDetails extends Component {
                 <DetailsTab yelpLocation={destination.yelpName} />
               </Paper>
             </Grid>
-
             <Grid item xs={12} md={4}>
               <Paper>
                 <FlightsList />
