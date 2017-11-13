@@ -5,6 +5,7 @@ import { withStyles } from 'material-ui/styles';
 import { GridList, GridListTile, GridListTileBar } from 'material-ui/GridList';
 import CircleLoader from '../CircleLoader';
 import SimpleSnackbar from '../SimpleSnackbar';
+import yelpStars from './yelpStars';
 
 const styles = theme => ({
   container: {
@@ -49,9 +50,9 @@ class DetailsList extends Component {
                 title={POI.name}
                 subtitle={
                   <span>
-                    Rating: {POI.rating}
+                    <img src={yelpStars[POI.rating]} alt={POI.rating} />
                     <br />
-                    Price: {POI.price}
+                    Based on {POI.review_count} reviews
                   </span>
                 }
                 actionIcon={
