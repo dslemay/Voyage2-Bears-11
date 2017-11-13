@@ -4,6 +4,7 @@ import {
   FETCH_DESTINATION,
   RECEIVE_DESTINATION,
   FETCH_DESTINATION_CATEGORY,
+  RECEIVE_DESTINATION_CATEGORY,
   RESET_DESTINATION,
   FETCH_USER,
   ADD_FAVORITE,
@@ -24,11 +25,13 @@ export const fetchDestinationCategory = (
   location,
   category
 ) => async dispatch => {
+  dispatch({ type: FETCH_DESTINATION_CATEGORY, category });
+
   const res = await axios.get(
     `/api/yelp?location=${location}&category=${category}`
   );
 
-  dispatch({ type: FETCH_DESTINATION_CATEGORY, category, payload: res.data });
+  dispatch({ type: RECEIVE_DESTINATION_CATEGORY, category, payload: res.data });
 };
 
 export const resetDestination = () => dispatch => {
