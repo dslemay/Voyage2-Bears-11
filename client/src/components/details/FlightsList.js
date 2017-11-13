@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { fetchFlights } from '../actions/flightActions';
-import { updateMessages } from '../actions';
+import { fetchFlights } from '../../actions/flightActions';
+import { updateMessages } from '../../actions';
 import Button from 'material-ui/Button';
-import MultipleSelect from './MultipleSelect';
-import DatePickers from './DatePickers';
+import MultipleSelect from '../MultipleSelect';
+import DatePickers from '../DatePickers';
 import { withStyles } from 'material-ui/styles';
 import PropTypes from 'prop-types';
 
