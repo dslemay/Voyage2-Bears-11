@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 const styles = theme => ({
   root: {
+    width: '100%',
     padding: '30px 0',
     display: 'flex',
     justifyContent: 'space-around',
