@@ -10,13 +10,13 @@ const styles = theme => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   formControl: {
     margin: theme.spacing.unit,
-    minWidth: 120,
-    maxWidth: 300,
-  },
+    minWidth: 195,
+    maxWidth: 300
+  }
 });
 
 const ITEM_HEIGHT = 48;
@@ -39,7 +39,7 @@ const originAirport = [
   '(DTW) Detroit, MI',
   '(PHL) Philadelphia, PA',
   '(BWI) Baltimore, MD',
-  '(SLC) Salt Lake City, UT',
+  '(SLC) Salt Lake City, UT'
 ];
 
 class MultipleSelect extends React.Component {
@@ -51,7 +51,7 @@ class MultipleSelect extends React.Component {
 
   changeOrigin(event) {
     this.props.onOriginChange(event.target.value);
-  };
+  }
 
   render() {
     const { classes } = this.props;
@@ -59,7 +59,7 @@ class MultipleSelect extends React.Component {
     return (
       <div className={classes.container}>
         <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="name-multiple">From</InputLabel>
+          <InputLabel htmlFor="name-multiple">Departing from</InputLabel>
           <Select
             value={this.props.originName}
             onChange={this.changeOrigin}
@@ -68,33 +68,32 @@ class MultipleSelect extends React.Component {
               PaperProps: {
                 style: {
                   maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-                  width: 200,
-                },
-              },
+                  width: 200
+                }
+              }
             }}
           >
-            {originAirport.map(name => (
+            {originAirport.map(name =>
               <MenuItem
                 key={name}
                 value={name}
                 style={{
-                  fontWeight: this.props.originName.indexOf(name) !== -1 ? '500' : '400',
+                  fontWeight:
+                    this.props.originName.indexOf(name) !== -1 ? '500' : '400'
                 }}
               >
                 {name}
               </MenuItem>
-            ))}
+            )}
           </Select>
         </FormControl>
-
-        
       </div>
     );
   }
 }
 
 MultipleSelect.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(MultipleSelect);

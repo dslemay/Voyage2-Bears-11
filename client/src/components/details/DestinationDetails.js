@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import DetailsTab from './DetailsTab';
 import FlightsList from '../FlightsList';
 import PropTypes from 'prop-types';
@@ -9,6 +10,7 @@ import Grid from 'material-ui/Grid';
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
+import ShuffleIcon from 'material-ui-icons/Shuffle';
 import * as actions from '../../actions';
 
 const breakpoint = {
@@ -27,24 +29,38 @@ const styles = theme => ({
     }
   },
   paper: {
-    padding: 16,
-    paddingTop: 40,
-    paddingBottom: 40,
+    padding: 34,
+    marginBottom: 30,
     textAlign: 'left',
     color: theme.palette.text.secondary
   },
   card: {
-    width: '100%'
+    width: '100%',
+    marginBottom: 30
   },
   media: {
     height: 500
+  },
+  shuffleBtn: {
+    float: 'right',
+    top: 40,
+    right: 40
   }
 });
 
 class DestinationDetails extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { link: '/' };
+  }
+
   componentDidMount() {
     const destination = this.props.match.params.location;
     this.props.fetchDestination(destination);
+
+    axios
+      .get('/api/randomLocation')
+      .then(res => this.setState({ link: `/details/${res.data}` }));
   }
 
   componentWillUnmount() {
@@ -59,7 +75,7 @@ class DestinationDetails extends Component {
         return;
       default:
         return (
-          <Grid container spacing={24}>
+          <Grid container justify="center" spacing={24}>
             <Grid item xs={12}>
               <Card className={classes.card}>
                 <CardMedia
@@ -71,13 +87,21 @@ class DestinationDetails extends Component {
                   <Typography type="display2" component="h2">
                     {destination.name}
                   </Typography>
+                  <Button
+                    fab
+                    color="primary"
+                    className={classes.shuffleBtn}
+                    href={this.state.link}
+                  >
+                    <ShuffleIcon />
+                  </Button>
                 </CardContent>
                 <CardActions>
                   {this.renderFavButton()}
                 </CardActions>
               </Card>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} md={8}>
               <Paper className={classes.paper}>
                 {destination.description}
               </Paper>
@@ -87,6 +111,7 @@ class DestinationDetails extends Component {
                 <DetailsTab yelpLocation={destination.yelpName} />
               </Paper>
             </Grid>
+
             <Grid item xs={12} md={4}>
               <Paper>
                 <FlightsList />

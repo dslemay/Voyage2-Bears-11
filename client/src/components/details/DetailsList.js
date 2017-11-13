@@ -26,7 +26,6 @@ const styles = theme => ({
 class DetailsList extends Component {
   render() {
     const { classes, yelpCategory } = this.props;
-    console.log(this.props);
     return (
       <div className={classes.container}>
         <GridList cellHeight={230} className={classes.gridList}>
