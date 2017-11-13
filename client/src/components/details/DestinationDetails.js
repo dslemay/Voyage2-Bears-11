@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import DetailsTab from './DetailsTab';
+import FlightsList from '../FlightsList';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
@@ -84,6 +85,11 @@ class DestinationDetails extends Component {
             <Grid item xs={12} md={8}>
               <Paper>
                 <DetailsTab yelpLocation={destination.yelpName} />
+              </Paper>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Paper>
+                <FlightsList />
               </Paper>
             </Grid>
           </Grid>

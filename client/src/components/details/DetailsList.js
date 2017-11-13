@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import { GridList, GridListTile, GridListTileBar } from 'material-ui/GridList';
 import SimpleSnackbar from '../SimpleSnackbar';
+import yelpStars from './yelpStars';
 
 const styles = theme => ({
   container: {
@@ -25,6 +26,7 @@ const styles = theme => ({
 class DetailsList extends Component {
   render() {
     const { classes, yelpCategory } = this.props;
+    console.log(this.props);
     return (
       <div className={classes.container}>
         <GridList cellHeight={230} className={classes.gridList}>
@@ -40,9 +42,9 @@ class DetailsList extends Component {
                 title={POI.name}
                 subtitle={
                   <span>
-                    Rating: {POI.rating}
+                    <img src={yelpStars[POI.rating]} alt={POI.rating} />
                     <br />
-                    Price: {POI.price}
+                    Based on {POI.review_count} reviews
                   </span>
                 }
                 actionIcon={
