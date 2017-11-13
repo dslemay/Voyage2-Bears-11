@@ -11,20 +11,18 @@ import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 import ShuffleIcon from 'material-ui-icons/Shuffle';
+import Tooltip from 'material-ui/Tooltip';
 import * as actions from '../../actions';
-
-const breakpoint = {
-  small: '@media (max-width: 500px)'
-};
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    marginTop: 30,
-    marginRight: 30,
-    marginLeft: 30,
-
-    [breakpoint.small]: {
+    margin: 40,
+    [theme.breakpoints.up('lg')]: {
+      margin: '10%',
+      marginTop: 30
+    },
+    [theme.breakpoints.down('sm')]: {
       margin: 0
     }
   },
@@ -44,7 +42,7 @@ const styles = theme => ({
   shuffleBtn: {
     float: 'right',
     top: 40,
-    right: 40
+    right: '4%'
   }
 });
 
@@ -87,14 +85,20 @@ class DestinationDetails extends Component {
                   <Typography type="display2" component="h2">
                     {destination.name}
                   </Typography>
-                  <Button
-                    fab
-                    color="primary"
-                    className={classes.shuffleBtn}
-                    href={this.state.link}
+                  <Tooltip
+                    id="tooltip-icon"
+                    title="Shuffle destination"
+                    placement="bottom"
                   >
-                    <ShuffleIcon />
-                  </Button>
+                    <Button
+                      fab
+                      color="primary"
+                      className={classes.shuffleBtn}
+                      href={this.state.link}
+                    >
+                      <ShuffleIcon />
+                    </Button>
+                  </Tooltip>
                 </CardContent>
                 <CardActions>
                   {this.renderFavButton()}

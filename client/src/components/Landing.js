@@ -11,18 +11,17 @@ import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 
-const breakpoint = {
-  small: '@media (max-width: 500px)'
-};
-
 const styles = theme => ({
   root: {
     flexGrow: 1,
     marginTop: 30,
     marginRight: 30,
     marginLeft: 30,
-
-    [breakpoint.small]: {
+    [theme.breakpoints.up('lg')]: {
+      margin: '10%',
+      marginTop: 30
+    },
+    [theme.breakpoints.down('sm')]: {
       margin: 0
     }
   },
