@@ -10,6 +10,7 @@ import {
   ADD_FAVORITE,
   REMOVE_FAVORITE,
   FETCH_FAVORITES,
+  RECEIVE_FAVORITES,
   ADD_MESSAGE,
   REMOVE_MESSAGE
 } from './types';
@@ -78,10 +79,12 @@ export const updateFavorites = (favArrName, locationId) => async dispatch => {
 };
 
 export const fetchFavorites = () => async dispatch => {
+  dispatch({ type: FETCH_FAVORITES });
+
   const res = await axios.get('/api/favorites');
 
   if (!res.data.error) {
-    dispatch({ type: FETCH_FAVORITES, payload: res.data });
+    dispatch({ type: RECEIVE_FAVORITES, payload: res.data });
   }
 };
 

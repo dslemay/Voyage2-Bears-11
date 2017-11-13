@@ -8,6 +8,7 @@ import Divider from 'material-ui/Divider';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 import RemoveFavAlert from './RemoveFavAlert';
+import CircleLoader from '../CircleLoader';
 
 const styles = theme => ({
   root: {
@@ -31,6 +32,11 @@ const styles = theme => ({
 class YelpCards extends Component {
   renderCards() {
     const { classes, favType } = this.props;
+    const { isFetching } = this.props.favorites;
+
+    if (isFetching) {
+      return <CircleLoader />;
+    }
 
     return this.props.favorites[favType].map(favItem => {
       return (
