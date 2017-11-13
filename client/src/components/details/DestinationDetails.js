@@ -59,36 +59,41 @@ class DestinationDetails extends Component {
     const { classes } = this.props;
     const destination = this.props.destinationDetails.destination.info;
     const { isFetching } = this.props.destinationDetails.destination;
+
     if (isFetching) {
       return <CircleLoader large />;
     }
-    return (
-      <Grid container spacing={24}>
-        <Grid item xs={12}>
-          <Card className={classes.card}>
-            <CardMedia
-              className={classes.media}
-              image={destination.image}
-              title={destination.name}
-            />
-            <CardContent>
-              <Typography type="display2" component="h2">
-                {destination.name}
-              </Typography>
-            </CardContent>
-            <CardActions>{this.renderFavButton()}</CardActions>
-          </Card>
+
+    // Logic necessary to eliminate Material-UI warning during Redux actions
+    if (Object.keys(destination).length > 0 && destination !== undefined) {
+      return (
+        <Grid container spacing={24}>
+          <Grid item xs={12}>
+            <Card className={classes.card}>
+              <CardMedia
+                className={classes.media}
+                image={destination.image}
+                title={destination.name}
+              />
+              <CardContent>
+                <Typography type="display2" component="h2">
+                  {destination.name}
+                </Typography>
+              </CardContent>
+              <CardActions>{this.renderFavButton()}</CardActions>
+            </Card>
+          </Grid>
+          <Grid item xs={12}>
+            <Paper className={classes.paper}>{destination.description}</Paper>
+          </Grid>
+          <Grid item xs={12} md={8}>
+            <Paper>
+              <DetailsTab yelpLocation={destination.yelpName} />
+            </Paper>
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <Paper className={classes.paper}>{destination.description}</Paper>
-        </Grid>
-        <Grid item xs={12} md={8}>
-          <Paper>
-            <DetailsTab yelpLocation={destination.yelpName} />
-          </Paper>
-        </Grid>
-      </Grid>
-    );
+      );
+    }
   }
 
   renderFavButton = () => {
