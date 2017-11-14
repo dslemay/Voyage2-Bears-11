@@ -7,13 +7,13 @@ const styles = theme => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 200,
-  },
+    width: 200
+  }
 });
 
 class DatePickers extends React.Component {
@@ -25,11 +25,11 @@ class DatePickers extends React.Component {
 
   changeDate(event) {
     this.props.onDateChange(event.target.value);
-  };
+  }
 
   render() {
     const { classes } = this.props;
-    
+
     return (
       <form className={classes.container} noValidate>
         <TextField
@@ -38,7 +38,7 @@ class DatePickers extends React.Component {
           error={this.props.selected}
           className={classes.textField}
           InputLabelProps={{
-            shrink: true,
+            shrink: true
           }}
           value={this.props.departureDate}
           onChange={this.changeDate}
@@ -50,6 +50,9 @@ class DatePickers extends React.Component {
 
 DatePickers.propTypes = {
   classes: PropTypes.object.isRequired,
+  departureDate: PropTypes.string.isRequired,
+  onDateChange: PropTypes.func.isRequired,
+  selected: PropTypes.bool.isRequired
 };
 
 export default withStyles(styles)(DatePickers);
