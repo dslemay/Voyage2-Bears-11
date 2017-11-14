@@ -2,34 +2,41 @@
 import axios from 'axios';
 import {
   FETCH_DESTINATION,
+  RECEIVE_DESTINATION,
   FETCH_DESTINATION_CATEGORY,
+  RECEIVE_DESTINATION_CATEGORY,
+  RESET_DESTINATION,
   FETCH_USER,
   ADD_FAVORITE,
   REMOVE_FAVORITE,
   FETCH_FAVORITES,
+  RECEIVE_FAVORITES,
   ADD_MESSAGE,
   REMOVE_MESSAGE
 } from './types';
 
 export const fetchDestination = slug => async dispatch => {
-  if (slug) {
-    const res = await axios.get(`/api/locationDetails?location=${slug}`);
-    dispatch({ type: FETCH_DESTINATION, payload: res.data });
-  } else {
-    const res = { data: null };
-    dispatch({ type: FETCH_DESTINATION, payload: res.data });
-  }
+  dispatch({ type: FETCH_DESTINATION });
+
+  const res = await axios.get(`/api/locationDetails?location=${slug}`);
+  dispatch({ type: RECEIVE_DESTINATION, payload: res.data });
 };
 
 export const fetchDestinationCategory = (
   location,
   category
 ) => async dispatch => {
+  dispatch({ type: FETCH_DESTINATION_CATEGORY, category });
+
   const res = await axios.get(
     `/api/yelp?location=${location}&category=${category}`
   );
 
-  dispatch({ type: FETCH_DESTINATION_CATEGORY, category, payload: res.data });
+  dispatch({ type: RECEIVE_DESTINATION_CATEGORY, category, payload: res.data });
+};
+
+export const resetDestination = () => dispatch => {
+  dispatch({ type: RESET_DESTINATION });
 };
 
 export const fetchUser = () => async dispatch => {
@@ -72,10 +79,12 @@ export const updateFavorites = (favArrName, locationId) => async dispatch => {
 };
 
 export const fetchFavorites = () => async dispatch => {
+  dispatch({ type: FETCH_FAVORITES });
+
   const res = await axios.get('/api/favorites');
 
   if (!res.data.error) {
-    dispatch({ type: FETCH_FAVORITES, payload: res.data });
+    dispatch({ type: RECEIVE_FAVORITES, payload: res.data });
   }
 };
 

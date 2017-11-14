@@ -70,7 +70,7 @@ class FlightsList extends React.Component {
     // remove any flight prices on the tab
     ticket.pop();
     const originCode = getOriginCode(this.state.origin);
-    const destinationCode = this.props.destinationDetails.destination.IATA;
+    const destinationCode = this.props.destinationDetails.destination.info.IATA;
     this.props.fetchFlights(originCode, destinationCode, this.state.date);
   }
 
@@ -85,7 +85,7 @@ class FlightsList extends React.Component {
   render() {
     const classes = this.props.classes;
     const originCode = getOriginCode(this.state.origin);
-    const destinationCode = this.props.destinationDetails.destination.IATA;
+    const destinationCode = this.props.destinationDetails.destination.info.IATA;
     return (
       <div className={classes.container}>
         <FlightIcon className={classes.flightIcon} />

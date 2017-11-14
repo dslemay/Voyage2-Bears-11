@@ -8,6 +8,7 @@ import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 import Divider from 'material-ui/Divider';
 import Grid from 'material-ui/Grid';
+import CircleLoader from '../CircleLoader';
 
 const styles = theme => ({
   root: {
@@ -31,7 +32,11 @@ const styles = theme => ({
 class DestinationCards extends Component {
   renderCards() {
     const { classes } = this.props;
-    const { destinations } = this.props.favorites;
+    const { isFetching, destinations } = this.props.favorites;
+
+    if (isFetching) {
+      return <CircleLoader />;
+    }
 
     if (destinations) {
       return destinations.map(destination => {
