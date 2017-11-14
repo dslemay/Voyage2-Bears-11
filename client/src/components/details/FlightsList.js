@@ -169,7 +169,6 @@ class FlightsList extends React.Component {
             <Button
               raised
               color="primary"
-              className={classes.button}
               href={`https://www.google.com/flights/#search;f=${originCode};t=${destinationCode};d=${this
                 .state.date};tt=o`}
               target="_blank"
