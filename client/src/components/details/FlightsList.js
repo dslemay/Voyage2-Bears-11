@@ -36,23 +36,15 @@ function checkDate(date) {
 
   var today = new Date();
   if (dateArr[0] < today.getFullYear()) {
-    this.setState({
-      dateNotSelected: true
-    });
-    return;
+    return true;
   }
   else if (dateArr[1] < today.getMonth()+1) {
-    this.setState({
-      dateNotSelected: true
-    });
-    return;
+    return true;
   }
   else if (dateArr[2] < today.getDate()) {
-    this.setState({
-      dateNotSelected: true
-    });
-    return;
+    return true;
   }
+  return false;
 }
 
 class FlightsList extends React.Component {
@@ -73,20 +65,26 @@ class FlightsList extends React.Component {
 
   handleClick() {
     if (!this.state.origin) {
-      this.setState(prevState => ({
+      this.setState({
         codeNotSelected: true,
-      }));
+      });
       return;
     }
 
     if (!this.state.date) {
-      this.setState(prevState => ({
+      this.setState({
         dateNotSelected: true,
-      }));
+      });
       return;
     }
 
-    checkDate(this.state.date);
+    const checked = checkDate(this.state.date);
+    if (checked) {
+      this.setState({
+        dateNotSelected: true,
+      });
+      return;
+    }
 
     var ticket = this.props.flights;
     // ticket.pop() is used to remove any flight prices currently on the tab if user wants to change date or originCode
@@ -99,18 +97,18 @@ class FlightsList extends React.Component {
   handleOriginChange(origin) {
     this.setState({ origin });
     if (this.state.codeNotSelected === true) {
-      this.setState(prevState => ({
+      this.setState({
         codeNotSelected: false,
-      }));
+      });
     }
   }
 
   handleDateChange(date) {
     this.setState({ date });
     if (this.state.dateNotSelected === true) {
-      this.setState(prevState => ({
+      this.setState({
         dateNotSelected: false,
-      }));
+      });
     }
   }
 
