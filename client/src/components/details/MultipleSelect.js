@@ -74,7 +74,7 @@ class MultipleSelect extends React.Component {
               }
             }}
           >
-            {originAirport.map(name =>
+            {originAirport.map(name => (
               <MenuItem
                 key={name}
                 value={name}
@@ -85,7 +85,7 @@ class MultipleSelect extends React.Component {
               >
                 {name}
               </MenuItem>
-            )}
+            ))}
           </Select>
         </FormControl>
       </div>
@@ -94,7 +94,10 @@ class MultipleSelect extends React.Component {
 }
 
 MultipleSelect.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  onOriginChange: PropTypes.func.isRequired,
+  originName: PropTypes.string.isRequired,
+  selected: PropTypes.bool.isRequired
 };
 
 export default withStyles(styles)(MultipleSelect);

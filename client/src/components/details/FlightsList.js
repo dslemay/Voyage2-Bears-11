@@ -1,14 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
 import { fetchFlights } from '../../actions/flightActions';
-import { updateMessages } from '../../actions';
 import Button from 'material-ui/Button';
-import MultipleSelect from '../MultipleSelect';
-import DatePickers from '../DatePickers';
+import MultipleSelect from './MultipleSelect';
+import DatePickers from './DatePickers';
 import { withStyles } from 'material-ui/styles';
 import PropTypes from 'prop-types';
 import FlightIcon from 'material-ui-icons/Flight';
+import CircleLoader from '../CircleLoader';
 
 const styles = theme => ({
   container: {
@@ -45,17 +44,22 @@ function getOriginCode(origin) {
 }
 
 function checkDate(date) {
-  var dateArr = date.split("-");
+  var dateArr = date.split('-');
   dateArr = dateArr.map(Number);
 
   var today = new Date();
   if (dateArr[0] < today.getFullYear()) {
     return true;
-  }
-  else if (dateArr[1] < today.getMonth()+1 && dateArr[0] === today.getFullYear()) {
+  } else if (
+    dateArr[1] < today.getMonth() + 1 &&
+    dateArr[0] === today.getFullYear()
+  ) {
     return true;
-  }
-  else if (dateArr[2] < today.getDate() && dateArr[1] === today.getMonth()+1 && dateArr[0] === today.getFullYear()) {
+  } else if (
+    dateArr[2] < today.getDate() &&
+    dateArr[1] === today.getMonth() + 1 &&
+    dateArr[0] === today.getFullYear()
+  ) {
     return true;
   }
   return false;
@@ -73,21 +77,21 @@ class FlightsList extends React.Component {
       origin: '',
       date: '',
       codeNotSelected: false,
-      dateNotSelected: false,
+      dateNotSelected: false
     };
   }
 
   handleClick() {
     if (!this.state.origin) {
       this.setState({
-        codeNotSelected: true,
+        codeNotSelected: true
       });
       return;
     }
 
     if (!this.state.date) {
       this.setState({
-        dateNotSelected: true,
+        dateNotSelected: true
       });
       return;
     }
@@ -95,30 +99,21 @@ class FlightsList extends React.Component {
     const checked = checkDate(this.state.date);
     if (checked) {
       this.setState({
-        dateNotSelected: true,
+        dateNotSelected: true
       });
       return;
     }
 
-    var ticket = this.props.flights;
-    // ticket.pop() is used to remove any flight prices currently on the tab if user wants to change date or originCode
-    ticket.pop();
     const originCode = getOriginCode(this.state.origin);
     const destinationCode = this.props.destinationDetails.destination.info.IATA;
     this.props.fetchFlights(originCode, destinationCode, this.state.date);
-  }
-
-  componentDidMount() {
-    // this.props.flights.pop() is used to remove the price from component. If not used then a price will still be on 
-    // the component even when randomizing the next location.
-    this.props.flights.pop();
   }
 
   handleOriginChange(origin) {
     this.setState({ origin });
     if (this.state.codeNotSelected === true) {
       this.setState({
-        codeNotSelected: false,
+        codeNotSelected: false
       });
     }
   }
@@ -127,17 +122,43 @@ class FlightsList extends React.Component {
     this.setState({ date });
     if (this.state.dateNotSelected === true) {
       this.setState({
-        dateNotSelected: false,
+        dateNotSelected: false
       });
+    }
+  }
+
+  renderFlightCost() {
+    const { isFetching, info } = this.props.destinationDetails.flights;
+    const originCode = getOriginCode(this.state.origin);
+    const destinationCode = this.props.destinationDetails.destination.info.IATA;
+
+    if (isFetching) {
+      return <CircleLoader />;
+    }
+
+    if (!isFetching && Object.keys(info).length) {
+      return info.map(flight => (
+        <div key={flight.trips.requestId}>
+          <h5>Flights as low as:</h5>
+          <h6>{flight.trips.tripOption['0'].saleTotal.replace('USD', '$$')}</h6>
+          <br />
+          <Button
+            raised
+            color="primary"
+            href={`https://www.google.com/flights/#search;f=${originCode};t=${destinationCode};d=${this
+              .state.date};tt=o`}
+            target="_blank"
+          >
+            Book Flights Now
+          </Button>
+        </div>
+      ));
     }
   }
 
   render() {
     const classes = this.props.classes;
-    const originCode = getOriginCode(this.state.origin);
-    const destinationCode = this.props.destinationDetails.destination.info.IATA;
     return (
-      
       <div className={classes.container}>
         <FlightIcon className={classes.flightIcon} />
         <p>Pick an airport and departure date.</p>
@@ -153,49 +174,28 @@ class FlightsList extends React.Component {
           selected={this.state.dateNotSelected}
         />
 
-        <Button 
-          raised 
+        <Button
+          raised
           color="primary"
-          className={classes.button} 
+          className={classes.button}
           onClick={this.handleClick}
         >
           Check Prices
         </Button>
-
-        {this.props.flights.map(flight =>
-          <div key={flight.data.flights.trips.requestId}>
-            <h5>Flights as low as:</h5>
-            <h6>
-              {flight.data.flights.trips.tripOption['0'].saleTotal.replace(
-                'USD',
-                '$$'
-              )}
-            </h6>
-            <br />
-            <Button
-              raised
-              color="primary"
-              href={`https://www.google.com/flights/#search;f=${originCode};t=${destinationCode};d=${this
-                .state.date};tt=o`}
-              target="_blank"
-            >
-              Book Flights Now
-            </Button>
-          </div>
-        )}
+        {this.renderFlightCost()}
       </div>
     );
   }
 }
 
-function mapStateToProps({ flights, destinationDetails }) {
-  return { flights, destinationDetails };
+function mapStateToProps({ destinationDetails }) {
+  return { destinationDetails };
 }
 
 FlightsList.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default connect(mapStateToProps, { fetchFlights, updateMessages })(
-  withStyles(styles)(FlightsList)
-);
+export default connect(mapStateToProps, {
+  fetchFlights
+})(withStyles(styles)(FlightsList));
