@@ -59,7 +59,6 @@ class DetailsTab extends React.Component {
             <Tab label="Hotels" />
             <Tab label="Restaurants" />
             <Tab label="Entertainment" />
-            <Tab label="Flights" />
           </Tabs>
         </AppBar>
         {value === 0 &&
@@ -73,10 +72,6 @@ class DetailsTab extends React.Component {
         {value === 2 &&
           <TabContainer>
             <DetailsList yelpCategory="entertainment" />
-          </TabContainer>}
-        {value === 3 &&
-          <TabContainer>
-            <FlightsList />
           </TabContainer>}
       </div>
     );

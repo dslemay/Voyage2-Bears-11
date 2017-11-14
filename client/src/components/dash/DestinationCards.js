@@ -8,6 +8,7 @@ import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 import Divider from 'material-ui/Divider';
 import Grid from 'material-ui/Grid';
+import CircleLoader from '../CircleLoader';
 
 const styles = theme => ({
   root: {
@@ -25,13 +26,43 @@ const styles = theme => ({
   },
   line: {
     marginBottom: 23
+  },
+  button: {
+    marginTop: 40,
+    marginLeft: '14%'
   }
 });
 
 class DestinationCards extends Component {
   renderCards() {
     const { classes } = this.props;
-    const { destinations } = this.props.favorites;
+    const { isFetching, destinations } = this.props.favorites;
+    const numFavorites = this.props.favorites.destinations.length;
+    console.log(numFavorites);
+
+    if (isFetching) {
+      return <CircleLoader />;
+    }
+
+    if (numFavorites === 0) {
+      return (
+        <div>
+          <Typography type="subheading" className={classes.button}>
+            You have no favorites in this category. Start exploring to find
+            some!
+          </Typography>
+          <Button
+            className={classes.button}
+            component={Link}
+            to="/details/melbourne"
+            color="primary"
+            raised
+          >
+            Explore
+          </Button>
+        </div>
+      );
+    }
 
     if (destinations) {
       return destinations.map(destination => {

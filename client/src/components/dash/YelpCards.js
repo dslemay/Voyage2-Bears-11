@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
@@ -8,6 +9,7 @@ import Divider from 'material-ui/Divider';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 import RemoveFavAlert from './RemoveFavAlert';
+import CircleLoader from '../CircleLoader';
 
 const styles = theme => ({
   root: {
@@ -25,12 +27,42 @@ const styles = theme => ({
   },
   line: {
     marginBottom: 23
+  },
+  button: {
+    marginTop: 40,
+    marginLeft: '14%'
   }
 });
 
 class YelpCards extends Component {
   renderCards() {
     const { classes, favType } = this.props;
+    const { isFetching } = this.props.favorites;
+    const numFavorites = this.props.favorites[favType].length;
+
+    if (isFetching) {
+      return <CircleLoader />;
+    }
+
+    if (numFavorites === 0) {
+      return (
+        <div>
+          <Typography type="subheading" className={classes.button}>
+            You have no favorites in this category. Start exploring to find
+            some!
+          </Typography>
+          <Button
+            className={classes.button}
+            component={Link}
+            to="/details/melbourne"
+            color="primary"
+            raised
+          >
+            Explore
+          </Button>
+        </div>
+      );
+    }
 
     return this.props.favorites[favType].map(favItem => {
       return (

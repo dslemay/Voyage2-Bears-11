@@ -8,7 +8,7 @@ import DestinationCards from './DestinationCards';
 
 function TabContainer(props) {
   return (
-    <div style={{ padding: 8 * 3 }}>
+    <div style={{ padding: 12 }}>
       {props.children}
     </div>
   );
@@ -22,7 +22,11 @@ const styles = theme => ({
   root: {
     flexGrow: 1,
     marginTop: 20,
-    backgroundColor: '#E8EAF6'
+    backgroundColor: '#E8EAF6',
+    [theme.breakpoints.up('lg')]: {
+      margin: '10%',
+      marginTop: 30
+    }
   },
   tabBar: {
     top: 64,

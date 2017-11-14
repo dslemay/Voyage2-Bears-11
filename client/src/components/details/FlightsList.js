@@ -8,17 +8,31 @@ import MultipleSelect from '../MultipleSelect';
 import DatePickers from '../DatePickers';
 import { withStyles } from 'material-ui/styles';
 import PropTypes from 'prop-types';
+import FlightIcon from 'material-ui-icons/Flight';
 
 const styles = theme => ({
   container: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    textAlign: 'center'
+    textAlign: 'center',
+    padding: 16
   },
   button: {
     marginTop: 20,
-    marginBottom: 20
+    marginBottom: 20,
+    width: '50%',
+    marginLeft: '25%'
+  },
+  flightIcon: {
+    height: 70,
+    width: 70,
+    display: 'block',
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    marginBottom: 15,
+    marginTop: 15,
+    color: 'gray'
   }
 });
 
@@ -90,7 +104,7 @@ class FlightsList extends React.Component {
     // ticket.pop() is used to remove any flight prices currently on the tab if user wants to change date or originCode
     ticket.pop();
     const originCode = getOriginCode(this.state.origin);
-    const destinationCode = this.props.destinationDetails.destination.IATA;
+    const destinationCode = this.props.destinationDetails.destination.info.IATA;
     this.props.fetchFlights(originCode, destinationCode, this.state.date);
   }
 
@@ -115,45 +129,56 @@ class FlightsList extends React.Component {
   render() {
     const classes = this.props.classes;
     const originCode = getOriginCode(this.state.origin);
-    const destinationCode = this.props.destinationDetails.destination.IATA;
+    const destinationCode = this.props.destinationDetails.destination.info.IATA;
     return (
-      <section className={classes.container}>
-        <div>
-          <MultipleSelect
-            onOriginChange={this.handleOriginChange}
-            originName={this.state.origin}
-            selected={this.state.codeNotSelected}
-          />
+      
+      <div className={classes.container}>
+        <FlightIcon className={classes.flightIcon} />
+        <p>Pick an airport and departure date.</p>
+        <MultipleSelect
+          onOriginChange={this.handleOriginChange}
+          originName={this.state.origin}
+          selected={this.state.codeNotSelected}
+        />
 
-          <DatePickers
-            departureDate={this.state.date}
-            onDateChange={this.handleDateChange}
-            selected={this.state.dateNotSelected}
-          />
+        <DatePickers
+          departureDate={this.state.date}
+          onDateChange={this.handleDateChange}
+          selected={this.state.dateNotSelected}
+        />
 
-          <Button raised className={classes.button} onClick={this.handleClick}>
-            Check Prices
-          </Button>
+        <Button 
+          raised 
+          color="primary"
+          className={classes.button} 
+          onClick={this.handleClick}
+        >
+          Check Prices
+        </Button>
 
-          {this.props.flights.map(flight =>
-            <div key={flight.data.flights.trips.requestId}>
-              <h5>Flights as low as</h5>
-              <p>
-                {flight.data.flights.trips.tripOption['0'].saleTotal}
-              </p>
-              <Button
-                raised
-                className={classes.button}
-                href={`https://www.google.com/flights/#search;f=${originCode};t=${destinationCode};d=${this
-                  .state.date};tt=o`}
-                target="_blank"
-              >
-                Book Flights Now
-              </Button>
-            </div>
-          )}
-        </div>
-      </section>
+        {this.props.flights.map(flight =>
+          <div key={flight.data.flights.trips.requestId}>
+            <h5>Flights as low as:</h5>
+            <h6>
+              {flight.data.flights.trips.tripOption['0'].saleTotal.replace(
+                'USD',
+                '$$'
+              )}
+            </h6>
+            <br />
+            <Button
+              raised
+              color="primary"
+              className={classes.button}
+              href={`https://www.google.com/flights/#search;f=${originCode};t=${destinationCode};d=${this
+                .state.date};tt=o`}
+              target="_blank"
+            >
+              Book Flights Now
+            </Button>
+          </div>
+        )}
+      </div>
     );
   }
 }

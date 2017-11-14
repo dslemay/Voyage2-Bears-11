@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import { GridList, GridListTile, GridListTileBar } from 'material-ui/GridList';
+import CircleLoader from '../CircleLoader';
 import SimpleSnackbar from '../SimpleSnackbar';
+import yelpStars from './yelpStars';
 
 const styles = theme => ({
   container: {
@@ -23,12 +25,20 @@ const styles = theme => ({
 });
 
 class DetailsList extends Component {
-  render() {
+  renderContent() {
     const { classes, yelpCategory } = this.props;
+    const { isFetching, locations } = this.props.destinationDetails[
+      yelpCategory
+    ];
+
+    if (isFetching) {
+      return <CircleLoader />;
+    }
+
     return (
       <div className={classes.container}>
         <GridList cellHeight={230} className={classes.gridList}>
-          {this.props.destinationDetails[yelpCategory].map(POI =>
+          {locations.map(POI => (
             <GridListTile key={POI.name}>
               <img
                 src={POI.image_url}
@@ -40,25 +50,31 @@ class DetailsList extends Component {
                 title={POI.name}
                 subtitle={
                   <span>
-                    Rating: {POI.rating}
+                    <img src={yelpStars[POI.rating]} alt={POI.rating} />
                     <br />
-                    Price: {POI.price}
+                    Based on {POI.review_count} reviews
                   </span>
                 }
                 actionIcon={
-                  this.props.auth
-                    ? <SimpleSnackbar
-                        yelpCategory={yelpCategory}
-                        yelpId={POI.id}
-                      />
-                    : ''
+                  this.props.auth ? (
+                    <SimpleSnackbar
+                      yelpCategory={yelpCategory}
+                      yelpId={POI.id}
+                    />
+                  ) : (
+                    ''
+                  )
                 }
               />
             </GridListTile>
-          )}
+          ))}
         </GridList>
       </div>
     );
+  }
+
+  render() {
+    return this.renderContent();
   }
 }
 

@@ -6,6 +6,7 @@ import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
+import TerrainIcon from 'material-ui-icons/Terrain';
 import Button from 'material-ui/Button';
 
 const styles = theme => ({
@@ -19,6 +20,10 @@ const styles = theme => ({
   menuButton: {
     marginLeft: -12,
     marginRight: 20
+  },
+  logo: {
+    height: 30,
+    width: 30
   }
 });
 
@@ -59,8 +64,9 @@ class Header extends Component {
       <div className={classes.root}>
         <AppBar position="fixed">
           <Toolbar>
+            <TerrainIcon className={classes.logo} />
             <Typography
-              type="display1"
+              type="title"
               color="inherit"
               className={classes.flex}
               component={Link}
