@@ -36,22 +36,22 @@ function checkDate(date) {
 
   var today = new Date();
   if (dateArr[0] < today.getFullYear()) {
-    return this.props.updateMessages(null, {
-      type: 'error',
-      text: 'Please choose correct date'
+    this.setState({
+      dateNotSelected: true
     });
+    return;
   }
   else if (dateArr[1] < today.getMonth()+1) {
-    return this.props.updateMessages(null, {
-      type: 'error',
-      text: 'Please choose correct date'
+    this.setState({
+      dateNotSelected: true
     });
+    return;
   }
   else if (dateArr[2] < today.getDate()) {
-    return this.props.updateMessages(null, {
-      type: 'error',
-      text: 'Please choose correct date'
+    this.setState({
+      dateNotSelected: true
     });
+    return;
   }
 }
 
@@ -74,14 +74,14 @@ class FlightsList extends React.Component {
   handleClick() {
     if (!this.state.origin) {
       this.setState(prevState => ({
-        codeNotSelected: !prevState.codeNotSelected
+        codeNotSelected: true,
       }));
       return;
     }
 
     if (!this.state.date) {
       this.setState(prevState => ({
-        dateNotSelected: !prevState.dateNotSelected
+        dateNotSelected: true,
       }));
       return;
     }
@@ -100,16 +100,16 @@ class FlightsList extends React.Component {
     this.setState({ origin });
     if (this.state.codeNotSelected === true) {
       this.setState(prevState => ({
-        codeNotSelected: !prevState.codeNotSelected
+        codeNotSelected: false,
       }));
     }
   }
 
   handleDateChange(date) {
     this.setState({ date });
-    if (!this.state.date === true) {
+    if (this.state.dateNotSelected === true) {
       this.setState(prevState => ({
-        dateNotSelected: !prevState.dateNotSelected
+        dateNotSelected: false,
       }));
     }
   }
