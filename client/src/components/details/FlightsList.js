@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { fetchFlights } from '../actions/flightActions';
-import { updateMessages } from '../actions';
+import { fetchFlights } from '../../actions/flightActions';
+import { updateMessages } from '../../actions';
 import Button from 'material-ui/Button';
-import MultipleSelect from './MultipleSelect';
-import DatePickers from './DatePickers';
+import MultipleSelect from '../MultipleSelect';
+import DatePickers from '../DatePickers';
 import { withStyles } from 'material-ui/styles';
 import PropTypes from 'prop-types';
 import FlightIcon from 'material-ui-icons/Flight';
@@ -44,6 +44,23 @@ function getOriginCode(origin) {
   return originCode;
 }
 
+function checkDate(date) {
+  var dateArr = date.split("-");
+  dateArr = dateArr.map(Number);
+
+  var today = new Date();
+  if (dateArr[0] < today.getFullYear()) {
+    return true;
+  }
+  else if (dateArr[1] < today.getMonth()+1 && dateArr[0] === today.getFullYear()) {
+    return true;
+  }
+  else if (dateArr[2] < today.getDate() && dateArr[1] === today.getMonth()+1 && dateArr[0] === today.getFullYear()) {
+    return true;
+  }
+  return false;
+}
+
 class FlightsList extends React.Component {
   constructor(props) {
     super(props);
@@ -54,32 +71,65 @@ class FlightsList extends React.Component {
 
     this.state = {
       origin: '',
-      date: ''
+      date: '',
+      codeNotSelected: false,
+      dateNotSelected: false,
     };
   }
 
   handleClick() {
-    if (!this.state.date || !this.state.origin) {
-      return this.props.updateMessages(null, {
-        type: 'error',
-        text: 'You must select an airport and date'
+    if (!this.state.origin) {
+      this.setState({
+        codeNotSelected: true,
       });
+      return;
+    }
+
+    if (!this.state.date) {
+      this.setState({
+        dateNotSelected: true,
+      });
+      return;
+    }
+
+    const checked = checkDate(this.state.date);
+    if (checked) {
+      this.setState({
+        dateNotSelected: true,
+      });
+      return;
     }
 
     var ticket = this.props.flights;
-    // remove any flight prices on the tab
+    // ticket.pop() is used to remove any flight prices currently on the tab if user wants to change date or originCode
     ticket.pop();
     const originCode = getOriginCode(this.state.origin);
     const destinationCode = this.props.destinationDetails.destination.info.IATA;
     this.props.fetchFlights(originCode, destinationCode, this.state.date);
   }
 
+  componentDidMount() {
+    // this.props.flights.pop() is used to remove the price from component. If not used then a price will still be on 
+    // the component even when randomizing the next location.
+    this.props.flights.pop();
+  }
+
   handleOriginChange(origin) {
     this.setState({ origin });
+    if (this.state.codeNotSelected === true) {
+      this.setState({
+        codeNotSelected: false,
+      });
+    }
   }
 
   handleDateChange(date) {
     this.setState({ date });
+    if (this.state.dateNotSelected === true) {
+      this.setState({
+        dateNotSelected: false,
+      });
+    }
   }
 
   render() {
@@ -87,23 +137,26 @@ class FlightsList extends React.Component {
     const originCode = getOriginCode(this.state.origin);
     const destinationCode = this.props.destinationDetails.destination.info.IATA;
     return (
+      
       <div className={classes.container}>
         <FlightIcon className={classes.flightIcon} />
         <p>Pick an airport and departure date.</p>
         <MultipleSelect
           onOriginChange={this.handleOriginChange}
           originName={this.state.origin}
+          selected={this.state.codeNotSelected}
         />
 
         <DatePickers
           departureDate={this.state.date}
           onDateChange={this.handleDateChange}
+          selected={this.state.dateNotSelected}
         />
 
-        <Button
-          raised
+        <Button 
+          raised 
           color="primary"
-          className={classes.button}
+          className={classes.button} 
           onClick={this.handleClick}
         >
           Check Prices

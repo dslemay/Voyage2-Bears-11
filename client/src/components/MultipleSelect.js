@@ -64,6 +64,7 @@ class MultipleSelect extends React.Component {
             value={this.props.originName}
             onChange={this.changeOrigin}
             input={<Input id="name-multiple" />}
+            error={this.props.selected}
             MenuProps={{
               PaperProps: {
                 style: {
