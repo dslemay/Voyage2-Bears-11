@@ -1,11 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
 import { fetchFlights } from '../actions/flightActions';
 import { updateMessages } from '../actions';
 import Button from 'material-ui/Button';
 import MultipleSelect from './MultipleSelect';
-import DatePickers from './DatePickers';
+import { DatePicker } from 'material-ui-pickers';
 import { withStyles } from 'material-ui/styles';
 import PropTypes from 'prop-types';
 import FlightIcon from 'material-ui-icons/Flight';
@@ -19,10 +18,8 @@ const styles = theme => ({
     padding: 16
   },
   button: {
-    marginTop: 20,
-    marginBottom: 20,
-    width: '50%',
-    marginLeft: '25%'
+    margin: 12,
+    width: 195
   },
   flightIcon: {
     height: 70,
@@ -45,21 +42,13 @@ function getOriginCode(origin) {
 }
 
 class FlightsList extends React.Component {
-  constructor(props) {
-    super(props);
+  state = {
+    origin: '',
+    selectedDate: new Date()
+  };
 
-    this.handleDateChange = this.handleDateChange.bind(this);
-    this.handleOriginChange = this.handleOriginChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-
-    this.state = {
-      origin: '',
-      date: ''
-    };
-  }
-
-  handleClick() {
-    if (!this.state.date || !this.state.origin) {
+  handleClick = () => {
+    if (!this.state.origin) {
       return this.props.updateMessages(null, {
         type: 'error',
         text: 'You must select an airport and date'
@@ -71,16 +60,17 @@ class FlightsList extends React.Component {
     ticket.pop();
     const originCode = getOriginCode(this.state.origin);
     const destinationCode = this.props.destinationDetails.destination.info.IATA;
-    this.props.fetchFlights(originCode, destinationCode, this.state.date);
-  }
+    const formattedDate = this.state.selectedDate.toISOString().split('T')[0];
+    this.props.fetchFlights(originCode, destinationCode, formattedDate);
+  };
 
-  handleOriginChange(origin) {
+  handleOriginChange = origin => {
     this.setState({ origin });
-  }
+  };
 
-  handleDateChange(date) {
-    this.setState({ date });
-  }
+  handleDateChange = date => {
+    this.setState({ selectedDate: date });
+  };
 
   render() {
     const classes = this.props.classes;
@@ -95,15 +85,16 @@ class FlightsList extends React.Component {
           originName={this.state.origin}
         />
 
-        <DatePickers
-          departureDate={this.state.date}
-          onDateChange={this.handleDateChange}
+        <DatePicker
+          value={this.state.selectedDate}
+          onChange={this.handleDateChange}
+          className={classes.button}
         />
 
         <Button
           raised
           color="primary"
-          className={classes.button}
+          className={classes.container}
           onClick={this.handleClick}
         >
           Check Prices
@@ -111,6 +102,7 @@ class FlightsList extends React.Component {
 
         {this.props.flights.map(flight =>
           <div key={flight.data.flights.trips.requestId}>
+            <br />
             <h5>Flights as low as:</h5>
             <h6>
               {flight.data.flights.trips.tripOption['0'].saleTotal.replace(
@@ -120,10 +112,11 @@ class FlightsList extends React.Component {
             </h6>
             <br />
             <Button
+              className={classes.container}
               raised
               color="primary"
               href={`https://www.google.com/flights/#search;f=${originCode};t=${destinationCode};d=${this
-                .state.date};tt=o`}
+                .state.selectedDate};tt=o`}
               target="_blank"
             >
               Book Flights Now
