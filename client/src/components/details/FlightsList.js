@@ -52,10 +52,10 @@ function checkDate(date) {
   if (dateArr[0] < today.getFullYear()) {
     return true;
   }
-  else if (dateArr[1] < today.getMonth()+1) {
+  else if (dateArr[1] < today.getMonth()+1 && dateArr[0] === today.getFullYear()) {
     return true;
   }
-  else if (dateArr[2] < today.getDate()) {
+  else if (dateArr[2] < today.getDate() && dateArr[1] === today.getMonth()+1 && dateArr[0] === today.getFullYear()) {
     return true;
   }
   return false;
