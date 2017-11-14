@@ -108,6 +108,12 @@ class FlightsList extends React.Component {
     this.props.fetchFlights(originCode, destinationCode, this.state.date);
   }
 
+  componentDidMount() {
+    // this.props.flights.pop() is used to remove the price from component. If not used then a price will still be on 
+    // the component even when randomizing the next location.
+    this.props.flights.pop();
+  }
+
   handleOriginChange(origin) {
     this.setState({ origin });
     if (this.state.codeNotSelected === true) {
