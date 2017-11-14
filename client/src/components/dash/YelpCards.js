@@ -113,7 +113,8 @@ class YelpCards extends Component {
 
 YelpCards.propTypes = {
   classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired
+  theme: PropTypes.object.isRequired,
+  favType: PropTypes.string.isRequired
 };
 
 function mapStateToProps({ favorites }) {
