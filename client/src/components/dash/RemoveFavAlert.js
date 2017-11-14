@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { updateFavorites } from '../../actions';
 import Button from 'material-ui/Button';
@@ -63,5 +64,10 @@ class RemoveFavAlert extends Component {
     );
   }
 }
+
+RemoveFavAlert.PropTypes = {
+  yelpId: PropTypes.string.isRequired,
+  category: PropTypes.string.isRequired
+};
 
 export default connect(null, { updateFavorites })(RemoveFavAlert);
