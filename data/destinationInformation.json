@@ -53,5 +53,59 @@
     "description":
       "Bristol is a city straddling the River Avon in the southwest of England with a prosperous maritime history. Its former city-centre port is now a cultural hub, the Harbourside, where the M Shed museum explores local social and industrial heritage. The harbour's 19th-century warehouses now contain restaurants, shops and cultural institutions such as contemporary art gallery The Arnolfini.",
     "image": "https://source.unsplash.com/Cs7Fj3FfSr8"
+  },
+  {
+    "name": "Denver, Colorado",
+    "slug": "denver",
+    "yelpName": "denver, co",
+    "IATA": "DEN",
+    "description":
+      "Denver, the capital of Colorado, is an American metropolis dating to the Old West era. Larimer Square, the city’s oldest block, features landmark 19th-century buildings. Museums include the Denver Art Museum, an ultramodern complex known for its collection of indigenous works, and the mansion of famed Titanic survivor Molly Brown. Denver is also a jumping-off point for ski resorts in the nearby Rocky Mountains.",
+    "image": "https://unsplash.com/photos/x4PKN_RXoX0"
+  },
+  {
+    "name": "Washington, DC",
+    "slug": "washington-dc",
+    "yelpName": "washington, dc",
+    "IATA": "IAD",
+    "description":
+      "Washington, DC, the U.S. capital, is a compact city on the Potomac River, bordering the states of Maryland and Virginia. It’s defined by imposing neoclassical monuments and buildings – including the iconic ones that house the federal government’s 3 branches: the Capitol, White House and Supreme Court. It's also home to iconic museums and performing-arts venues such as the Kennedy Center.",
+    "image": "https://unsplash.com/photos/pArjs_G6m4Y"
+  },
+  {
+    "name": "Portland, Oregon",
+    "slug": "portland-oregon",
+    "yelpName": "portland, or",
+    "IATA": "PDX",
+    "description":
+      "Portland, Oregon’s largest city, sits on the Columbia and Willamette rivers, in the shadow of snow-capped Mount Hood. It’s known for its parks, bridges and bicycle paths, as well as for its eco-friendliness and its microbreweries and coffeehouses. Iconic Washington Park encompasses sites from the formal Japanese Garden to Oregon Zoo and its railway. The city hosts thriving art, theater and music scenes.",
+    "image": "https://unsplash.com/photos/ZB_Ns0hVZNk"
+  },
+  {
+    "name": "Austin, Texas",
+    "slug": "austin-texas",
+    "yelpName": "austin, tx",
+    "IATA": "AUS",
+    "description":
+      "Austin is the state capital of Texas, an inland city bordering the Hill Country region. Home to the University of Texas flagship campus, Austin is known for its eclectic live-music scene centered around country, blues and rock. Its many parks and lakes are popular for hiking, biking, swimming and boating. South of the city, Formula One's Circuit of the Americas raceway has hosted the United States Grand Prix.",
+    "image": "https://unsplash.com/photos/l1AOEY4Yy5Q"
+  },
+  {
+    "name": "Boston, Massachussets",
+    "slug": "boston-massachusetts",
+    "yelpName": "boston, ma",
+    "IATA": "BOS",
+    "description":
+      "Boston is Massachusetts’ capital and largest city. Founded in 1630, it’s one of the oldest cities in the U.S. The key role it played in the American Revolution is highlighted on the Freedom Trail, a 2.5-mile walking route of historic sites that tells the story of the nation’s founding. One stop, former meeting house Faneuil Hall, is a popular marketplace.",
+    "image": "https://unsplash.com/photos/_pIkJUaE1hc"
+  },
+  {
+    "name": "San Diego, California",
+    "slug": "san-diego-california",
+    "yelpName": "san diego, ca",
+    "IATA": "SAN",
+    "description":
+      "San Diego is a city on the Pacific coast of California known for its beaches, parks and warm climate. Immense Balboa Park is the site of the renowned San Diego Zoo, as well as numerous art galleries, artist studios, museums and gardens. A deep harbor is home to a large active naval fleet, with the USS Midway, an aircraft-carrier-turned-museum, open to the public.",
+    "image": "https://unsplash.com/photos/Wr79EN6_R3Y"
   }
 ]
