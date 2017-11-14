@@ -15,13 +15,14 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    textAlign: 'center'
+    textAlign: 'center',
+    padding: 16
   },
   button: {
     marginTop: 20,
     marginBottom: 20,
-    width: '40%',
-    marginLeft: '30%'
+    width: '50%',
+    marginLeft: '25%'
   },
   flightIcon: {
     height: 70,
@@ -108,10 +109,16 @@ class FlightsList extends React.Component {
           Check Prices
         </Button>
 
-        {this.props.flights.map(flight => (
+        {this.props.flights.map(flight =>
           <div key={flight.data.flights.trips.requestId}>
             <h5>Flights as low as:</h5>
-            <p>{flight.data.flights.trips.tripOption['0'].saleTotal}</p>
+            <h6>
+              {flight.data.flights.trips.tripOption['0'].saleTotal.replace(
+                'USD',
+                '$$'
+              )}
+            </h6>
+            <br />
             <Button
               raised
               color="primary"
@@ -122,7 +129,7 @@ class FlightsList extends React.Component {
               Book Flights Now
             </Button>
           </div>
-        ))}
+        )}
       </div>
     );
   }

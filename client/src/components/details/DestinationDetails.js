@@ -109,11 +109,15 @@ class DestinationDetails extends Component {
                   </Button>
                 </Tooltip>
               </CardContent>
-              <CardActions>{this.renderFavButton()}</CardActions>
+              <CardActions>
+                {this.renderFavButton()}
+              </CardActions>
             </Card>
           </Grid>
           <Grid item xs={12} md={8}>
-            <Paper className={classes.paper}>{destination.description}</Paper>
+            <Paper className={classes.paper}>
+              {destination.description}
+            </Paper>
           </Grid>
           <Grid item xs={12} md={8}>
             <Paper>
@@ -160,7 +164,11 @@ class DestinationDetails extends Component {
 
   render() {
     const { classes } = this.props;
-    return <div className={classes.root}>{this.renderContent()}</div>;
+    return (
+      <div className={classes.root}>
+        {this.renderContent()}
+      </div>
+    );
   }
 }
 

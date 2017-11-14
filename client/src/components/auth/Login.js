@@ -1,16 +1,24 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
 import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
+import TerrainIcon from 'material-ui-icons/Terrain';
 import { fetchUser, fetchFavorites, updateMessages } from '../../actions';
 
 const styles = theme => ({
   paper: {
     marginTop: 30,
-    padding: 16,
-    width: '80%',
-    margin: '0 auto'
+    paddingBottom: 30,
+    width: 320,
+    margin: '0 auto',
+    textAlign: 'center'
+  },
+  icon: {
+    color: 'gray',
+    height: 80,
+    width: 80
   }
 });
 
@@ -73,37 +81,48 @@ class Login extends Component {
       { id: 'password', type: 'password', label: 'Password' }
     ];
 
-    const formFields = fieldsInfo.map(field => (
+    const formFields = fieldsInfo.map(field =>
       <div className="row" key={field.id}>
         <div className="input-field col s12">
           <input
+            style={{ marginBottom: 0 }}
             id={field.id}
             type={field.type}
             className="validate"
             value={this.state[field.id]}
             onChange={this.handleFieldChange}
           />
-          <label htmlFor="email">{field.label}</label>
+          <label htmlFor="email">
+            {field.label}
+          </label>
         </div>
       </div>
-    ));
+    );
 
     const { classes } = this.props;
 
     return (
       <Paper className={classes.paper}>
         <div className="container">
-          <h2>Login</h2>
+          <TerrainIcon className={classes.icon} />
           <form className="col s12" onSubmit={this.handleSubmit}>
             {formFields}
             <button
-              className="btn waves-effect waves-light"
+              style={{
+                width: '100%',
+                marginTop: 20,
+                backgroundColor: '#3F51B5'
+              }}
+              className="btn"
               type="submit"
               name="action"
             >
               Login
             </button>
           </form>
+          <p>
+            Need an account? Register <Link to="/register">here</Link>
+          </p>
         </div>
       </Paper>
     );

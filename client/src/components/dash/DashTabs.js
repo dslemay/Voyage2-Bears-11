@@ -8,7 +8,7 @@ import DestinationCards from './DestinationCards';
 
 function TabContainer(props) {
   return (
-    <div style={{ padding: 8 * 3 }}>
+    <div style={{ padding: 12 }}>
       {props.children}
     </div>
   );
