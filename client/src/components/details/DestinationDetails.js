@@ -137,7 +137,7 @@ class DestinationDetails extends Component {
 
   renderFavButton = () => {
     const { auth } = this.props;
-    const id = this.props.destinationDetails.destination._id;
+    const id = this.props.destinationDetails.destination.info._id;
 
     // Render button if user is logged in
     if (auth) {
@@ -156,7 +156,7 @@ class DestinationDetails extends Component {
   };
 
   renderFavMessage = () => {
-    const id = this.props.destinationDetails.destination._id;
+    const id = this.props.destinationDetails.destination.info._id;
     const destinations = this.props.auth.favorites.destinations;
     const inFavorites = destinations.indexOf(id);
     return inFavorites > -1 ? 'Remove from Favorites' : 'Add to Favorites';
