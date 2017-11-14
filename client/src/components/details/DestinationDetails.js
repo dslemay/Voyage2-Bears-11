@@ -24,7 +24,7 @@ const styles = theme => ({
     flexGrow: 1,
     margin: 40,
     [theme.breakpoints.up('lg')]: {
-      margin: '10%',
+      margin: '12%',
       marginTop: 30
     },
     [theme.breakpoints.down('sm')]: {
