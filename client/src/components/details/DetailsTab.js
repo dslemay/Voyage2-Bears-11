@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import { fetchDestinationCategory } from '../../actions';
 import AppBar from 'material-ui/AppBar';
 import Tabs, { Tab } from 'material-ui/Tabs';
-import FlightsList from './FlightsList';
 
 function TabContainer(props) {
   return (
