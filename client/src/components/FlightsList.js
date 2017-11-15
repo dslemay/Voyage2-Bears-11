@@ -88,6 +88,7 @@ class FlightsList extends React.Component {
         <DatePicker
           value={this.state.selectedDate}
           onChange={this.handleDateChange}
+          minDate={new Date()}
           className={classes.button}
         />
 
