@@ -23,22 +23,22 @@ const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 
 const originAirport = [
-  '(SFO) San Francisco, CA',
   '(ATL) Atlanta, GA',
-  '(LAX) Los Angeles, CA',
-  '(ORD) Chicago, IL',
-  '(DFW) Dallas, TX',
-  '(JFK) Queens, NY',
-  '(PDX) Portland, OR',
-  '(DEN) Denver, CO',
+  '(BOS) Boston, MA',
+  '(BWI) Baltimore, MD',
   '(CLT) Charlotte, NC',
-  '(SEA) Seattle, WA',
+  '(DEN) Denver, CO',
+  '(DFW) Dallas, TX',
+  '(DTW) Detroit, MI',
+  '(JFK) Queens, NY',
+  '(LAX) Los Angeles, CA',
   '(MIA) Miami, FL',
   '(MSP) Minneapolis, MN',
-  '(BOS) Boston, MA',
-  '(DTW) Detroit, MI',
+  '(ORD) Chicago, IL',
+  '(PDX) Portland, OR',
   '(PHL) Philadelphia, PA',
-  '(BWI) Baltimore, MD',
+  '(SEA) Seattle, WA',
+  '(SFO) San Francisco, CA',
   '(SLC) Salt Lake City, UT'
 ];
 
