@@ -53,5 +53,95 @@
     "description":
       "Bristol is a city straddling the River Avon in the southwest of England with a prosperous maritime history. Its former city-centre port is now a cultural hub, the Harbourside, where the M Shed museum explores local social and industrial heritage. The harbour's 19th-century warehouses now contain restaurants, shops and cultural institutions such as contemporary art gallery The Arnolfini.",
     "image": "https://source.unsplash.com/Cs7Fj3FfSr8"
+  },
+  {
+    "name": "Denver, Colorado",
+    "slug": "denver",
+    "yelpName": "denver, co",
+    "IATA": "DEN",
+    "description":
+      "Denver, the capital of Colorado, is an American metropolis dating to the Old West era. Larimer Square, the city’s oldest block, features landmark 19th-century buildings. Museums include the Denver Art Museum, an ultramodern complex known for its collection of indigenous works, and the mansion of famed Titanic survivor Molly Brown. Denver is also a jumping-off point for ski resorts in the nearby Rocky Mountains.",
+    "image": "https://source.unsplash.com/x4PKN_RXoX0"
+  },
+  {
+    "name": "Washington, DC",
+    "slug": "washington-dc",
+    "yelpName": "washington, dc",
+    "IATA": "IAD",
+    "description":
+      "Washington, DC, the U.S. capital, is a compact city on the Potomac River, bordering the states of Maryland and Virginia. It’s defined by imposing neoclassical monuments and buildings – including the iconic ones that house the federal government’s 3 branches: the Capitol, White House and Supreme Court. It's also home to iconic museums and performing-arts venues such as the Kennedy Center.",
+    "image": "https://source.unsplash.com/pArjs_G6m4Y"
+  },
+  {
+    "name": "Portland, Oregon",
+    "slug": "portland",
+    "yelpName": "portland, or",
+    "IATA": "PDX",
+    "description":
+      "Portland, Oregon’s largest city, sits on the Columbia and Willamette rivers, in the shadow of snow-capped Mount Hood. It’s known for its parks, bridges and bicycle paths, as well as for its eco-friendliness and its microbreweries and coffeehouses. Iconic Washington Park encompasses sites from the formal Japanese Garden to Oregon Zoo and its railway. The city hosts thriving art, theater and music scenes.",
+    "image": "https://source.unsplash.com/ZB_Ns0hVZNk"
+  },
+  {
+    "name": "Austin, Texas",
+    "slug": "austin",
+    "yelpName": "austin, tx",
+    "IATA": "AUS",
+    "description":
+      "Austin is the state capital of Texas, an inland city bordering the Hill Country region. Home to the University of Texas flagship campus, Austin is known for its eclectic live-music scene centered around country, blues and rock. Its many parks and lakes are popular for hiking, biking, swimming and boating. South of the city, Formula One's Circuit of the Americas raceway has hosted the United States Grand Prix.",
+    "image": "https://source.unsplash.com/l1AOEY4Yy5Q"
+  },
+  {
+    "name": "Boston, Massachussets",
+    "slug": "boston",
+    "yelpName": "boston, ma",
+    "IATA": "BOS",
+    "description":
+      "Boston is Massachusetts’ capital and largest city. Founded in 1630, it’s one of the oldest cities in the U.S. The key role it played in the American Revolution is highlighted on the Freedom Trail, a 2.5-mile walking route of historic sites that tells the story of the nation’s founding. One stop, former meeting house Faneuil Hall, is a popular marketplace.",
+    "image": "https://source.unsplash.com/_pIkJUaE1hc"
+  },
+  {
+    "name": "San Diego, California",
+    "slug": "san-diego",
+    "yelpName": "san diego, ca",
+    "IATA": "SAN",
+    "description":
+      "San Diego is a city on the Pacific coast of California known for its beaches, parks and warm climate. Immense Balboa Park is the site of the renowned San Diego Zoo, as well as numerous art galleries, artist studios, museums and gardens. A deep harbor is home to a large active naval fleet, with the USS Midway, an aircraft-carrier-turned-museum, open to the public.",
+    "image": "https://source.unsplash.com/Wr79EN6_R3Y"
+  },
+  {
+    "name": "Amsterdam",
+    "slug": "amsterdam",
+    "yelpName": "amsterdam",
+    "IATA": "AMS",
+    "description":
+      "Amsterdam is the Netherlands’ capital, known for its artistic heritage, elaborate canal system and narrow houses with gabled facades, legacies of the city’s 17th-century Golden Age. Its Museum District houses the Van Gogh Museum, works by Rembrandt and Vermeer at the Rijksmuseum, and modern art at the Stedelijk. Cycling is key to the city’s character, and there are numerous bike paths.",
+    "image": "https://source.unsplash.com/S80l8OMq0xA"
+  },
+  {
+    "name": "Paris",
+    "slug": "paris",
+    "yelpName": "paris",
+    "IATA": "CDG",
+    "description":
+      "Paris, France's capital, is a major European city and a global center for art, fashion, gastronomy and culture. Its 19th-century cityscape is crisscrossed by wide boulevards and the River Seine. Beyond such landmarks as the Eiffel Tower and the 12th-century, Gothic Notre-Dame cathedral, the city is known for its cafe culture and designer boutiques along the Rue du Faubourg Saint-Honoré.",
+    "image": "https://source.unsplash.com/R5scocnOOdM"
+  },
+  {
+    "name": "Las Vegas",
+    "slug": "las-vegas",
+    "yelpName": "las vegas, nv",
+    "IATA": "LAS",
+    "description":
+      "Las Vegas, in Nevada’s Mojave Desert, is a resort city famed for its vibrant nightlife, centered around 24-hour casinos and other entertainment options. Its main street and focal point is the Strip, just over 4 miles long. This boulevard is home to themed hotels with elaborate displays such as fountains synchronized to music as well as replicas of an Egyptian pyramid, the Venetian Grand Canal, and the Eiffel Tower.",
+    "image": "https://source.unsplash.com/0jH9HOxPBKw"
+  },
+  {
+    "name": "Chicago",
+    "slug": "chicago",
+    "yelpName": "chicago, il",
+    "IATA": "ORD",
+    "description":
+      "Chicago, on Lake Michigan in Illinois, is among the largest cities in the U.S. Famed for its bold architecture, it has a skyline punctuated by skyscrapers such as the iconic John Hancock Center, 1,451-ft. Willis Tower (formerly the Sears Tower) and the neo-Gothic Tribune Tower. The city is also renowned for its museums, including the Art Institute of Chicago with its noted Impressionist and Post-Impressionist works.",
+    "image": "https://source.unsplash.com/XXA8PTuLD1Y"
   }
 ]
