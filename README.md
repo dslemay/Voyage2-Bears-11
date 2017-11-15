@@ -30,7 +30,7 @@ module.exports = {
 };
 ```
 
-On the server end the environment variables should be defined as YELP_CLIENT_ID, YELP_CLIENT_SECRET, DATABASE, COOKIE_SECRET, and GOOGLE_KEY.
+On the server end the environment variables should be defined as YELP_CLIENT_ID, YELP_CLIENT_SECRET, DATABASE, COOKIE_SECRET, and GOOGLE_FLIGHTS.
 
 ## Contributors
 

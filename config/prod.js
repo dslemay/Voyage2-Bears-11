@@ -3,5 +3,5 @@ module.exports = {
   yelpClientSecret: process.env.YELP_CLIENT_SECRET,
   database: process.env.DATABASE,
   cookieSecret: process.env.COOKIE_SECRET,
-  googleKey: process.env.GOOGLE_KEY
+  googleFlights: process.env.GOOGLE_FLIGHTS
 };
