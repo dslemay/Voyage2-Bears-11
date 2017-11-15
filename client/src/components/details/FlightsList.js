@@ -71,9 +71,17 @@ class FlightsList extends React.Component {
     }
   };
 
-  handleDateChange = selectedDate => {
-    this.setState({ selectedDate });
+  handleDateChange = date => {
+    this.setState({ selectedDate: date });
   };
+
+  formatDate() {
+    const date = new Date(this.state.selectedDate);
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+    return `${year}-${month}-${day}`;
+  }
 
   renderFlightCost() {
     const { isFetching, info } = this.props.destinationDetails.flights;
@@ -85,24 +93,21 @@ class FlightsList extends React.Component {
     }
 
     if (!isFetching && Object.keys(info).length) {
-      return info.map(flight =>
+      return info.map(flight => (
         <div key={flight.trips.requestId}>
           <h5>Flights as low as:</h5>
-          <h6>
-            {flight.trips.tripOption['0'].saleTotal.replace('USD', '$$')}
-          </h6>
+          <h6>{flight.trips.tripOption['0'].saleTotal.replace('USD', '$$')}</h6>
           <br />
           <Button
             raised
             color="primary"
-            href={`https://www.google.com/flights/#search;f=${originCode};t=${destinationCode};d=${this
-              .state.selecteDdate};tt=o`}
+            href={`https://www.google.com/flights/#search;f=${originCode};t=${destinationCode};d=${this.formatDate()};tt=o`}
             target="_blank"
           >
             Book Flights Now
           </Button>
         </div>
-      );
+      ));
     }
   }
 
