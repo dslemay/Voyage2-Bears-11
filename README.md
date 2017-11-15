@@ -1,5 +1,7 @@
 # Wanderful
 
+http://www.wanderful-travel.com/
+
 Wanderful is a random travel destination web application. Upon visiting the site, users are able to click on a button and be directed to a destination details page for the randomly generated location from the database. Here users can view a brief description of the location and details such as hotels, restaurants, and entertainment available at the location. Additionally, users can get flight information to the destination's nearest airport. Users are also able to create an account which allows them to favorite/save destinations and points of interest for later retrieval on the user's dashboard.
 
 ## Set up dev environment
