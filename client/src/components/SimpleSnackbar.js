@@ -74,7 +74,11 @@ class SimpleSnackbar extends Component {
           SnackbarContentProps={{
             'aria-describedby': 'message-id'
           }}
-          message={<span id="message-id">{this.renderMessage()}</span>}
+          message={
+            <span id="message-id">
+              {this.renderMessage()}
+            </span>
+          }
         />
       </div>
     );

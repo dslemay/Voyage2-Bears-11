@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { fetchFlights } from '../../actions/flightActions';
 import Button from 'material-ui/Button';
-import MultipleSelect from './MultipleSelect';
-import DatePickers from './DatePickers';
+import AirportSelect from './AirportSelect';
+import { DatePicker } from 'material-ui-pickers';
 import { withStyles } from 'material-ui/styles';
 import PropTypes from 'prop-types';
 import FlightIcon from 'material-ui-icons/Flight';
@@ -18,10 +18,8 @@ const styles = theme => ({
     padding: 16
   },
   button: {
-    marginTop: 20,
-    marginBottom: 20,
-    width: '50%',
-    marginLeft: '25%'
+    margin: 12,
+    width: 195
   },
   flightIcon: {
     height: 70,
@@ -43,45 +41,14 @@ function getOriginCode(origin) {
   return originCode;
 }
 
-function checkDate(date) {
-  var dateArr = date.split('-');
-  dateArr = dateArr.map(Number);
-
-  var today = new Date();
-  if (dateArr[0] < today.getFullYear()) {
-    return true;
-  } else if (
-    dateArr[1] < today.getMonth() + 1 &&
-    dateArr[0] === today.getFullYear()
-  ) {
-    return true;
-  } else if (
-    dateArr[2] < today.getDate() &&
-    dateArr[1] === today.getMonth() + 1 &&
-    dateArr[0] === today.getFullYear()
-  ) {
-    return true;
-  }
-  return false;
-}
-
 class FlightsList extends React.Component {
-  constructor(props) {
-    super(props);
+  state = {
+    origin: '',
+    selectedDate: new Date(),
+    codeNotSelected: false
+  };
 
-    this.handleDateChange = this.handleDateChange.bind(this);
-    this.handleOriginChange = this.handleOriginChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-
-    this.state = {
-      origin: '',
-      date: '',
-      codeNotSelected: false,
-      dateNotSelected: false
-    };
-  }
-
-  handleClick() {
+  handleClick = () => {
     if (!this.state.origin) {
       this.setState({
         codeNotSelected: true
@@ -89,43 +56,24 @@ class FlightsList extends React.Component {
       return;
     }
 
-    if (!this.state.date) {
-      this.setState({
-        dateNotSelected: true
-      });
-      return;
-    }
-
-    const checked = checkDate(this.state.date);
-    if (checked) {
-      this.setState({
-        dateNotSelected: true
-      });
-      return;
-    }
-
     const originCode = getOriginCode(this.state.origin);
     const destinationCode = this.props.destinationDetails.destination.info.IATA;
-    this.props.fetchFlights(originCode, destinationCode, this.state.date);
-  }
+    const formattedDate = this.state.selectedDate.toISOString().split('T')[0];
+    this.props.fetchFlights(originCode, destinationCode, formattedDate);
+  };
 
-  handleOriginChange(origin) {
+  handleOriginChange = origin => {
     this.setState({ origin });
     if (this.state.codeNotSelected === true) {
       this.setState({
         codeNotSelected: false
       });
     }
-  }
+  };
 
-  handleDateChange(date) {
-    this.setState({ date });
-    if (this.state.dateNotSelected === true) {
-      this.setState({
-        dateNotSelected: false
-      });
-    }
-  }
+  handleDateChange = selectedDate => {
+    this.setState({ selectedDate });
+  };
 
   renderFlightCost() {
     const { isFetching, info } = this.props.destinationDetails.flights;
@@ -137,22 +85,24 @@ class FlightsList extends React.Component {
     }
 
     if (!isFetching && Object.keys(info).length) {
-      return info.map(flight => (
+      return info.map(flight =>
         <div key={flight.trips.requestId}>
           <h5>Flights as low as:</h5>
-          <h6>{flight.trips.tripOption['0'].saleTotal.replace('USD', '$$')}</h6>
+          <h6>
+            {flight.trips.tripOption['0'].saleTotal.replace('USD', '$$')}
+          </h6>
           <br />
           <Button
             raised
             color="primary"
             href={`https://www.google.com/flights/#search;f=${originCode};t=${destinationCode};d=${this
-              .state.date};tt=o`}
+              .state.selecteDdate};tt=o`}
             target="_blank"
           >
             Book Flights Now
           </Button>
         </div>
-      ));
+      );
     }
   }
 
@@ -162,22 +112,23 @@ class FlightsList extends React.Component {
       <div className={classes.container}>
         <FlightIcon className={classes.flightIcon} />
         <p>Pick an airport and departure date.</p>
-        <MultipleSelect
+        <AirportSelect
           onOriginChange={this.handleOriginChange}
           originName={this.state.origin}
           selected={this.state.codeNotSelected}
         />
 
-        <DatePickers
-          departureDate={this.state.date}
-          onDateChange={this.handleDateChange}
-          selected={this.state.dateNotSelected}
+        <DatePicker
+          value={this.state.selectedDate}
+          onChange={this.handleDateChange}
+          minDate={new Date()}
+          className={classes.button}
         />
 
         <Button
           raised
           color="primary"
-          className={classes.button}
+          className={classes.container}
           onClick={this.handleClick}
         >
           Check Prices

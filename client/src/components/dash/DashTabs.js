@@ -24,7 +24,7 @@ const styles = theme => ({
     marginTop: 20,
     backgroundColor: '#E8EAF6',
     [theme.breakpoints.up('lg')]: {
-      margin: '10%',
+      margin: '12%',
       marginTop: 30
     }
   },
