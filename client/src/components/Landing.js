@@ -14,11 +14,9 @@ import Typography from 'material-ui/Typography';
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    marginTop: 30,
-    marginRight: 30,
-    marginLeft: 30,
+    margin: 40,
     [theme.breakpoints.up('lg')]: {
-      margin: '10%',
+      margin: '12%',
       marginTop: 30
     },
     [theme.breakpoints.down('sm')]: {

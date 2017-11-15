@@ -3,7 +3,9 @@ import {
   RECEIVE_DESTINATION,
   FETCH_DESTINATION_CATEGORY,
   RECEIVE_DESTINATION_CATEGORY,
-  RESET_DESTINATION
+  RESET_DESTINATION,
+  FETCH_FLIGHTS,
+  RECEIVE_FLIGHTS
 } from '../actions/types';
 
 const initialState = {
@@ -22,6 +24,10 @@ const initialState = {
   entertainment: {
     isFetching: false,
     locations: []
+  },
+  flights: {
+    isFetching: false,
+    info: []
   }
 };
 
@@ -41,6 +47,14 @@ export default function(state = initialState, action) {
     case RECEIVE_DESTINATION_CATEGORY:
       return Object.assign({}, state, {
         [category]: { isFetching: false, locations: action.payload }
+      });
+    case FETCH_FLIGHTS:
+      return Object.assign({}, state, {
+        flights: { isFetching: true }
+      });
+    case RECEIVE_FLIGHTS:
+      return Object.assign({}, state, {
+        flights: { isFetching: false, info: [action.payload] }
       });
     case RESET_DESTINATION:
       return Object.assign({}, initialState);

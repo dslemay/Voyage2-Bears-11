@@ -38,7 +38,6 @@ class DestinationCards extends Component {
     const { classes } = this.props;
     const { isFetching, destinations } = this.props.favorites;
     const numFavorites = this.props.favorites.destinations.length;
-    console.log(numFavorites);
 
     if (isFetching) {
       return <CircleLoader />;
