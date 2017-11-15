@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { fetchFlights } from '../actions/flightActions';
 import { updateMessages } from '../actions';
 import Button from 'material-ui/Button';
-import MultipleSelect from './MultipleSelect';
+import AirportSelect from './AirportSelect';
 import { DatePicker } from 'material-ui-pickers';
 import { withStyles } from 'material-ui/styles';
 import PropTypes from 'prop-types';
@@ -80,7 +80,7 @@ class FlightsList extends React.Component {
       <div className={classes.container}>
         <FlightIcon className={classes.flightIcon} />
         <p>Pick an airport and departure date.</p>
-        <MultipleSelect
+        <AirportSelect
           onOriginChange={this.handleOriginChange}
           originName={this.state.origin}
         />

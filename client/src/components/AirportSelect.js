@@ -19,9 +19,6 @@ const styles = theme => ({
   }
 });
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-
 const originAirport = [
   '(ATL) Atlanta, GA',
   '(BOS) Boston, MA',
@@ -42,16 +39,10 @@ const originAirport = [
   '(SLC) Salt Lake City, UT'
 ];
 
-class MultipleSelect extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.changeOrigin = this.changeOrigin.bind(this);
-  }
-
-  changeOrigin(event) {
+class AirportSelect extends React.Component {
+  changeOrigin = event => {
     this.props.onOriginChange(event.target.value);
-  }
+  };
 
   render() {
     const { classes } = this.props;
@@ -67,7 +58,7 @@ class MultipleSelect extends React.Component {
             MenuProps={{
               PaperProps: {
                 style: {
-                  maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+                  maxHeight: 224,
                   width: 200
                 }
               }
@@ -92,8 +83,8 @@ class MultipleSelect extends React.Component {
   }
 }
 
-MultipleSelect.propTypes = {
+AirportSelect.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(MultipleSelect);
+export default withStyles(styles)(AirportSelect);
