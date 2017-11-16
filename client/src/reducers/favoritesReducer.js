@@ -2,7 +2,8 @@ import {
   ADD_FAVORITE,
   REMOVE_FAVORITE,
   FETCH_FAVORITES,
-  RECEIVE_FAVORITES
+  RECEIVE_FAVORITES,
+  FETCH_FAVORITES_ERROR
 } from '../actions/types';
 
 const initialState = {
@@ -33,6 +34,10 @@ export default function(state = initialState, action) {
       return Object.assign({}, state, {
         isFetching: false,
         ...action.payload
+      });
+    case FETCH_FAVORITES_ERROR:
+      return Object.assign({}, state, {
+        isFetching: false
       });
     default:
       return state;
