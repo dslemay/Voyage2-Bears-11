@@ -10,6 +10,7 @@ import {
   ADD_FAVORITE,
   REMOVE_FAVORITE,
   FETCH_FAVORITES,
+  FETCH_FAVORITES_ERROR,
   RECEIVE_FAVORITES,
   ADD_MESSAGE,
   REMOVE_MESSAGE
@@ -86,6 +87,8 @@ export const fetchFavorites = () => async dispatch => {
   if (!res.data.error) {
     dispatch({ type: RECEIVE_FAVORITES, payload: res.data });
   }
+
+  dispatch({ type: FETCH_FAVORITES_ERROR });
 };
 
 export const updateMessages = (index, message) => async dispatch => {
