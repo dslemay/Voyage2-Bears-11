@@ -9,8 +9,8 @@ const styles = theme => ({
     padding: '30px 0',
     display: 'flex',
     justifyContent: 'space-around',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });
 
 function CircleLoader(props) {
@@ -25,8 +25,8 @@ function CircleLoader(props) {
   return <div className={classes.root}>{loader}</div>;
 }
 
-CircleLoader.PropTypes = {
-  classes: PropTypes.object.isRequired
+CircleLoader.propTypes = {
+  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(CircleLoader);
