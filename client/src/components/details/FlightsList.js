@@ -1,25 +1,25 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchFlights } from '../../actions/flightActions';
 import Button from 'material-ui/Button';
-import AirportSelect from './AirportSelect';
 import { DatePicker } from 'material-ui-pickers';
 import { withStyles } from 'material-ui/styles';
 import PropTypes from 'prop-types';
 import FlightIcon from 'material-ui-icons/Flight';
 import CircleLoader from '../CircleLoader';
+import { fetchFlights } from '../../actions/flightActions';
+import AirportSelect from './AirportSelect';
 
-const styles = theme => ({
+const styles = () => ({
   container: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     textAlign: 'center',
-    padding: 16
+    padding: 16,
   },
   button: {
     margin: 12,
-    width: 195
+    width: 195,
   },
   flightIcon: {
     height: 70,
@@ -29,8 +29,8 @@ const styles = theme => ({
     marginLeft: 'auto',
     marginBottom: 15,
     marginTop: 15,
-    color: 'gray'
-  }
+    color: 'gray',
+  },
 });
 
 // this function takes the string from the origin selection and returns just the IATA code
@@ -45,13 +45,13 @@ class FlightsList extends React.Component {
   state = {
     origin: '',
     selectedDate: new Date(),
-    codeNotSelected: false
+    codeNotSelected: false,
   };
 
   handleClick = () => {
     if (!this.state.origin) {
       this.setState({
-        codeNotSelected: true
+        codeNotSelected: true,
       });
       return;
     }
@@ -66,7 +66,7 @@ class FlightsList extends React.Component {
     this.setState({ origin });
     if (this.state.codeNotSelected === true) {
       this.setState({
-        codeNotSelected: false
+        codeNotSelected: false,
       });
     }
   };
@@ -78,8 +78,8 @@ class FlightsList extends React.Component {
   formatDate() {
     const date = new Date(this.state.selectedDate);
     const year = date.getFullYear();
-    const month = ('0' + (date.getMonth() + 1)).slice(-2);
-    const day = ('0' + date.getDate()).slice(-2);
+    const month = `0${date.getMonth() + 1}`.slice(-2);
+    const day = `0${date.getDate()}`.slice(-2);
     return `${year}-${month}-${day}`;
   }
 
@@ -109,10 +109,11 @@ class FlightsList extends React.Component {
         </div>
       ));
     }
+    return null;
   }
 
   render() {
-    const classes = this.props.classes;
+    const { classes } = this.props;
     return (
       <div className={classes.container}>
         <FlightIcon className={classes.flightIcon} />
@@ -131,7 +132,7 @@ class FlightsList extends React.Component {
         />
 
         <Button
-          raised
+          variant="raised"
           color="primary"
           className={classes.container}
           onClick={this.handleClick}
@@ -149,9 +150,26 @@ function mapStateToProps({ destinationDetails }) {
 }
 
 FlightsList.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.shape({
+    button: PropTypes.string,
+    container: PropTypes.string,
+    flightIcon: PropTypes.string,
+  }).isRequired,
+  destinationDetails: PropTypes.shape({
+    destination: PropTypes.shape({
+      info: PropTypes.shape({
+        IATA: PropTypes.string,
+      }),
+      isFetching: PropTypes.bool,
+    }),
+    flights: PropTypes.shape({
+      info: PropTypes.array.isRequired,
+      isFetching: PropTypes.bool.isRequired,
+    }),
+  }).isRequired,
+  fetchFlights: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, {
-  fetchFlights
+  fetchFlights,
 })(withStyles(styles)(FlightsList));
