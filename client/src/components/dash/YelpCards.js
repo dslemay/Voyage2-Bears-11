@@ -14,24 +14,24 @@ import CircleLoader from '../CircleLoader';
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    marginTop: 30
+    marginTop: 30,
   },
   card: {
     width: '100%',
     '&:hover': {
-      boxShadow: theme.shadows[8]
-    }
+      boxShadow: theme.shadows[8],
+    },
   },
   media: {
-    height: 200
+    height: 200,
   },
   line: {
-    marginBottom: 23
+    marginBottom: 23,
   },
   button: {
     marginTop: 40,
-    marginLeft: '14%'
-  }
+    marginLeft: '14%',
+  },
 });
 
 class YelpCards extends Component {
@@ -64,35 +64,30 @@ class YelpCards extends Component {
       );
     }
 
-    return this.props.favorites[favType].map(favItem => {
-      return (
-        <Grid item xs={12} sm={6} md={4} key={favItem.coordinates.latitude}>
-          <Card className={classes.card}>
-            <RemoveFavAlert yelpId={favItem.id} category={favType} />
-            <CardHeader
-              title={favItem.name}
-              subheader={favItem.location.city}
+    return this.props.favorites[favType].map(favItem => (
+      <Grid item xs={12} sm={6} md={4} key={favItem.coordinates.latitude}>
+        <Card className={classes.card}>
+          <RemoveFavAlert yelpId={favItem.id} category={favType} />
+          <CardHeader title={favItem.name} subheader={favItem.location.city} />
+          <CardMedia
+            className={classes.media}
+            image={favItem.image_url}
+            title={favItem.name}
+          />
+          <CardActions>
+            <img
+              src="https://i.imgur.com/fIljKM6.png"
+              alt=""
+              height="50"
+              width="50"
             />
-            <CardMedia
-              className={classes.media}
-              image={favItem.image_url}
-              title={favItem.name}
-            />
-            <CardActions>
-              <img
-                src="https://i.imgur.com/fIljKM6.png"
-                alt=""
-                height="50"
-                width="50"
-              />
-              <Button dense color="primary" href={favItem.url} target="_blank">
-                Yelp Info
-              </Button>
-            </CardActions>
-          </Card>
-        </Grid>
-      );
-    });
+            <Button dense color="primary" href={favItem.url} target="_blank">
+              Yelp Info
+            </Button>
+          </CardActions>
+        </Card>
+      </Grid>
+    ));
   }
 
   render() {
@@ -112,9 +107,20 @@ class YelpCards extends Component {
 }
 
 YelpCards.propTypes = {
-  classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired,
-  favType: PropTypes.string.isRequired
+  classes: PropTypes.shape({
+    root: PropTypes.string.isRequired,
+    card: PropTypes.string.isRequired,
+    media: PropTypes.string.isRequired,
+    line: PropTypes.string.isRequired,
+    button: PropTypes.string.isRequired,
+  }).isRequired,
+  favType: PropTypes.string.isRequired,
+  favorites: PropTypes.shape({
+    isFetching: PropTypes.bool.isRequired,
+    hotels: PropTypes.arrayOf(PropTypes.string).isRequired,
+    restaurants: PropTypes.arrayOf(PropTypes.string).isRequired,
+    entertainment: PropTypes.arrayOf(PropTypes.string).isRequired,
+  }).isRequired,
 };
 
 function mapStateToProps({ favorites }) {
@@ -122,5 +128,5 @@ function mapStateToProps({ favorites }) {
 }
 
 export default connect(mapStateToProps)(
-  withStyles(styles, { withTheme: true })(YelpCards)
+  withStyles(styles, { withTheme: true })(YelpCards),
 );

@@ -5,22 +5,20 @@ import { connect } from 'react-redux';
 import { updateMessages } from '../../actions';
 import Alert from './Alert';
 
-const styles = theme => ({
+const styles = () => ({
   root: {
     width: '50%',
     margin: '0 auto',
     paddingTop: '10px',
-    fontSize: '1.2rem'
-  }
+    fontSize: '1.2rem',
+  },
 });
 
 class AlertMessages extends Component {
-  randomKey() {
-    return Math.floor(Math.random() * 1000);
-  }
+  randomKey = () => Math.floor(Math.random() * 1000);
 
   removeMessage(message) {
-    const messages = this.props.messages;
+    const { messages } = this.props;
     const index = messages.indexOf(message);
     this.props.updateMessages(index);
   }
@@ -45,9 +43,22 @@ function mapStateToProps({ messages }) {
 }
 
 AlertMessages.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.shape({
+    root: PropTypes.string.isRequired,
+  }).isRequired,
+  messages: PropTypes.arrayOf(
+    PropTypes.shape({
+      text: PropTypes.string.isRequired,
+      type: PropTypes.oneOf(['error', 'success']),
+    }),
+  ),
+  updateMessages: PropTypes.func.isRequired,
+};
+
+AlertMessages.defaultProps = {
+  messages: [],
 };
 
 export default withStyles(styles)(
-  connect(mapStateToProps, { updateMessages })(AlertMessages)
+  connect(mapStateToProps, { updateMessages })(AlertMessages),
 );

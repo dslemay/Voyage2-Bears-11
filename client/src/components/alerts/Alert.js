@@ -11,13 +11,13 @@ const styles = theme => ({
     padding: '0 0 0 1.5rem',
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   button: {
     margin: theme.spacing.unit,
     height: '50%',
-    width: 'auto'
-  }
+    width: 'auto',
+  },
 });
 
 class Alert extends Component {
@@ -33,11 +33,11 @@ class Alert extends Component {
     const { type } = this.props;
     const classes = {
       error: '#ED4337',
-      success: '#5cb85c'
+      success: '#5cb85c',
     };
     return (
       { backgroundColor: classes[type] } || {
-        backgroundColor: classes.success
+        backgroundColor: classes.success,
       }
     );
   }
@@ -56,14 +56,18 @@ class Alert extends Component {
 }
 
 Alert.defaultProps = {
-  timeout: 3000
+  timeout: 3000,
 };
 
-Alert.PropTypes = {
-  type: PropTypes.string,
-  text: PropTypes.string,
+Alert.propTypes = {
+  type: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+  timeout: PropTypes.number,
   onClose: PropTypes.func.isRequired,
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.shape({
+    paper: PropTypes.string.isRequired,
+    button: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default withStyles(styles)(Alert);
