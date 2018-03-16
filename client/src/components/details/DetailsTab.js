@@ -1,22 +1,18 @@
 import React from 'react';
-import DetailsList from './DetailsList';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import { connect } from 'react-redux';
-import { fetchDestinationCategory } from '../../actions';
 import AppBar from 'material-ui/AppBar';
 import Tabs, { Tab } from 'material-ui/Tabs';
+import DetailsList from './DetailsList';
+import { fetchDestinationCategory } from '../../actions';
 
 function TabContainer(props) {
-  return (
-    <div style={{ padding: 0 }}>
-      {props.children}
-    </div>
-  );
+  return <div style={{ padding: 0 }}>{props.children}</div>;
 }
 
 TabContainer.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 };
 
 const styles = theme => ({
@@ -24,15 +20,15 @@ const styles = theme => ({
     flexGrow: 1,
 
     backgroundColor: theme.palette.background.paper,
-    width: '100%'
-  }
+    width: '100%',
+  },
 });
 
 class DetailsTab extends React.Component {
   constructor() {
     super();
     this.state = {
-      value: 0
+      value: 0,
     };
   }
 
@@ -60,27 +56,34 @@ class DetailsTab extends React.Component {
             <Tab label="Entertainment" />
           </Tabs>
         </AppBar>
-        {value === 0 &&
+        {value === 0 && (
           <TabContainer>
             <DetailsList yelpCategory="hotels" />
-          </TabContainer>}
-        {value === 1 &&
+          </TabContainer>
+        )}
+        {value === 1 && (
           <TabContainer>
             <DetailsList yelpCategory="restaurants" />
-          </TabContainer>}
-        {value === 2 &&
+          </TabContainer>
+        )}
+        {value === 2 && (
           <TabContainer>
             <DetailsList yelpCategory="entertainment" />
-          </TabContainer>}
+          </TabContainer>
+        )}
       </div>
     );
   }
 }
 
 DetailsTab.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.shape({
+    root: PropTypes.string.isRequired,
+  }).isRequired,
+  yelpLocation: PropTypes.string.isRequired,
+  fetchDestinationCategory: PropTypes.func.isRequired,
 };
 
 export default connect(null, { fetchDestinationCategory })(
-  withStyles(styles)(DetailsTab)
+  withStyles(styles)(DetailsTab),
 );

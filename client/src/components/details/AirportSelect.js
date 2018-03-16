@@ -10,13 +10,13 @@ const styles = theme => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   formControl: {
     margin: theme.spacing.unit,
     minWidth: 195,
-    maxWidth: 300
-  }
+    maxWidth: 300,
+  },
 });
 
 const originAirport = [
@@ -36,7 +36,7 @@ const originAirport = [
   '(PHL) Philadelphia, PA',
   '(SEA) Seattle, WA',
   '(SFO) San Francisco, CA',
-  '(SLC) Salt Lake City, UT'
+  '(SLC) Salt Lake City, UT',
 ];
 
 class AirportSelect extends React.Component {
@@ -59,23 +59,23 @@ class AirportSelect extends React.Component {
               PaperProps: {
                 style: {
                   maxHeight: 224,
-                  width: 200
-                }
-              }
+                  width: 200,
+                },
+              },
             }}
           >
-            {originAirport.map(name =>
+            {originAirport.map(name => (
               <MenuItem
                 key={name}
                 value={name}
                 style={{
                   fontWeight:
-                    this.props.originName.indexOf(name) !== -1 ? '500' : '400'
+                    this.props.originName.indexOf(name) !== -1 ? '500' : '400',
                 }}
               >
                 {name}
               </MenuItem>
-            )}
+            ))}
           </Select>
         </FormControl>
       </div>
@@ -84,7 +84,12 @@ class AirportSelect extends React.Component {
 }
 
 AirportSelect.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.shape({
+    container: PropTypes.string.isRequired,
+    formControl: PropTypes.string.isRequired,
+  }).isRequired,
+  onOriginChange: PropTypes.func.isRequired,
+  originName: PropTypes.string.isRequired,
 };
 
 export default withStyles(styles)(AirportSelect);

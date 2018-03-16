@@ -17,5 +17,5 @@ export default {
 
   4.5: 'https://i.imgur.com/eDCErH7.png',
 
-  5: 'https://i.imgur.com/G3oyJzS.png'
+  5: 'https://i.imgur.com/G3oyJzS.png',
 };

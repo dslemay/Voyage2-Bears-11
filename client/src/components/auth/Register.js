@@ -7,19 +7,19 @@ import Paper from 'material-ui/Paper';
 import TerrainIcon from 'material-ui-icons/Terrain';
 import { fetchUser, updateMessages } from '../../actions';
 
-const styles = theme => ({
+const styles = () => ({
   paper: {
     marginTop: 30,
     paddingBottom: 30,
     width: 320,
     margin: '0 auto',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   icon: {
     color: 'gray',
     height: 80,
-    width: 80
-  }
+    width: 80,
+  },
 });
 
 class Register extends Component {
@@ -30,7 +30,7 @@ class Register extends Component {
       name: '',
       email: '',
       password: '',
-      passwordConfirm: ''
+      passwordConfirm: '',
     };
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
@@ -48,19 +48,19 @@ class Register extends Component {
       name: this.state.name,
       email: this.state.email,
       password: this.state.password,
-      'password-confirm': this.state.passwordConfirm
+      'password-confirm': this.state.passwordConfirm,
     };
 
     fetch('/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
-      body: JSON.stringify(formData)
+      body: JSON.stringify(formData),
     })
       .then(response => response.json())
       .then(data => {
         if (data.errors) {
-          const errors = data.errors;
+          const { errors } = data;
           errors.map(error => {
             const message = { type: 'error', text: error.msg };
             return this.props.updateMessages(null, message);
@@ -68,7 +68,7 @@ class Register extends Component {
         } else {
           this.props.updateMessages(null, {
             type: 'success',
-            text: 'You have been successfully logged in'
+            text: 'You have been successfully logged in',
           });
         }
         // Handle redirect upon successful user creation.
@@ -84,26 +84,26 @@ class Register extends Component {
       { id: 'name', type: 'text', label: 'Name' },
       { id: 'email', type: 'email', label: 'Email' },
       { id: 'password', type: 'password', label: 'Password' },
-      { id: 'passwordConfirm', type: 'password', label: 'Confirm Password' }
+      { id: 'passwordConfirm', type: 'password', label: 'Confirm Password' },
     ];
 
-    const formFields = fieldsInfo.map(field =>
+    const formFields = fieldsInfo.map(field => (
       <div className="row" key={field.id}>
         <div className="input-field col s12">
-          <input
-            style={{ marginBottom: 0 }}
-            id={field.id}
-            type={field.type}
-            className="validate"
-            value={this.state[field.id]}
-            onChange={this.handleFieldChange}
-          />
           <label htmlFor="name">
+            <input
+              style={{ marginBottom: 0 }}
+              id={field.id}
+              type={field.type}
+              className="validate"
+              value={this.state[field.id]}
+              onChange={this.handleFieldChange}
+            />
             {field.label}
           </label>
         </div>
       </div>
-    );
+    ));
 
     const { classes } = this.props;
 
@@ -117,7 +117,7 @@ class Register extends Component {
               style={{
                 width: '100%',
                 marginTop: 20,
-                backgroundColor: '#3F51B5'
+                backgroundColor: '#3F51B5',
               }}
               className="btn"
               type="submit"
@@ -136,9 +136,17 @@ class Register extends Component {
 }
 
 Register.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.shape({
+    paper: PropTypes.string.isRequired,
+    icon: PropTypes.string.isRequired,
+  }).isRequired,
+  fetchUser: PropTypes.func.isRequired,
+  updateMessages: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default withStyles(styles)(
-  connect(null, { fetchUser, updateMessages })(Register)
+  connect(null, { fetchUser, updateMessages })(Register),
 );

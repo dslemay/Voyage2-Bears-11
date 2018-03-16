@@ -3,7 +3,7 @@ import { CircularProgress } from 'material-ui/Progress';
 import { withStyles } from 'material-ui/styles';
 import PropTypes from 'prop-types';
 
-const styles = theme => ({
+const styles = () => ({
   root: {
     width: '100%',
     padding: '30px 0',
@@ -15,7 +15,7 @@ const styles = theme => ({
 
 function CircleLoader(props) {
   const { classes } = props;
-  var loader;
+  let loader;
   if (props.large) {
     loader = <CircularProgress size={180} thickness={4} />;
   } else {
@@ -26,7 +26,14 @@ function CircleLoader(props) {
 }
 
 CircleLoader.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.shape({
+    root: PropTypes.string.isRequired,
+  }).isRequired,
+  large: PropTypes.bool,
+};
+
+CircleLoader.defaultProps = {
+  large: false,
 };
 
 export default withStyles(styles)(CircleLoader);
