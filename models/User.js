@@ -1,10 +1,10 @@
-// Add user schema with mongoose here
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-mongoose.Promise = global.Promise;
 const validator = require('validator');
 const passportLocalMongoose = require('passport-local-mongoose');
 const mongodbErrorHandler = require('mongoose-mongodb-errors');
+
+const { Schema } = mongoose;
+mongoose.Promise = global.Promise;
 
 const userSchema = new Schema({
   email: {
@@ -16,25 +16,25 @@ const userSchema = new Schema({
       validator: (v, cb) => {
         cb(validator.isEmail(v));
       },
-      message: 'Please supply a valid email'
+      message: 'Please supply a valid email',
     },
-    required: 'Please supply an email'
+    required: 'Please supply an email',
   },
   name: {
     type: String,
     trim: true,
-    required: 'Please supply a name'
+    required: 'Please supply a name',
   },
   favorites: {
     hotels: [String],
     restaurants: [String],
     entertainment: [String],
-    destinations: [{ type: Schema.Types.ObjectId, ref: 'Destination' }]
+    destinations: [{ type: Schema.Types.ObjectId, ref: 'Destination' }],
   },
   admin: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 });
 
 userSchema.plugin(passportLocalMongoose, { usernameField: 'email' });

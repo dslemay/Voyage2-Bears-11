@@ -5,18 +5,18 @@ module.exports = app => {
   app.post(
     '/api/favorites',
     authController.isLoggedIn,
-    favoritesController.updateFavorites
+    favoritesController.updateFavorites,
   );
 
   app.get(
     '/api/favorites',
     authController.isLoggedIn,
-    favoritesController.getFavoritesData
+    favoritesController.getFavoritesData,
   );
 
   app.get(
     '/api/destinationDetails',
     authController.isLoggedIn,
-    favoritesController.destinationDetails
+    favoritesController.destinationDetails,
   );
 };
