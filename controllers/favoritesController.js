@@ -1,52 +1,51 @@
 const mongoose = require('mongoose');
+
 const User = mongoose.model('User');
 const Destination = mongoose.model('Destination');
 const yelp = require('yelp-fusion');
 const keys = require('../config/keys');
 
-const clientId = keys.yelpClientID;
-const clientSecret = keys.yelpClientSecret;
+const apiKey = keys.yelpAPIKey;
 
 exports.updateFavorites = async (req, res) => {
   // Check if place ID exists in current user array. If it doesn't $addToSet. If it does, remove from array
-  const favArrName = req.body.favArrName; // Hotels vs POIs
-  const databaseArr = 'favorites.' + favArrName; // Which array we are modifying in the database
+  const { favArrName } = req.body; // Hotels vs POIs
+  const databaseArr = `favorites.${favArrName}`; // Which array we are modifying in the database
   const locationQuery = req.body.locationId; // Location to be adding or removing
   const favorites = req.user.favorites[favArrName];
   const favIndex = favorites.indexOf(locationQuery);
   const index = favIndex > -1 ? favIndex : undefined;
 
-  var user;
+  let user;
   if (index === undefined) {
     user = await User.findByIdAndUpdate(
-      req.user._id,
+      req.user._id, // eslint-disable-line no-underscore-dangle
       {
         $push: {
           [databaseArr]: {
             $each: [locationQuery],
-            $position: 0
-          }
-        }
+            $position: 0,
+          },
+        },
       },
-      { new: true }
+      { new: true },
     );
   } else {
     user = await User.findByIdAndUpdate(
-      req.user._id,
+      req.user._id, // eslint-disable-line no-underscore-dangle
       {
-        $pull: { [databaseArr]: locationQuery }
+        $pull: { [databaseArr]: locationQuery },
       },
-      { new: true }
+      { new: true },
     );
   }
 
   res.send({ index, user });
 };
 
+// eslint-disable-next-line consistent-return
 exports.getFavoritesData = async (req, res) => {
-  const tokenReq = await yelp.accessToken(clientId, clientSecret);
-  const token = tokenReq.jsonBody.access_token;
-  const client = yelp.client(token);
+  const client = yelp.client(apiKey);
   const locationQuery = req.query.location;
 
   // If there is a req.query, get information for that location
@@ -68,12 +67,11 @@ exports.getFavoritesData = async (req, res) => {
   const hotelsIds = req.user.favorites.hotels;
   const restaurantsIds = req.user.favorites.restaurants;
   const entertainmentIds = req.user.favorites.entertainment;
-  const destinationIds = req.user.favorites.destinations;
 
   // Get any data stored in user model
   const destinationPromise = User.findOne(
-    { _id: req.user._id },
-    'favorites.destinations'
+    { _id: req.user._id }, // eslint-disable-line no-underscore-dangle
+    'favorites.destinations',
   ).populate('favorites.destinations', 'name slug image');
 
   // Resolve all promises and format data for return
@@ -84,12 +82,12 @@ exports.getFavoritesData = async (req, res) => {
     hotelsRes,
     restaurantsRes,
     entertainmentRes,
-    destinationRes
+    destinationRes,
   ] = await Promise.all([
     hotelsPromise,
     restaurantsPromise,
     entertainmentPromise,
-    destinationPromise
+    destinationPromise,
   ]);
   const hotels = returnJsonBody(hotelsRes);
   const restaurants = returnJsonBody(restaurantsRes);
@@ -103,7 +101,7 @@ exports.destinationDetails = async (req, res) => {
   const locationQuery = req.query.destination;
   const destination = await Destination.findById(
     locationQuery,
-    'name slug image'
+    'name slug image',
   );
   res.send({ destination });
 };
