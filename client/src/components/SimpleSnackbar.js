@@ -52,7 +52,7 @@ class SimpleSnackbar extends Component {
   render() {
     return (
       <div>
-        <IconButton color="primary" onClick={this.handleClick}>
+        <IconButton style={{ color: '#FF4136' }} onClick={this.handleClick}>
           {this.renderHeart()}
         </IconButton>
         <Snackbar
