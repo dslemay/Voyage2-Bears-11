@@ -3,6 +3,7 @@ const { sanitizeBody } = require('express-validator/filter');
 const passport = require('passport');
 const mongoose = require('mongoose');
 const promisify = require('es6-promisify');
+
 const User = mongoose.model('User');
 
 exports.validateRegister = [
@@ -27,9 +28,10 @@ exports.validateRegister = [
     .isEmpty()
     .withMessage('You must confirm your password')
     .custom((value, { req }) => value === req.body.password)
-    .withMessage('Your passwords must match')
+    .withMessage('Your passwords must match'),
 ];
 
+// eslint-disable-next-line consistent-return
 exports.checkValidations = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -47,8 +49,8 @@ exports.register = async (req, res, next) => {
   next();
 };
 
-exports.login = function(req, res, next) {
-  passport.authenticate('local', function(err, user, info) {
+exports.login = (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
     if (err) {
       return next(err);
     }
@@ -57,20 +59,21 @@ exports.login = function(req, res, next) {
         .status(401)
         .json({ type: 'error', text: info.message, redirect: '/login' });
     }
-    req.logIn(user, async function(err) {
-      if (err) {
+    return req.logIn(user, async error => {
+      if (error) {
         return next(err);
       }
       await req.session.save();
       return res.status(200).json({
         type: 'success',
         text: 'You have been successfully logged in',
-        redirect: '/'
+        redirect: '/',
       });
     });
   })(req, res, next);
 };
 
+// eslint-disable-next-line consistent-return
 exports.isLoggedIn = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
