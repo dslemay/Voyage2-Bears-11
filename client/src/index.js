@@ -1,5 +1,5 @@
 import 'materialize-css/dist/css/materialize.min.css';
-import 'materialize-css/dist/js/materialize.min.js';
+import 'materialize-css/dist/js/materialize.min';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -16,5 +16,5 @@ ReactDOM.render(
   <Provider store={store}>
     <App />
   </Provider>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
