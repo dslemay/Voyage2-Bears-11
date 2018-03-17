@@ -46,6 +46,7 @@ const styles = theme => ({
   },
   shuffleBtn: {
     float: 'right',
+    top: 40,
     right: '4%',
   },
 });
