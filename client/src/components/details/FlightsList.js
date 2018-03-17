@@ -6,7 +6,7 @@ import { withStyles } from 'material-ui/styles';
 import PropTypes from 'prop-types';
 import FlightIcon from 'material-ui-icons/Flight';
 import CircleLoader from '../CircleLoader';
-import { fetchFlights } from '../../actions/flightActions';
+import { fetchFlights } from '../../actions';
 import AirportSelect from './AirportSelect';
 
 const styles = () => ({
