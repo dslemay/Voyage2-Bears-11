@@ -84,15 +84,17 @@ class Login extends Component {
     const formFields = fieldsInfo.map(field => (
       <div className="row" key={field.id}>
         <div className="input-field col s12">
-          <label htmlFor={field.id}>
-            <input
-              style={{ marginBottom: 0 }}
-              id={field.id}
-              type={field.type}
-              className="validate"
-              value={this.state[field.id]}
-              onChange={this.handleFieldChange}
-            />
+          <input
+            style={{ marginBottom: 0 }}
+            id={field.id}
+            type={field.type}
+            className="validate"
+            value={this.state[field.id]}
+            onChange={this.handleFieldChange}
+          />
+          <label // eslint-disable-line jsx-a11y/label-has-for
+            htmlFor={field.id}
+          >
             {field.label}
           </label>
         </div>
