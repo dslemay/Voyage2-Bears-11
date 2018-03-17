@@ -19,9 +19,7 @@ const { database, cookieSecret } = keys;
 // Connect to Database and use native ES6 promises
 mongoose.Promise = global.Promise;
 mongoose
-  .connect(database, {
-    useMongoClient: true,
-  })
+  .connect(database)
   .catch(err => console.error(`Unable to connect to MongoDB: ${err.message}`));
 
 // Set up middlewares
