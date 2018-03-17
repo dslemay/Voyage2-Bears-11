@@ -1,4 +1,6 @@
 const express = require('express');
+const assert = require('assert');
+const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const session = require('express-session');
@@ -12,20 +14,19 @@ require('./services/passport');
 
 const app = express();
 
-const database = keys.database;
-const cookieSecret = keys.cookieSecret;
+const { database, cookieSecret } = keys;
 
 // Connect to Database and use native ES6 promises
 mongoose.Promise = global.Promise;
 mongoose
   .connect(database, {
-    useMongoClient: true
+    useMongoClient: true,
   })
   .catch(err => console.error(`Unable to connect to MongoDB: ${err.message}`));
 
 // Set up middlewares
 
-//Body Parser to be used for passing the fields for login and registration form
+// Body Parser to be used for passing the fields for login and registration form
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -35,10 +36,10 @@ app.use(expressValidator());
 // Set up and configure MongoDBStore for storing session details
 const store = new MongoDBStore({
   uri: database,
-  collection: 'sessions'
+  collection: 'sessions',
 });
 
-store.on('error', function(error) {
+store.on('error', error => {
   assert.ifError(error);
   assert.ok(false);
 });
@@ -48,12 +49,12 @@ app.use(
   session({
     secret: cookieSecret,
     cookie: {
-      maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
+      maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
     },
     resave: false,
     saveUninitialized: false,
-    store: store
-  })
+    store,
+  }),
 );
 
 // Initialize Passport and use sessions
@@ -69,7 +70,6 @@ require('./routes/favoriteRoutes')(app);
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
 
-  const path = require('path');
   app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
