@@ -45,7 +45,7 @@
     "client": "npm run start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "load-destinations": "node ./data/loadSampleDestinations.js",
-    "lint": "eslint . --ext .js --ignore-pattern 'node_modules/'",
+    "lint": "eslint .",
     "precommit": "lint-staged",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
