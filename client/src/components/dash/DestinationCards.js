@@ -13,24 +13,24 @@ import CircleLoader from '../CircleLoader';
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    marginTop: 30
+    marginTop: 30,
   },
   card: {
     width: '100%',
     '&:hover': {
-      boxShadow: theme.shadows[8]
-    }
+      boxShadow: theme.shadows[8],
+    },
   },
   media: {
-    height: 350
+    height: 350,
   },
   line: {
-    marginBottom: 23
+    marginBottom: 23,
   },
   button: {
     marginTop: 40,
-    marginLeft: '14%'
-  }
+    marginLeft: '14%',
+  },
 });
 
 class DestinationCards extends Component {
@@ -55,7 +55,7 @@ class DestinationCards extends Component {
             component={Link}
             to="/details/melbourne"
             color="primary"
-            raised
+            variant="raised"
           >
             Explore
           </Button>
@@ -64,35 +64,38 @@ class DestinationCards extends Component {
     }
 
     if (destinations) {
-      return destinations.map(destination => {
-        return (
-          <Grid item xs={12} md={6} key={destination._id}>
-            <Card className={classes.card}>
-              <CardMedia
-                className={classes.media}
-                image={destination.image}
-                title={destination.name}
-              />
-              <CardContent>
-                <Typography type="headline" component="h2">
-                  {destination.name}
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <Button
-                  component={Link}
-                  to={`details/${destination.slug}`}
-                  dense
-                  color="primary"
-                >
-                  More Details
-                </Button>
-              </CardActions>
-            </Card>
-          </Grid>
-        );
-      });
+      return destinations.map(destination => (
+        <Grid
+          item
+          xs={12}
+          md={6}
+          key={destination._id} // eslint-disable-line no-underscore-dangle
+        >
+          <Card className={classes.card}>
+            <CardMedia
+              className={classes.media}
+              image={destination.image}
+              title={destination.name}
+            />
+            <CardContent>
+              <Typography type="headline" component="h2">
+                {destination.name}
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <Button
+                component={Link}
+                to={`details/${destination.slug}`}
+                color="primary"
+              >
+                More Details
+              </Button>
+            </CardActions>
+          </Card>
+        </Grid>
+      ));
     }
+    return null;
   }
 
   render() {
@@ -113,7 +116,17 @@ class DestinationCards extends Component {
 }
 
 DestinationCards.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.shape({
+    root: PropTypes.string.isRequired,
+    card: PropTypes.string.isRequired,
+    media: PropTypes.string.isRequired,
+    line: PropTypes.string.isRequired,
+    button: PropTypes.string.isRequired,
+  }).isRequired,
+  favorites: PropTypes.shape({
+    isFetching: PropTypes.bool.isRequired,
+    destinations: PropTypes.arrayOf(PropTypes.object),
+  }).isRequired,
 };
 
 function mapStateToProps({ favorites }) {

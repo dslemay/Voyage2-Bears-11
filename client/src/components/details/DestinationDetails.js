@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import DetailsTab from './DetailsTab';
-import FlightsList from './FlightsList';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
-import CircleLoader from '../CircleLoader';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 import ShuffleIcon from 'material-ui-icons/Shuffle';
 import Tooltip from 'material-ui/Tooltip';
+import CircleLoader from '../CircleLoader';
+import DetailsTab from './DetailsTab';
+import FlightsList from './FlightsList';
 import {
   fetchDestination,
   resetDestination,
-  updateFavorites
+  updateFavorites,
 } from '../../actions';
 
 const styles = theme => ({
@@ -25,30 +25,30 @@ const styles = theme => ({
     margin: 40,
     [theme.breakpoints.up('lg')]: {
       margin: '12%',
-      marginTop: 30
+      marginTop: 30,
     },
     [theme.breakpoints.down('sm')]: {
-      margin: 0
-    }
+      margin: 0,
+    },
   },
   paper: {
     padding: 34,
     marginBottom: 30,
     textAlign: 'left',
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
   },
   card: {
     width: '100%',
-    marginBottom: 30
+    marginBottom: 30,
   },
   media: {
-    height: 500
+    height: 500,
   },
   shuffleBtn: {
     float: 'right',
     top: 40,
-    right: '4%'
-  }
+    right: '4%',
+  },
 });
 
 class DestinationDetails extends Component {
@@ -91,7 +91,7 @@ class DestinationDetails extends Component {
                 title={destination.name}
               />
               <CardContent>
-                <Typography type="display2" component="h2">
+                <Typography variant="display2" component="h2">
                   {destination.name}
                 </Typography>
                 <Tooltip
@@ -100,7 +100,7 @@ class DestinationDetails extends Component {
                   placement="bottom"
                 >
                   <Button
-                    fab
+                    variant="fab"
                     color="primary"
                     className={classes.shuffleBtn}
                     href={this.state.link}
@@ -109,15 +109,11 @@ class DestinationDetails extends Component {
                   </Button>
                 </Tooltip>
               </CardContent>
-              <CardActions>
-                {this.renderFavButton()}
-              </CardActions>
+              <CardActions>{this.renderFavButton()}</CardActions>
             </Card>
           </Grid>
           <Grid item xs={12} md={8}>
-            <Paper className={classes.paper}>
-              {destination.description}
-            </Paper>
+            <Paper className={classes.paper}>{destination.description}</Paper>
           </Grid>
           <Grid item xs={12} md={8}>
             <Paper>
@@ -133,17 +129,18 @@ class DestinationDetails extends Component {
         </Grid>
       );
     }
+    return null;
   }
 
   renderFavButton = () => {
     const { auth } = this.props;
+    // eslint-disable-next-line no-underscore-dangle
     const id = this.props.destinationDetails.destination.info._id;
 
     // Render button if user is logged in
     if (auth) {
       return (
         <Button
-          dense
           color="primary"
           onClick={() => this.props.updateFavorites('destinations', id)}
         >
@@ -151,29 +148,61 @@ class DestinationDetails extends Component {
         </Button>
       );
     }
-
-    return;
+    return null;
   };
 
   renderFavMessage = () => {
+    // eslint-disable-next-line no-underscore-dangle
     const id = this.props.destinationDetails.destination.info._id;
-    const destinations = this.props.auth.favorites.destinations;
+    const { destinations } = this.props.auth.favorites;
     const inFavorites = destinations.indexOf(id);
     return inFavorites > -1 ? 'Remove from Favorites' : 'Add to Favorites';
   };
 
   render() {
     const { classes } = this.props;
-    return (
-      <div className={classes.root}>
-        {this.renderContent()}
-      </div>
-    );
+    return <div className={classes.root}>{this.renderContent()}</div>;
   }
 }
 
 DestinationDetails.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.shape({
+    card: PropTypes.string,
+    media: PropTypes.string,
+    paper: PropTypes.string,
+    root: PropTypes.string,
+    shuffleBtn: PropTypes.string,
+  }).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      location: PropTypes.string.isRequired,
+    }),
+  }).isRequired,
+  fetchDestination: PropTypes.func.isRequired,
+  resetDestination: PropTypes.func.isRequired,
+  updateFavorites: PropTypes.func.isRequired,
+  auth: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  destinationDetails: PropTypes.shape({
+    destination: PropTypes.shape({
+      info: PropTypes.shape({
+        IATA: PropTypes.string,
+        description: PropTypes.string,
+        name: PropTypes.string,
+        yelpName: PropTypes.string,
+        _id: PropTypes.string,
+      }),
+      isFetching: PropTypes.bool.isRequired,
+    }),
+  }),
+};
+
+DestinationDetails.defaultProps = {
+  auth: false,
+  destinationDetails: {
+    destination: {
+      info: {},
+    },
+  },
 };
 
 function mapStateToProps({ auth, destinationDetails }) {
@@ -183,5 +212,5 @@ function mapStateToProps({ auth, destinationDetails }) {
 export default connect(mapStateToProps, {
   fetchDestination,
   resetDestination,
-  updateFavorites
+  updateFavorites,
 })(withStyles(styles)(DestinationDetails));

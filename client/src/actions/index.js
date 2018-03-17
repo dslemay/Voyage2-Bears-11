@@ -13,7 +13,9 @@ import {
   FETCH_FAVORITES_ERROR,
   RECEIVE_FAVORITES,
   ADD_MESSAGE,
-  REMOVE_MESSAGE
+  REMOVE_MESSAGE,
+  FETCH_FLIGHTS,
+  RECEIVE_FLIGHTS,
 } from './types';
 
 export const fetchDestination = slug => async dispatch => {
@@ -25,12 +27,12 @@ export const fetchDestination = slug => async dispatch => {
 
 export const fetchDestinationCategory = (
   location,
-  category
+  category,
 ) => async dispatch => {
   dispatch({ type: FETCH_DESTINATION_CATEGORY, category });
 
   const res = await axios.get(
-    `/api/yelp?location=${location}&category=${category}`
+    `/api/yelp?location=${location}&category=${category}`,
   );
 
   dispatch({ type: RECEIVE_DESTINATION_CATEGORY, category, payload: res.data });
@@ -48,7 +50,7 @@ export const fetchUser = () => async dispatch => {
 
 export const updateFavorites = (favArrName, locationId) => async dispatch => {
   const res = await axios.post('/api/favorites', { favArrName, locationId });
-  const index = res.data.index;
+  const { index } = res.data;
   dispatch({ type: FETCH_USER, payload: res.data.user });
 
   if (index === undefined && favArrName !== 'destinations') {
@@ -56,26 +58,26 @@ export const updateFavorites = (favArrName, locationId) => async dispatch => {
     return dispatch({
       type: ADD_FAVORITE,
       favArrName,
-      location: yelp.data
+      location: yelp.data,
     });
   }
 
   if (index === undefined && favArrName === 'destinations') {
-    const res = await axios.get(
-      `/api/destinationDetails?destination=${locationId}`
+    const resLocation = await axios.get(
+      `/api/destinationDetails?destination=${locationId}`,
     );
-    const destination = res.data.destination;
+    const { destination } = resLocation.data;
     return dispatch({
       type: ADD_FAVORITE,
       favArrName,
-      location: destination
+      location: destination,
     });
   }
 
-  dispatch({
+  return dispatch({
     type: REMOVE_FAVORITE,
     favArrName,
-    index: res.data.index
+    index: res.data.index,
   });
 };
 
@@ -96,4 +98,16 @@ export const updateMessages = (index, message) => async dispatch => {
     return dispatch({ type: REMOVE_MESSAGE, index });
   }
   return dispatch({ type: ADD_MESSAGE, payload: message });
+};
+
+export const fetchFlights = (origin, destination, date) => async dispatch => {
+  dispatch({ type: FETCH_FLIGHTS });
+
+  const flights = await axios.post('/api/flights', {
+    origin,
+    destination,
+    date,
+  });
+
+  dispatch({ type: RECEIVE_FLIGHTS, payload: flights.data.flights });
 };

@@ -8,5 +8,5 @@ export default combineReducers({
   auth: authReducer,
   favorites: favoritesReducer,
   messages: messageReducer,
-  destinationDetails: destinationDetailsReducer
+  destinationDetails: destinationDetailsReducer,
 });

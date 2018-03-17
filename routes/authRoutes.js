@@ -1,4 +1,3 @@
-const express = require('express');
 const authController = require('../controllers/authController');
 
 module.exports = app => {
@@ -7,7 +6,7 @@ module.exports = app => {
     authController.validateRegister,
     authController.checkValidations,
     authController.register,
-    authController.login
+    authController.login,
   );
 
   app.post('/auth/login', authController.login);

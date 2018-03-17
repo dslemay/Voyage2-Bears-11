@@ -7,19 +7,19 @@ import Paper from 'material-ui/Paper';
 import TerrainIcon from 'material-ui-icons/Terrain';
 import { fetchUser, fetchFavorites, updateMessages } from '../../actions';
 
-const styles = theme => ({
+const styles = () => ({
   paper: {
     marginTop: 30,
     paddingBottom: 30,
     width: 320,
     margin: '0 auto',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   icon: {
     color: 'gray',
     height: 80,
-    width: 80
-  }
+    width: 80,
+  },
 });
 
 class Login extends Component {
@@ -28,7 +28,7 @@ class Login extends Component {
 
     this.state = {
       email: '',
-      password: ''
+      password: '',
     };
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
@@ -44,14 +44,14 @@ class Login extends Component {
 
     const form = {
       email: this.state.email,
-      password: this.state.password
+      password: this.state.password,
     };
 
     fetch('/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
-      body: JSON.stringify(form)
+      body: JSON.stringify(form),
     })
       .then(response => response.json())
       .then(data => {
@@ -67,7 +67,7 @@ class Login extends Component {
           this.props.fetchFavorites();
           this.props.history.push(path);
         } else {
-          //Login was unsuccessful
+          // Login was unsuccessful
           document.getElementById('email').value = '';
           document.getElementById('password').value = '';
           this.setState({ email: '', password: '' });
@@ -78,10 +78,10 @@ class Login extends Component {
   render() {
     const fieldsInfo = [
       { id: 'email', type: 'email', label: 'Email' },
-      { id: 'password', type: 'password', label: 'Password' }
+      { id: 'password', type: 'password', label: 'Password' },
     ];
 
-    const formFields = fieldsInfo.map(field =>
+    const formFields = fieldsInfo.map(field => (
       <div className="row" key={field.id}>
         <div className="input-field col s12">
           <input
@@ -92,12 +92,14 @@ class Login extends Component {
             value={this.state[field.id]}
             onChange={this.handleFieldChange}
           />
-          <label htmlFor="email">
+          <label // eslint-disable-line jsx-a11y/label-has-for
+            htmlFor={field.id}
+          >
             {field.label}
           </label>
         </div>
       </div>
-    );
+    ));
 
     const { classes } = this.props;
 
@@ -111,7 +113,7 @@ class Login extends Component {
               style={{
                 width: '100%',
                 marginTop: 20,
-                backgroundColor: '#3F51B5'
+                backgroundColor: '#3F51B5',
               }}
               className="btn"
               type="submit"
@@ -130,9 +132,18 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.shape({
+    paper: PropTypes.string.isRequired,
+    icon: PropTypes.string.isRequired,
+  }).isRequired,
+  updateMessages: PropTypes.func.isRequired,
+  fetchUser: PropTypes.func.isRequired,
+  fetchFavorites: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default withStyles(styles)(
-  connect(null, { fetchUser, fetchFavorites, updateMessages })(Login)
+  connect(null, { fetchUser, fetchFavorites, updateMessages })(Login),
 );

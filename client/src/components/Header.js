@@ -9,29 +9,29 @@ import Typography from 'material-ui/Typography';
 import TerrainIcon from 'material-ui-icons/Terrain';
 import Button from 'material-ui/Button';
 
-const styles = theme => ({
+const styles = () => ({
   root: {
     width: '100%',
-    height: 60
+    height: 60,
   },
   flex: {
-    flex: 1
+    flex: 1,
   },
   menuButton: {
     marginLeft: -12,
-    marginRight: 20
+    marginRight: 20,
   },
   logo: {
     height: 30,
-    width: 30
-  }
+    width: 30,
+  },
 });
 
 class Header extends Component {
   renderLinks() {
     switch (this.props.auth) {
       case null:
-        return;
+        return null;
       case false:
         return (
           <div>
@@ -83,7 +83,17 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.shape({
+    root: PropTypes.string.isRequired,
+    flex: PropTypes.string.isRequired,
+    menuButton: PropTypes.string.isRequired,
+    logo: PropTypes.string.isRequired,
+  }).isRequired,
+  auth: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+};
+
+Header.defaultProps = {
+  auth: false,
 };
 
 function mapStateToProps({ auth }) {

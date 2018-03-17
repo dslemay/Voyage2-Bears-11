@@ -1,24 +1,24 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { updateFavorites } from '../../actions';
 import Button from 'material-ui/Button';
 import Dialog, {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle
+  DialogTitle,
 } from 'material-ui/Dialog';
 import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui-icons/Close';
+import { updateFavorites } from '../../actions';
 
 const style = {
-  float: 'right'
+  float: 'right',
 };
 
 class RemoveFavAlert extends Component {
   state = {
-    open: false
+    open: false,
   };
 
   handleClickOpen = () => {
@@ -65,9 +65,10 @@ class RemoveFavAlert extends Component {
   }
 }
 
-RemoveFavAlert.PropTypes = {
+RemoveFavAlert.propTypes = {
   yelpId: PropTypes.string.isRequired,
-  category: PropTypes.string.isRequired
+  category: PropTypes.string.isRequired,
+  updateFavorites: PropTypes.func.isRequired,
 };
 
 export default connect(null, { updateFavorites })(RemoveFavAlert);

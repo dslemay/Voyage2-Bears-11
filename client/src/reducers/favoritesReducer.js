@@ -3,7 +3,7 @@ import {
   REMOVE_FAVORITE,
   FETCH_FAVORITES,
   RECEIVE_FAVORITES,
-  FETCH_FAVORITES_ERROR
+  FETCH_FAVORITES_ERROR,
 } from '../actions/types';
 
 const initialState = {
@@ -11,7 +11,7 @@ const initialState = {
   hotels: [],
   restaurants: [],
   entertainment: [],
-  destinations: []
+  destinations: [],
 };
 
 export default function(state = initialState, action) {
@@ -19,26 +19,31 @@ export default function(state = initialState, action) {
   const i = action.index;
   switch (action.type) {
     case ADD_FAVORITE:
-      return Object.assign({}, state, {
-        [arr]: [action.location, ...state[arr]]
-      });
+      return {
+        ...state,
+        [arr]: [action.location, ...state[arr]],
+      };
     case REMOVE_FAVORITE:
-      return Object.assign({}, state, {
-        [arr]: [...state[arr].slice(0, i), ...state[arr].slice(i + 1)]
-      });
+      return {
+        ...state,
+        [arr]: [...state[arr].slice(0, i), ...state[arr].slice(i + 1)],
+      };
     case FETCH_FAVORITES:
-      return Object.assign({}, state, {
-        isFetching: true
-      });
+      return {
+        ...state,
+        isFetching: true,
+      };
     case RECEIVE_FAVORITES:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: false,
-        ...action.payload
-      });
+        ...action.payload,
+      };
     case FETCH_FAVORITES_ERROR:
-      return Object.assign({}, state, {
-        isFetching: false
-      });
+      return {
+        ...state,
+        isFetching: false,
+      };
     default:
       return state;
   }

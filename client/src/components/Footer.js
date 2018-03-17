@@ -12,8 +12,8 @@ const styles = theme => ({
     background: 'rgb(33, 33, 33)',
     color: 'rgba(255, 255, 255, 0.54)',
     textAlign: 'center',
-    position: 'sticky'
-  })
+    position: 'sticky',
+  }),
 });
 
 function Footer(props) {
@@ -21,19 +21,14 @@ function Footer(props) {
   return (
     <div>
       <Paper className={classes.root} elevation={0}>
-        <Typography
-          type="headline"
-          component="h5"
-          color="inherit"
-          gutterBottom={true}
-        >
+        <Typography type="headline" component="h5" color="inherit" gutterBottom>
           Project created in the Chingu Voyage 2 cohort
         </Typography>
         <Typography
           type="subheading"
           component="p"
           color="inherit"
-          gutterBottom={true}
+          gutterBottom
         >
           &copy;2017 Adrian Bernardo, Alex Steele, and Daniel Lemay
         </Typography>
@@ -50,7 +45,9 @@ function Footer(props) {
 }
 
 Footer.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.shape({
+    root: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default withStyles(styles)(Footer);
