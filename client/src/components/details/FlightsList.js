@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Component } from 'react';
+import moment from 'moment';
 import { connect } from 'react-redux';
 import Button from 'material-ui/Button';
 import { DatePicker } from 'material-ui-pickers';
@@ -41,7 +42,7 @@ function getOriginCode(origin) {
   return originCode;
 }
 
-class FlightsList extends React.Component {
+class FlightsList extends Component {
   state = {
     origin: '',
     selectedDate: new Date(),
@@ -75,14 +76,6 @@ class FlightsList extends React.Component {
     this.setState({ selectedDate: date });
   };
 
-  formatDate() {
-    const date = new Date(this.state.selectedDate);
-    const year = date.getFullYear();
-    const month = `0${date.getMonth() + 1}`.slice(-2);
-    const day = `0${date.getDate()}`.slice(-2);
-    return `${year}-${month}-${day}`;
-  }
-
   renderFlightCost() {
     const { isFetching, info } = this.props.destinationDetails.flights;
     const originCode = getOriginCode(this.state.origin);
@@ -93,6 +86,9 @@ class FlightsList extends React.Component {
     }
 
     if (!isFetching && Object.keys(info).length) {
+      const formattedDate = moment(this.state.selectedDate).format(
+        'YYYY-MM-DD',
+      );
       return info.map(flight => (
         <div key={flight.trips.requestId}>
           <h5>Flights as low as:</h5>
@@ -101,7 +97,7 @@ class FlightsList extends React.Component {
           <Button
             raised
             color="primary"
-            href={`https://www.google.com/flights/#search;f=${originCode};t=${destinationCode};d=${this.formatDate()};tt=o`}
+            href={`https://www.google.com/flights/#search;f=${originCode};t=${destinationCode};d=${formattedDate};tt=o`}
             target="_blank"
           >
             Book Flights Now
@@ -127,7 +123,7 @@ class FlightsList extends React.Component {
         <DatePicker
           value={this.state.selectedDate}
           onChange={this.handleDateChange}
-          minDate={new Date()}
+          minDate={moment().format('YYYY-MM-DD')}
           className={classes.button}
         />
 
