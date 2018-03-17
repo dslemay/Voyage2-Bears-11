@@ -2,7 +2,7 @@ const { check, validationResult } = require('express-validator/check');
 const { sanitizeBody } = require('express-validator/filter');
 const passport = require('passport');
 const mongoose = require('mongoose');
-const promisify = require('es6-promisify');
+const { promisify } = require('es6-promisify');
 
 const User = mongoose.model('User');
 
@@ -43,7 +43,7 @@ exports.checkValidations = (req, res, next) => {
 exports.register = async (req, res, next) => {
   // Save User to database and hash password
   const user = new User({ name: req.body.name, email: req.body.email });
-  const register = promisify(User.register, User);
+  const register = promisify(User.register.bind(User));
   await register(user, req.body.password);
   // TODO Add error handling for issues such as account already exists
   next();
