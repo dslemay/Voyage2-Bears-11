@@ -55,7 +55,7 @@ class DestinationCards extends Component {
             component={Link}
             to="/details/melbourne"
             color="primary"
-            raised
+            variant="raised"
           >
             Explore
           </Button>
@@ -86,7 +86,6 @@ class DestinationCards extends Component {
               <Button
                 component={Link}
                 to={`details/${destination.slug}`}
-                dense
                 color="primary"
               >
                 More Details
@@ -126,7 +125,7 @@ DestinationCards.propTypes = {
   }).isRequired,
   favorites: PropTypes.shape({
     isFetching: PropTypes.bool.isRequired,
-    destinations: PropTypes.arrayOf(PropTypes.string),
+    destinations: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,
 };
 

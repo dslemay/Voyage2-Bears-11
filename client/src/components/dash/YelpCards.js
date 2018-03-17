@@ -56,7 +56,7 @@ class YelpCards extends Component {
             component={Link}
             to="/details/melbourne"
             color="primary"
-            raised
+            variant="raised"
           >
             Explore
           </Button>
@@ -81,7 +81,7 @@ class YelpCards extends Component {
               height="50"
               width="50"
             />
-            <Button dense color="primary" href={favItem.url} target="_blank">
+            <Button color="primary" href={favItem.url} target="_blank">
               Yelp Info
             </Button>
           </CardActions>
@@ -117,9 +117,9 @@ YelpCards.propTypes = {
   favType: PropTypes.string.isRequired,
   favorites: PropTypes.shape({
     isFetching: PropTypes.bool.isRequired,
-    hotels: PropTypes.arrayOf(PropTypes.string).isRequired,
-    restaurants: PropTypes.arrayOf(PropTypes.string).isRequired,
-    entertainment: PropTypes.arrayOf(PropTypes.string).isRequired,
+    hotels: PropTypes.arrayOf(PropTypes.object).isRequired,
+    restaurants: PropTypes.arrayOf(PropTypes.object).isRequired,
+    entertainment: PropTypes.arrayOf(PropTypes.object).isRequired,
   }).isRequired,
 };
 
