@@ -9,10 +9,8 @@ const Destination = mongoose.model('Destination');
 const apiKey = keys.yelpAPIKey;
 const { googleFlights } = keys;
 
-// Implement async/await syntax for this route
-
 module.exports = app => {
-  app.get('/api/yelp', (req, res) => {
+  app.get('/api/yelp', async (req, res) => {
     const { location, category } = req.query;
     const searchRequest = {
       term: category,
@@ -20,16 +18,14 @@ module.exports = app => {
     };
 
     const client = yelp.client(apiKey);
-    client
-      .search(searchRequest)
-      .then(response => {
-        const twelveResults = response.jsonBody.businesses.slice(0, 12);
-        const businesses = JSON.stringify(twelveResults, null, 4);
-        res.send(businesses);
-      })
-      .catch(e => {
-        console.log(e);
-      });
+    try {
+      const searchRes = await client.search(searchRequest);
+      const twelveResults = searchRes.jsonBody.businesses.slice(0, 12);
+      const businesses = JSON.stringify(twelveResults, null, 4);
+      res.send(businesses);
+    } catch (error) {
+      console.log(error);
+    }
   });
 
   app.post('/api/flights', async (req, res) => {
