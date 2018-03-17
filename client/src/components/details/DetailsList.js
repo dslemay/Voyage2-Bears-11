@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import { GridList, GridListTile, GridListTileBar } from 'material-ui/GridList';
+import GridList, { GridListTile, GridListTileBar } from 'material-ui/GridList';
 import CircleLoader from '../CircleLoader';
 import SimpleSnackbar from '../SimpleSnackbar';
 import yelpStars from './yelpStars';
@@ -13,20 +13,21 @@ const styles = theme => ({
     flexWrap: 'wrap',
     justifyContent: 'space-around',
     overflow: 'hidden',
-    background: theme.palette.background.paper
+    background: theme.palette.background.paper,
   },
   gridList: {
     width: '100%',
-    height: 500
+    height: 500,
   },
   gridImg: {
-    cursor: 'pointer'
-  }
+    cursor: 'pointer',
+  },
 });
 
 class DetailsList extends Component {
   renderContent() {
     const { classes, yelpCategory } = this.props;
+    // eslint-disable-next-line react/prop-types
     const { isFetching, locations } = this.props.destinationDetails[
       yelpCategory
     ];
@@ -40,12 +41,13 @@ class DetailsList extends Component {
         <GridList cellHeight={230} className={classes.gridList}>
           {locations.map(POI => (
             <GridListTile key={POI.name}>
-              <img
-                src={POI.image_url}
-                alt={POI.name}
-                onClick={() => window.open(POI.url)}
-                className={classes.gridImg}
-              />
+              <a href={POI.url} target="_blank">
+                <img
+                  src={POI.image_url}
+                  alt={POI.name}
+                  className={classes.gridImg}
+                />
+              </a>
               <GridListTileBar
                 title={POI.name}
                 subtitle={
@@ -79,8 +81,31 @@ class DetailsList extends Component {
 }
 
 DetailsList.propTypes = {
-  classes: PropTypes.object.isRequired,
-  yelpCategory: PropTypes.string.isRequired
+  classes: PropTypes.shape({
+    container: PropTypes.string.isRequired,
+    gridList: PropTypes.string.isRequired,
+    gridImg: PropTypes.string.isRequired,
+  }).isRequired,
+  auth: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  yelpCategory: PropTypes.string.isRequired,
+  destinationDetails: PropTypes.shape({
+    hotels: PropTypes.shape({
+      isFetching: PropTypes.bool.isRequired,
+      locations: PropTypes.arrayOf(PropTypes.object),
+    }).isRequired,
+    restaurants: PropTypes.shape({
+      isFetching: PropTypes.bool.isRequired,
+      locations: PropTypes.arrayOf(PropTypes.object),
+    }).isRequired,
+    entertainment: PropTypes.shape({
+      isFetching: PropTypes.bool.isRequired,
+      locations: PropTypes.arrayOf(PropTypes.object),
+    }).isRequired,
+  }).isRequired,
+};
+
+DetailsList.defaultProps = {
+  auth: false,
 };
 
 function mapStateToProps({ destinationDetails, auth }) {
